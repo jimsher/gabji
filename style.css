@@ -341,7 +341,7 @@ body {
 /* ==========================================================================
    7. ფიდის გვერდი (FEED / CARDS)
    ========================================================================== */
-  /* ==========================================================================
+ /* ==========================================================================
    7. ფიდის გვერდი (FEED / CARDS)
    ========================================================================== */
 
@@ -453,7 +453,7 @@ input:checked + .toggle-slider:before {
   justify-content: center;
   align-items: center;
   margin-top: 6px;
-  margin-bottom: 22px;
+  margin-bottom: 0; /* განულდა, რომ ღილაკი ბარათზე ავიდეს */
 }
 
 /* უკანა ბარათის ფენა */
@@ -535,7 +535,7 @@ input:checked + .toggle-slider:before {
   background: rgba(24, 17, 38, 0.52);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
-  padding: 16px 18px 36px;
+  padding: 16px 18px 40px; /* ქვედა პადინგი გაიზარდა ღილაკების ადგილისთვის */
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
@@ -557,17 +557,25 @@ input:checked + .toggle-slider:before {
   letter-spacing: -0.2px;
 }
 
+/* გულის ღილაკის გასწორება - რომ არ მოიჭრას */
 .mini-fav-btn {
   background: none;
   border: none;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .mini-fav-btn svg {
+  width: 20px;
+  height: 20px;
   fill: #e57373;
+  display: block;
 }
 
 .card-distance-text {
@@ -598,7 +606,7 @@ input:checked + .toggle-slider:before {
   font-size: 11px;
 }
 
-/* Like და Pass ღილაკები */
+/* Like და Pass ღილაკები - ბარათის ქვედა საზღვარზე გადამჯდარი */
 .card-action-buttons {
   position: relative;
   z-index: 10;
@@ -606,7 +614,7 @@ input:checked + .toggle-slider:before {
   justify-content: center;
   align-items: center;
   gap: 24px;
-  margin-top: -34px;
+  margin-top: -46px; /* ზუსტად ბარათის კიდეზე გადასვლისთვის */
   margin-bottom: 6px;
 }
 
@@ -623,6 +631,12 @@ input:checked + .toggle-slider:before {
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
   transition: transform 0.15s ease;
   backdrop-filter: blur(8px);
+}
+
+.action-circle-btn svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
 .action-circle-btn:active {
