@@ -10,6 +10,7 @@ import {
 import { 
   getFirestore, 
   doc, 
+  getDoc,
   setDoc, 
   collection, 
   getDocs, 
@@ -320,4 +321,74 @@ if (cardTitle) {
 
   // მონაცემების წამოღების გაშვება
   getProfilesFromDb();
+}
+
+/* ==========================================================================
+   4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
+   ========================================================================== */
+const profileNameEl = document.getElementById("profileName");
+
+if (profileNameEl) {
+  // ასაკის დათვლა პროფილისთვის
+  const getAge = (dateStr) => {
+    if (!dateStr) return "";
+    const birth = new Date(dateStr);
+    const diff = Date.now() - birth.getTime();
+    return Math.abs(new Date(diff).getUTCFullYear() - 1970);
+  };
+
+  onAuthStateChanged(auth, async (currentUser) => {
+    if (!currentUser) {
+      window.location.href = "index.html";
+      return;
+    }
+
+    try {
+      const userDocRef = doc(db, "users", currentUser.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        const age = getAge(data.birthDate);
+
+        // სახელი და ასაკი
+        profileNameEl.textContent = `${data.firstName || ""} ${data.lastName || ""}${age ? ", " + age : ""}`.trim() || "მომხმარებელი";
+
+        // ლოკაცია
+        const distEl = document.getElementById("profileDistance");
+        if (distEl) {
+          const locParts = [data.city, data.country].filter(Boolean).join(", ");
+          distEl.textContent = locParts ? `📍 ${locParts}` : "ლოკაცია მითითებული არ არის";
+        }
+
+        // ბიო / კონტაქტი
+        const bioEl = document.getElementById("profileBio");
+        if (bioEl) {
+          bioEl.textContent = data.phone ? `📞 ${data.phone}` : (data.email || "");
+        }
+
+        // ავატარის ფოტო
+        const avatarImg = document.getElementById("profileMainAvatar");
+        const avatarSvg = document.getElementById("profileAvatarPlaceholder");
+
+        if (data.photoUrl) {
+          if (avatarImg) {
+            avatarImg.src = data.photoUrl;
+            avatarImg.style.display = "block";
+          }
+          if (avatarSvg) {
+            avatarSvg.style.display = "none";
+          }
+        } else {
+          if (avatarImg) avatarImg.style.display = "none";
+          if (avatarSvg) avatarSvg.style.display = "block";
+        }
+      } else {
+        profileNameEl.textContent = "პროფილი ვერ მოიძებნა";
+      }
+    } catch (err) {
+      console.error("პროფილის ჩატვირთვის შეცდომა:", err);
+      profileNameEl.textContent = "შეცდომა ჩატვირთვისას";
+    }
+  });
 }
