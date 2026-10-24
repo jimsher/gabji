@@ -33,10 +33,12 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// თუ მომხმარებელი უკვე ავტორიზებულია, გადადის feed.html-ზე (თუ signup-ზე ან feed-ზე არ არის)
+// თუ მომხმარებელი უკვე ავტორიზებულია, გადადის feed.html-ზე (მხოლოდ index-ზე ყოფნისას)
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    if (!window.location.pathname.includes("signup.html") && !window.location.pathname.includes("feed.html")) {
+    const currentPath = window.location.pathname.toLowerCase();
+    const isIndex = currentPath.endsWith("index.html") || currentPath === "/" || currentPath === "";
+    if (isIndex) {
       window.location.href = "feed.html";
     }
   }
@@ -120,8 +122,7 @@ interestBtns.forEach((btn) => {
   });
 });
 
-// ფოტოს არჩევა და Base64-ში გადაყვანა
-let userPhotoBase64 = "";
+// ფოტოს არჩევა (Base64-ის გარეშე)
 const userPhotoInput = document.getElementById("userPhoto");
 const uploadCard = document.getElementById("uploadCard");
 const uploadLabel = document.getElementById("uploadLabel");
@@ -132,12 +133,6 @@ if (uploadCard && userPhotoInput) {
     if (userPhotoInput.files && userPhotoInput.files[0]) {
       const file = userPhotoInput.files[0];
       if (uploadLabel) uploadLabel.textContent = "არჩეულია: " + file.name;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        userPhotoBase64 = e.target.result;
-      };
-      reader.readAsDataURL(file);
     }
   });
 }
@@ -185,7 +180,7 @@ if (signupForm) {
         city: city,
         email: email,
         phone: phone,
-        photoUrl: userPhotoBase64 || null,
+        photoUrl: null,
         interests: selectedInterests,
         createdAt: serverTimestamp()
       });
@@ -268,7 +263,7 @@ if (cardTitle) {
       }
     }
 
-    // ფოტო (თუ ატვირთულია, გამოჩნდება; თუ არა - რჩება ნეიტრალური ავატარი)
+    // ფოტო
     if (photoBox) {
       const oldImg = photoBox.querySelector(".profile-pic");
       if (oldImg) oldImg.remove();
@@ -301,7 +296,7 @@ if (cardTitle) {
       displayProfile(currentCardIndex);
     } catch (e) {
       console.error("ბაზის შეცდომა:", e);
-      if (nameEl) nameEl.textContent = "ვერ ჩაიტვირთა";
+      if (cardTitle) cardTitle.textContent = "ვერ ჩაიტვირთა";
     }
   };
 
