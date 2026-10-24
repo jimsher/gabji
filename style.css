@@ -613,3 +613,332 @@ input:checked + .toggle-slider:before {
 .bottom-nav-bar a.nav-item {
   text-decoration: none;
 }
+
+
+/* ==========================================================================
+   7. ფიდის გვერდი (ზუსტი ორიგინალი დიზაინი)
+   ========================================================================== */
+
+.feed-screen {
+  padding: 12px 16px 8px;
+  background: #141024;
+}
+
+.feed-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* ზედა საძიებო ზოლი */
+.feed-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.search-input-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #716988;
+}
+
+.feed-search-input {
+  width: 100%;
+  padding: 11px 16px 11px 40px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.feed-search-input::placeholder {
+  color: #716988;
+}
+
+.filter-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 13px;
+  color: #a49cb8;
+  font-weight: 500;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 26px;
+  transition: 0.3s;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .toggle-slider {
+  background: #3a2b4c;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(22px);
+}
+
+/* ბარათების სტეკი (ორმაგი ბარათის ეფექტი) */
+.cards-deck-container {
+  position: relative;
+  width: 100%;
+  height: 510px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px 0;
+}
+
+/* უკანა გადახრილი ფენა */
+.deck-card-shadow {
+  position: absolute;
+  width: 92%;
+  height: 98%;
+  background: rgba(45, 34, 64, 0.6);
+  border-radius: 36px;
+  transform: rotate(-4deg) translateX(-8px) scale(0.98);
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* მთავარი პროფილის ბარათი */
+.main-profile-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #241b35;
+  border-radius: 36px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  z-index: 2;
+}
+
+/* ფოტოს / ავატარის არეალი */
+.card-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 30%, #352549 0%, #1b1328 100%);
+  z-index: 1;
+}
+
+.card-image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ზედა თეთრი ბეიჯი */
+.card-top-badge {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  width: 34px;
+  height: 18px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 3;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #241b35;
+  border-radius: 50%;
+}
+
+/* ქვედა მინისებრი ბლოკი */
+.card-info-glass {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(28, 20, 42, 0.7) 0%, rgba(18, 13, 28, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 20px 20px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-user-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.mini-fav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.card-distance-text {
+  font-size: 13px;
+  color: #9f96b5;
+  font-weight: 500;
+}
+
+.card-bio-text {
+  font-size: 12px;
+  color: #cfc8de;
+  line-height: 1.4;
+  margin: 4px 0 6px;
+}
+
+/* ინტერესების აბები */
+.card-interest-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.card-pill {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ded9ed;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Like და Pass მრგვალი ღილაკები */
+.card-action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin: 12px 0 8px;
+}
+
+.action-circle-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.action-circle-btn:active {
+  transform: scale(0.92);
+}
+
+.btn-like {
+  background: radial-gradient(circle at center, #3d2b45 0%, #251a2d 100%);
+  border: 1px solid rgba(255, 120, 160, 0.25);
+}
+
+.btn-pass {
+  background: radial-gradient(circle at center, #422530 0%, #28151e 100%);
+  border: 1px solid rgba(225, 110, 120, 0.25);
+}
+
+.btn-caption {
+  font-size: 11px;
+  color: #b5adc9;
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+/* ქვედა ნავიგაცია */
+.bottom-nav-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 14px 0 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #6d6682;
+  font-size: 11px;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.nav-item.active {
+  color: #d1829e;
+}
