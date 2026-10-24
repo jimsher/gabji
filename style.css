@@ -341,12 +341,12 @@ body {
 /* ==========================================================================
    7. ფიდის გვერდი (FEED / CARDS)
    ========================================================================== */
-/* ==========================================================================
+  /* ==========================================================================
    7. ფიდის გვერდი (FEED / CARDS)
    ========================================================================== */
 
 .feed-screen {
-  padding: 12px 16px 8px;
+  padding: 12px 18px 8px;
 }
 
 .feed-layout {
@@ -448,41 +448,44 @@ input:checked + .toggle-slider:before {
 .cards-deck-container {
   position: relative;
   width: 100%;
-  height: 480px;
+  height: 490px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 6px;
-  margin-bottom: 24px; /* ადგილი გადამჯდარი ღილაკებისთვის */
+  margin-bottom: 22px;
 }
 
+/* უკანა ბარათის ფენა (სიღრმე და გადახრა) */
 .deck-card-shadow {
   position: absolute;
-  width: 90%;
+  width: 92%;
   height: 98%;
-  background: rgba(45, 34, 64, 0.65);
-  border-radius: 34px;
-  transform: rotate(-4.5deg) translateX(-8px) scale(0.98);
+  background: #3a2e4d;
+  border-radius: 36px;
+  transform: rotate(-5deg) translate(-10px, -4px);
   z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
+/* მთავარი ბარათი */
 .main-profile-card {
   position: relative;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 25%, #301f42 0%, #171126 100%);
-  border-radius: 34px;
+  background: #1e162d;
+  border-radius: 36px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
   z-index: 2;
 }
 
-/* ფოტოს ადგილი - ნეიტრალური კონტეინერი */
+/* ფოტოს ადგილი - მთლიან ბარათზეა გაშლილი ქვევით */
 .card-image-placeholder {
   position: absolute;
   top: 0;
@@ -492,7 +495,7 @@ input:checked + .toggle-slider:before {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 30%, #352549 0%, #191228 100%);
+  background: radial-gradient(circle at 50% 25%, #352549 0%, #171126 100%);
   z-index: 1;
 }
 
@@ -502,6 +505,7 @@ input:checked + .toggle-slider:before {
   object-fit: cover;
 }
 
+/* ზედა თეთრი ოვალური ბეიჯი */
 .card-top-badge {
   position: absolute;
   top: 16px;
@@ -524,20 +528,20 @@ input:checked + .toggle-slider:before {
   border-radius: 50%;
 }
 
-/* ბარათის ქვედა შუშისებრი ბლოკი (ზუსტი გამჭვირვალობა და დაბურვა) */
+/* ბარათის ქვედა შუშისებრი ბლოკი (ნახევრად გამჭვირვალე მინა დაბურვით) */
 .card-info-glass {
   position: relative;
   z-index: 2;
-  background: rgba(22, 16, 36, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  padding: 18px 20px 42px; /* ქვემოდან მეტი ადგილი ღილაკებისთვის */
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(24, 17, 38, 0.52);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  padding: 16px 18px 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
   gap: 5px;
-  border-bottom-left-radius: 34px;
-  border-bottom-right-radius: 34px;
+  border-bottom-left-radius: 36px;
+  border-bottom-right-radius: 36px;
 }
 
 .card-name-row {
@@ -550,7 +554,7 @@ input:checked + .toggle-slider:before {
   font-size: 21px;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
 }
 
 .mini-fav-btn {
@@ -573,9 +577,9 @@ input:checked + .toggle-slider:before {
 
 .card-bio-text {
   font-size: 12px;
-  color: #d8d2ea;
+  color: #cfc9e2;
   line-height: 1.35;
-  margin: 3px 0 6px;
+  margin: 2px 0 5px;
 }
 
 .card-interest-pills {
@@ -586,29 +590,29 @@ input:checked + .toggle-slider:before {
 }
 
 .card-pill {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #e5e0f5;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #e3deee;
   padding: 5px 12px;
   border-radius: 14px;
   font-size: 11px;
 }
 
-/* Like და Pass ღილაკები (პირდაპირ ბარათის კიდეზე გადამჯდარი) */
+/* Like და Pass ღილაკები - ბარათის კიდეზე გადამჯდარი */
 .card-action-buttons {
   position: relative;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 28px;
-  margin-top: -38px; /* წევს ღილაკებს ზემოთ, ბარათის კიდეზე */
+  gap: 24px;
+  margin-top: -34px;
   margin-bottom: 6px;
 }
 
 .action-circle-btn {
-  width: 70px;
-  height: 70px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   border: none;
   display: flex;
@@ -616,7 +620,7 @@ input:checked + .toggle-slider:before {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
   transition: transform 0.15s ease;
   backdrop-filter: blur(8px);
 }
@@ -645,3 +649,4 @@ input:checked + .toggle-slider:before {
 .bottom-nav-bar a.nav-item {
   text-decoration: none;
 }
+    
