@@ -669,6 +669,20 @@ input:checked + .toggle-slider:before {
   font-weight: 500;
 }
 
-.bottom-nav-bar a.nav-item {
-  text-decoration: none;
+.bottom-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 412px;
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #141026;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 9999;
+  margin: 0;
+  padding: 0;
 }
