@@ -2,10 +2,17 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { 
   getAuth, 
   signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword,
   signInWithPopup, 
   GoogleAuthProvider, 
   onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // შენი ორიგინალი Firebase კონფიგურაცია
 const firebaseConfig = {
@@ -21,12 +28,16 @@ const firebaseConfig = {
 // ინიციალიზაცია
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 // თუ მომხმარებელი უკვე შესულია, ავტომატურად გადავიდეს feed.html-ზე
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    window.location.href = "feed.html";
+    // თუ რეგისტრაციის გვერდზეა, ავტომატურად არ გადააგდოს, რომ ფორმის შევსება შეძლოს
+    if (!window.location.pathname.includes("signup.html")) {
+      window.location.href = "feed.html";
+    }
   }
 });
 
@@ -75,4 +86,87 @@ if (googleLoginBtn) {
       alert("Google ავტორიზაციის შეცდომა: " + err.message);
     }
   };
+}
+
+/* ==========================================================================
+   რეგისტრაციის ფუნქციები (SIGNUP & FIRESTORE)
+   ========================================================================== */
+
+// ინტერესების ტეგების დაჭერა და მონიშვნა
+const interestBtns = document.querySelectorAll(".interest-pill");
+interestBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    btn.classList.toggle("active");
+  });
+});
+
+// ფოტოს არჩევის დამუშავება
+const userPhotoInput = document.getElementById("userPhoto");
+const uploadCard = document.getElementById("uploadCard");
+const uploadLabel = document.getElementById("uploadLabel");
+
+if (uploadCard && userPhotoInput) {
+  uploadCard.addEventListener("click", () => userPhotoInput.click());
+  userPhotoInput.addEventListener("change", () => {
+    if (userPhotoInput.files && userPhotoInput.files[0]) {
+      uploadLabel.textContent = "არჩეულია: " + userPhotoInput.files[0].name;
+    }
+  });
+}
+
+// რეგისტრაციის ფორმის გაგზავნა და Firestore ბაზაში შენახვა
+const signupForm = document.getElementById("signupForm");
+const submitBtn = document.getElementById("submitBtn");
+
+if (signupForm) {
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const firstName = document.getElementById("regFirstName").value.trim();
+    const lastName = document.getElementById("regLastName").value.trim();
+    const birthDate = document.getElementById("regBirthDate").value;
+    const country = document.getElementById("regCountry").value.trim();
+    const city = document.getElementById("regCity").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value.trim();
+    const phone = document.getElementById("regPhone").value.trim();
+
+    // მონიშნული ინტერესების შეგროვება მასივში
+    const selectedInterests = [];
+    document.querySelectorAll(".interest-pill.active").forEach((tag) => {
+      selectedInterests.push(tag.textContent.trim());
+    });
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "რეგისტრაცია...";
+
+    try {
+      // 1. მომხმარებლის შექმნა Firebase Auth-ში
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 2. მონაცემების შენახვა Firestore ბაზაში 'users' კოლექციაში
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        firstName: firstName,
+        lastName: lastName,
+        birthDate: birthDate,
+        country: country,
+        city: city,
+        email: email,
+        phone: phone,
+        interests: selectedInterests,
+        createdAt: serverTimestamp()
+      });
+
+      alert("რეგისტრაცია წარმატებით დასრულდა!");
+      window.location.href = "feed.html";
+
+    } catch (error) {
+      console.error("შეცდომა:", error);
+      alert("შეცდომა რეგისტრაციისას: " + error.message);
+      submitBtn.disabled = false;
+      submitBtn.innerText = "შესვლა";
+    }
+  });
 }
