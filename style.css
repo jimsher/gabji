@@ -686,3 +686,198 @@ input:checked + .toggle-slider:before {
   margin: 0;
   padding: 0;
 }
+
+
+/* ==========================================================================
+   8. პროფილის გვერდი (PROFILE SCREEN)
+   ========================================================================== */
+
+.profile-screen {
+  padding: 10px 16px 80px;
+  overflow-y: auto;
+}
+
+.profile-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ზედა გრადიენტიანი ჰედერი */
+.profile-header-card {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #a75276 0%, #764579 50%, #d87e5b 100%);
+  border-radius: 28px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profile-top-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.icon-btn-round {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* ავატარი და ონლაინ სტატუსი */
+.profile-avatar-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: -40px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+}
+
+.profile-avatar-ring {
+  position: relative;
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  border: 4px solid #141026;
+  background: #241b35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-online-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background: #22c55e;
+  border: 3px solid #141026;
+  border-radius: 50%;
+}
+
+.profile-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid #22c55e;
+  color: #22c55e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 14px;
+}
+
+.status-green-dot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+
+/* ფოტოების ბადე (3x2) */
+.profile-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 48px;
+}
+
+.gallery-photo-slot {
+  aspect-ratio: 1 / 1.15;
+  background: #1c152e;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gallery-photo-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ინფორმაციის ბლოკი */
+.profile-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.profile-distance {
+  font-size: 13px;
+  color: #8c85a1;
+}
+
+.profile-bio {
+  font-size: 13px;
+  color: #b0a8c4;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* ღილაკები */
+.profile-action-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.profile-btn {
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.15s ease;
+}
+
+.profile-btn:active {
+  transform: scale(0.97);
+}
+
+.btn-edit {
+  background: #c3597b;
+  border: 1px solid #c3597b;
+  color: #ffffff;
+}
+
+.btn-settings {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
