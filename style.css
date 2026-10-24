@@ -335,3 +335,281 @@ body {
 .nav-item.active {
   color: #ffffff;
 }
+
+
+
+/* ==========================================================================
+   7. ფიდის გვერდი (FEED / CARDS)
+   ========================================================================== */
+
+.feed-screen {
+  padding: 16px 18px 10px;
+}
+
+.feed-layout {
+  justify-content: space-between;
+}
+
+/* ზედა საძიებო ზოლი */
+.feed-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.search-input-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7d7595;
+}
+
+.feed-search-input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.filter-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 13px;
+  color: #b0a8c4;
+}
+
+/* გადამრთველი ღილაკი (Toggle Switch) */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  transition: 0.3s;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .toggle-slider {
+  background: linear-gradient(90deg, #c3597b 0%, #7e4b99 100%);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* ბარათების დიზაინი და წყობა */
+.cards-deck-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.deck-card-shadow {
+  position: absolute;
+  width: 90%;
+  height: 94%;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 28px;
+  transform: rotate(-3deg) scale(0.97);
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.main-profile-card {
+  position: relative;
+  width: 96%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 20%, #301f42 0%, #19122a 100%);
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* ფოტოს ადგილი - ნეიტრალური კონტეინერი */
+.card-image-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #281b37 0%, #171128 100%);
+  position: relative;
+}
+
+.card-top-badge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  width: 28px;
+  height: 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+/* ბარათის ქვედა შუშისებრი ბლოკი */
+.card-info-glass {
+  background: rgba(18, 13, 30, 0.88);
+  backdrop-filter: blur(14px);
+  padding: 16px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-user-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.mini-fav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.card-distance-text {
+  font-size: 13px;
+  color: #a69ebd;
+}
+
+.card-bio-text {
+  font-size: 12px;
+  color: #cfc9e2;
+  line-height: 1.35;
+  margin: 4px 0;
+}
+
+.card-interest-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.card-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cfc9e2;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+}
+
+/* Like და Pass ღილაკები */
+.card-action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+  margin: 10px 0;
+}
+
+.action-circle-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.action-circle-btn:active {
+  transform: scale(0.92);
+}
+
+.btn-like {
+  background: radial-gradient(circle, #3e2849 0%, #261933 100%);
+  border: 1px solid rgba(255, 117, 151, 0.3);
+}
+
+.btn-pass {
+  background: radial-gradient(circle, #482131 0%, #291522 100%);
+  border: 1px solid rgba(224, 122, 122, 0.3);
+}
+
+.btn-caption {
+  font-size: 10px;
+  color: #a89fbf;
+  margin-top: 2px;
+}
+
+.bottom-nav-bar a.nav-item {
+  text-decoration: none;
+}
