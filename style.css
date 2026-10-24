@@ -195,3 +195,143 @@ body {
   margin-top: 6px;
   cursor: pointer;
 }
+
+/* ==========================================================================
+   6. რეგისტრაციის გვერდი (SIGNUP & ONBOARDING)
+   ========================================================================== */
+
+/* ზედა ზოლი და დაბრუნების ისარი */
+.signup-top-bar {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.back-link {
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* სათაურები */
+.signup-header {
+  margin-bottom: 20px;
+}
+
+.signup-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.signup-sub {
+  font-size: 13px;
+  color: #8c85a1;
+  margin-top: 4px;
+}
+
+/* ფორმის სტრუქტურა */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 13px;
+  color: #cfc9e2;
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* ინტერესების ტეგები */
+.interest-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.interest-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cfc9e2;
+  border-radius: 18px;
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.interest-pill.active {
+  background: linear-gradient(90deg, #c3597b 0%, #7e4b99 100%);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+/* ფოტოს არჩევის ბლოკი */
+.photo-upload-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.camera-icon {
+  color: #8c85a1;
+}
+
+.upload-text {
+  font-size: 13px;
+  color: #8c85a1;
+}
+
+.action-bottom {
+  margin-top: 10px;
+}
+
+/* ქვედა ნავიგაცია */
+.bottom-nav-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 16px 0 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 20px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #6d6682;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  color: #ffffff;
+}
