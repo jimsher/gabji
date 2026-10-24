@@ -11,6 +11,8 @@ import {
   getFirestore, 
   doc, 
   setDoc, 
+  collection, 
+  getDocs, 
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -31,10 +33,10 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// თუ მომხმარებელი უკვე ავტორიზებულია, გადადის feed.html-ზე (თუ signup-ზე არ არის)
+// თუ მომხმარებელი უკვე ავტორიზებულია, გადადის feed.html-ზე (თუ signup-ზე ან feed-ზე არ არის)
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    if (!window.location.pathname.includes("signup.html")) {
+    if (!window.location.pathname.includes("signup.html") && !window.location.pathname.includes("feed.html")) {
       window.location.href = "feed.html";
     }
   }
@@ -188,7 +190,6 @@ if (signupForm) {
         createdAt: serverTimestamp()
       });
 
-      alert("რეგისტრაცია წარმატებით დასრულდა!");
       window.location.href = "feed.html";
 
     } catch (error) {
@@ -196,8 +197,132 @@ if (signupForm) {
       alert("შეცდომა რეგისტრაციისას: " + error.message);
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerText = "რეგისტრაცია";
+        submitBtn.innerText = "შესვლა";
       }
     }
   });
+}
+
+/* ==========================================================================
+   3. ფიდზე მონაცემების წამოღება (FEED.HTML & FIRESTORE)
+   ========================================================================== */
+const cardTitle = document.querySelector(".card-user-title");
+
+if (cardTitle) {
+  let feedProfiles = [];
+  let currentCardIndex = 0;
+
+  // ასაკის დათვლა
+  const calculateAge = (dateStr) => {
+    if (!dateStr) return "";
+    const birth = new Date(dateStr);
+    const diff = Date.now() - birth.getTime();
+    return Math.abs(new Date(diff).getUTCFullYear() - 1970);
+  };
+
+  // ბარათზე მონაცემების გამოჩენა
+  const displayProfile = (index) => {
+    const nameEl = document.querySelector(".card-user-title");
+    const locEl = document.querySelector(".card-distance-text");
+    const bioEl = document.querySelector(".card-bio-text");
+    const pillsWrap = document.querySelector(".card-interest-pills");
+    const photoBox = document.querySelector(".card-image-placeholder");
+
+    if (!feedProfiles.length || index >= feedProfiles.length) {
+      if (nameEl) nameEl.textContent = "მომხმარებლები არ არის";
+      if (locEl) locEl.textContent = "";
+      if (bioEl) bioEl.textContent = "";
+      if (pillsWrap) pillsWrap.innerHTML = "";
+      return;
+    }
+
+    const item = feedProfiles[index];
+    const age = calculateAge(item.birthDate);
+
+    // სახელი და ასაკი
+    if (nameEl) {
+      nameEl.textContent = `${item.firstName || ""} ${item.lastName || ""}${age ? ", " + age : ""}`.trim();
+    }
+
+    // ლოკაცია (ქალაქი, ქვეყანა)
+    if (locEl) {
+      const fullLoc = [item.city, item.country].filter(Boolean).join(", ");
+      locEl.textContent = fullLoc ? `📍 ${fullLoc}` : "";
+    }
+
+    // ტელეფონი / კონტაქტი
+    if (bioEl) {
+      bioEl.textContent = item.phone ? `📞 ${item.phone}` : (item.email || "");
+    }
+
+    // ინტერესების ტეგები
+    if (pillsWrap) {
+      pillsWrap.innerHTML = "";
+      if (Array.isArray(item.interests)) {
+        item.interests.forEach((intr) => {
+          const span = document.createElement("span");
+          span.className = "card-pill";
+          span.textContent = intr;
+          pillsWrap.appendChild(span);
+        });
+      }
+    }
+
+    // ფოტო (თუ ატვირთულია, გამოჩნდება; თუ არა - რჩება ნეიტრალური ავატარი)
+    if (photoBox) {
+      const oldImg = photoBox.querySelector(".profile-pic");
+      if (oldImg) oldImg.remove();
+
+      const placeholderSvg = photoBox.querySelector("svg");
+
+      if (item.photoUrl) {
+        if (placeholderSvg) placeholderSvg.style.display = "none";
+        const img = document.createElement("img");
+        img.className = "profile-pic";
+        img.src = item.photoUrl;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        photoBox.appendChild(img);
+      } else {
+        if (placeholderSvg) placeholderSvg.style.display = "block";
+      }
+    }
+  };
+
+  // ბაზიდან წამოღება
+  const getProfilesFromDb = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "users"));
+      feedProfiles = [];
+      snapshot.forEach((docSnap) => {
+        feedProfiles.push(docSnap.data());
+      });
+      displayProfile(currentCardIndex);
+    } catch (e) {
+      console.error("ბაზის შეცდომა:", e);
+      if (nameEl) nameEl.textContent = "ვერ ჩაიტვირთა";
+    }
+  };
+
+  // Like და Pass ღილაკებით შემდეგ მომხმარებელზე გადასვლა
+  const likeBtn = document.getElementById("likeBtn");
+  const passBtn = document.getElementById("passBtn");
+
+  if (likeBtn) {
+    likeBtn.onclick = () => {
+      currentCardIndex++;
+      displayProfile(currentCardIndex);
+    };
+  }
+
+  if (passBtn) {
+    passBtn.onclick = () => {
+      currentCardIndex++;
+      displayProfile(currentCardIndex);
+    };
+  }
+
+  // მონაცემების წამოღების გაშვება
+  getProfilesFromDb();
 }
