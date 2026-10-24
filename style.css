@@ -346,7 +346,7 @@ body {
    ========================================================================== */
 
 .feed-screen {
-  padding: 14px 16px 10px;
+  padding: 12px 16px 8px;
 }
 
 .feed-layout {
@@ -360,7 +360,7 @@ body {
   justify-content: space-between;
   gap: 12px;
   margin-top: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .search-input-wrap {
@@ -448,22 +448,23 @@ input:checked + .toggle-slider:before {
 .cards-deck-container {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 480px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 4px 0;
+  margin-top: 6px;
+  margin-bottom: 24px; /* ადგილი გადამჯდარი ღილაკებისთვის */
 }
 
 .deck-card-shadow {
   position: absolute;
-  width: 94%;
+  width: 90%;
   height: 98%;
-  background: #332447;
+  background: rgba(45, 34, 64, 0.65);
   border-radius: 34px;
-  transform: rotate(-4.5deg) translateX(-6px);
+  transform: rotate(-4.5deg) translateX(-8px) scale(0.98);
   z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .main-profile-card {
@@ -495,11 +496,17 @@ input:checked + .toggle-slider:before {
   z-index: 1;
 }
 
+.card-image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .card-top-badge {
   position: absolute;
   top: 16px;
   right: 18px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
   width: 32px;
   height: 18px;
   border-radius: 12px;
@@ -517,18 +524,20 @@ input:checked + .toggle-slider:before {
   border-radius: 50%;
 }
 
-/* ბარათის ქვედა შუშისებრი ბლოკი */
+/* ბარათის ქვედა შუშისებრი ბლოკი (ზუსტი გამჭვირვალობა და დაბურვა) */
 .card-info-glass {
   position: relative;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(23, 16, 36, 0.7) 0%, rgba(15, 11, 24, 0.95) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 18px 20px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(22, 16, 36, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 18px 20px 42px; /* ქვემოდან მეტი ადგილი ღილაკებისთვის */
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
+  border-bottom-left-radius: 34px;
+  border-bottom-right-radius: 34px;
 }
 
 .card-name-row {
@@ -538,10 +547,10 @@ input:checked + .toggle-slider:before {
 }
 
 .card-user-title {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
 }
 
 .mini-fav-btn {
@@ -553,46 +562,53 @@ input:checked + .toggle-slider:before {
   padding: 0;
 }
 
+.mini-fav-btn svg {
+  fill: #e57373;
+}
+
 .card-distance-text {
   font-size: 13px;
-  color: #a69ebd;
+  color: #b0a8c4;
 }
 
 .card-bio-text {
   font-size: 12px;
-  color: #cfc9e2;
+  color: #d8d2ea;
   line-height: 1.35;
-  margin: 3px 0 5px;
+  margin: 3px 0 6px;
 }
 
 .card-interest-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
   margin-top: 2px;
 }
 
 .card-pill {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #cfc9e2;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e5e0f5;
   padding: 5px 12px;
   border-radius: 14px;
   font-size: 11px;
 }
 
-/* Like და Pass ღილაკები */
+/* Like და Pass ღილაკები (პირდაპირ ბარათის კიდეზე გადამჯდარი) */
 .card-action-buttons {
+  position: relative;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
-  margin: 12px 0 8px;
+  gap: 28px;
+  margin-top: -38px; /* წევს ღილაკებს ზემოთ, ბარათის კიდეზე */
+  margin-bottom: 6px;
 }
 
 .action-circle-btn {
-  width: 68px;
-  height: 68px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   border: none;
   display: flex;
@@ -600,8 +616,9 @@ input:checked + .toggle-slider:before {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
   transition: transform 0.15s ease;
+  backdrop-filter: blur(8px);
 }
 
 .action-circle-btn:active {
@@ -609,24 +626,22 @@ input:checked + .toggle-slider:before {
 }
 
 .btn-like {
-  background: radial-gradient(circle, #3e2849 0%, #261933 100%);
-  border: 1px solid rgba(255, 117, 151, 0.3);
+  background: radial-gradient(circle at center, rgba(62, 40, 73, 0.95) 0%, rgba(38, 25, 51, 0.95) 100%);
+  border: 1.5px solid rgba(255, 117, 151, 0.35);
 }
 
 .btn-pass {
-  background: radial-gradient(circle, #482131 0%, #291522 100%);
-  border: 1px solid rgba(224, 122, 122, 0.3);
+  background: radial-gradient(circle at center, rgba(72, 33, 49, 0.95) 0%, rgba(41, 21, 34, 0.95) 100%);
+  border: 1.5px solid rgba(224, 122, 122, 0.35);
 }
 
 .btn-caption {
-  font-size: 11px;
+  font-size: 10px;
   color: #b0a7c4;
-  margin-top: 3px;
+  margin-top: 2px;
   font-weight: 500;
 }
 
 .bottom-nav-bar a.nav-item {
   text-decoration: none;
 }
-
-    
