@@ -456,7 +456,7 @@ input:checked + .toggle-slider:before {
   margin-bottom: 22px;
 }
 
-/* უკანა ბარათის ფენა (სიღრმე და გადახრა) */
+/* უკანა ბარათის ფენა */
 .deck-card-shadow {
   position: absolute;
   width: 92%;
@@ -485,7 +485,7 @@ input:checked + .toggle-slider:before {
   z-index: 2;
 }
 
-/* ფოტოს ადგილი - მთლიან ბარათზეა გაშლილი ქვევით */
+/* ფოტოს ადგილი */
 .card-image-placeholder {
   position: absolute;
   top: 0;
@@ -528,7 +528,7 @@ input:checked + .toggle-slider:before {
   border-radius: 50%;
 }
 
-/* ბარათის ქვედა შუშისებრი ბლოკი (ნახევრად გამჭვირვალე მინა დაბურვით) */
+/* ბარათის ქვედა შუშისებრი ბლოკი */
 .card-info-glass {
   position: relative;
   z-index: 2;
@@ -598,7 +598,7 @@ input:checked + .toggle-slider:before {
   font-size: 11px;
 }
 
-/* Like და Pass ღილაკები - ბარათის კიდეზე გადამჯდარი */
+/* Like და Pass ღილაკები */
 .card-action-buttons {
   position: relative;
   z-index: 10;
@@ -649,4 +649,3 @@ input:checked + .toggle-slider:before {
 .bottom-nav-bar a.nav-item {
   text-decoration: none;
 }
-    
