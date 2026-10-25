@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>GABJI - პროფილი</title>
   <link rel="stylesheet" href="style.css">
+  <!-- AWS S3 SDK Cloudflare R2-სთვის -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1585.0/aws-sdk.min.js"></script>
 </head>
 <body>
 
   <div class="app-screen profile-screen">
     <div class="content-layer profile-layout">
 
-      <!-- ზედა ჰედერი ფონური გრადიენტით -->
+      <!-- ზედა ჰედერი -->
       <div class="profile-header-card">
         <div class="profile-top-actions">
           <a href="feed.html" class="icon-btn-round" aria-label="Back">
@@ -27,9 +29,10 @@
           </button>
         </div>
 
-        <!-- მთავარი ავატარი -->
+        <!-- მთავარი ავატარი ფოტოს შეცვლის ფუნქციით -->
         <div class="profile-avatar-wrap">
-          <div class="profile-avatar-ring">
+          <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+          <div class="profile-avatar-ring" id="avatarRingBtn" style="cursor: pointer;" title="ფოტოს შეცვლა">
             <img id="profileMainAvatar" src="" alt="Avatar" class="profile-avatar-img" style="display: none;">
             <svg id="profileAvatarPlaceholder" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -37,9 +40,10 @@
             </svg>
             <span class="avatar-online-dot"></span>
           </div>
+
           <div class="profile-status-badge">
             <span class="status-green-dot"></span>
-            <span>აქტიურია</span>
+            <span id="uploadProgressText">აქტიურია</span>
           </div>
         </div>
       </div>
@@ -57,20 +61,20 @@
       <!-- მომხმარებლის დეტალები -->
       <div class="profile-info-block">
         <h2 class="profile-name" id="profileName">იტვირთება...</h2>
-        <p class="profile-distance" id="profileDistance">მანძილი — 20 კმ</p>
+        <p class="profile-distance" id="profileDistance">ლოკაცია</p>
         <p class="profile-bio" id="profileBio"></p>
       </div>
 
       <!-- მოქმედების ღილაკები -->
       <div class="profile-action-row">
         <button type="button" class="profile-btn btn-edit" id="btnEditProfile">რედაქტირება</button>
-        <button type="button" class="profile-btn btn-settings" id="btnSettingsProfile">პარამეტრები</button>
+        <button type="button" class="profile-btn btn-settings" id="btnSettingsProfile">გამოსვლა</button>
       </div>
 
     </div>
   </div>
 
-  <!-- დამოუკიდებელი ქვედა ნავიგაცია -->
+  <!-- ქვედა ნავიგაცია -->
   <nav class="bottom-nav-bar">
     <a href="feed.html" class="nav-item">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -97,6 +101,5 @@
   </nav>
 
   <script type="module" src="app.js"></script>
-
 </body>
 </html>
