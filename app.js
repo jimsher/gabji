@@ -379,13 +379,13 @@ if (cardTitle) {
 
 
 /* ==========================================================================
-   4. პროფილის მონაცემები & ფოტოს ატვირთვა R2-ში (profile.html)
+   4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
 
 if (profileNameEl) {
-  // Cloudflare R2 ატვირთვის დამხმარე ფუნქცია
-  function uploadPhotoToR2(file, onProgress, callback) {
+  // Cloudflare R2 ატვირთვა - მხოლოდ profile.html-ზე
+  const uploadPhotoToR2 = (file, callback) => {
     if (!file || typeof AWS === "undefined") {
       if (typeof callback === "function") callback(null);
       return;
@@ -393,10 +393,10 @@ if (profileNameEl) {
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = function(e) {
+    reader.onload = (e) => {
       const img = new Image();
       img.src = e.target.result;
-      img.onload = function() {
+      img.onload = () => {
         const maxDimension = 960;
         let width = img.width;
         let height = img.height;
@@ -419,13 +419,13 @@ if (profileNameEl) {
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
 
-        canvas.toBlob(function(blob) {
+        canvas.toBlob((blob) => {
           proceedUpload(blob || file);
         }, "image/jpeg", 0.8);
       };
-      img.onerror = function() { proceedUpload(file); };
+      img.onerror = () => proceedUpload(file);
     };
-    reader.onerror = function() { proceedUpload(file); };
+    reader.onerror = () => proceedUpload(file);
 
     function proceedUpload(blob) {
       const r2S3 = new AWS.S3({
@@ -447,18 +447,9 @@ if (profileNameEl) {
         CacheControl: "public, max-age=31536000, immutable"
       };
 
-      const uploader = r2S3.upload(params);
-
-      uploader.on("httpUploadProgress", function(evt) {
-        if (evt.total && typeof onProgress === "function") {
-          const percent = Math.round((evt.loaded / evt.total) * 100);
-          onProgress(percent);
-        }
-      });
-
-      uploader.send(function(err, data) {
+      r2S3.upload(params, (err, data) => {
         if (err) {
-          console.error("R2 Upload Error:", err);
+          console.error("R2 Error:", err);
           alert("ატვირთვის შეცდომა: " + err.message);
           if (typeof callback === "function") callback(null);
         } else {
@@ -467,7 +458,7 @@ if (profileNameEl) {
         }
       });
     }
-  }
+  };
 
   const getAge = (dateStr) => {
     if (!dateStr) return "";
@@ -482,10 +473,8 @@ if (profileNameEl) {
       return;
     }
 
-    const userDocRef = doc(db, "users", currentUser.uid);
-
-    // 1. მონაცემების გამოჩენა
     try {
+      const userDocRef = doc(db, "users", currentUser.uid);
       const userSnap = await getDoc(userDocRef);
 
       if (userSnap.exists()) {
@@ -495,37 +484,31 @@ if (profileNameEl) {
         // სახელი და ასაკი
         profileNameEl.textContent = `${data.firstName || ""} ${data.lastName || ""}${age ? ", " + age : ""}`.trim() || "მომხმარებელი";
 
-        // @username (თუ არსებობს ელემენტი)
+        // იუზერნეიმი (TikTok სტილისთვის)
         const userTag = document.getElementById("profileUsername");
         if (userTag) {
-          userTag.textContent = data.username ? `@${data.username}` : (data.email ? `@${data.email.split("@")[0]}` : "@user");
+          userTag.textContent = data.email ? `@${data.email.split("@")[0]}` : "@user";
         }
 
-        // რეალური სტატისტიკა ბაზიდან (გამოწერები, გამომწერები, მოწონებები)
+        // სტატისტიკა
         const statFollowing = document.getElementById("statFollowing");
         const statFollowers = document.getElementById("statFollowers");
         const statLikes = document.getElementById("statLikes");
-
-        if (statFollowing) statFollowing.textContent = (data.followingCount !== undefined && data.followingCount !== null) ? data.followingCount : 0;
-        if (statFollowers) statFollowers.textContent = (data.followersCount !== undefined && data.followersCount !== null) ? data.followersCount : 0;
-        if (statLikes) statLikes.textContent = (data.likesCount !== undefined && data.likesCount !== null) ? data.likesCount : 0;
+        if (statFollowing) statFollowing.textContent = data.followingCount || 0;
+        if (statFollowers) statFollowers.textContent = data.followersCount || 0;
+        if (statLikes) statLikes.textContent = data.likesCount || 0;
 
         // ლოკაცია
         const distEl = document.getElementById("profileDistance");
         const locEl = document.getElementById("profileLocation");
         const locParts = [data.city, data.country].filter(Boolean).join(", ");
+        if (distEl) distEl.textContent = locParts ? `📍 ${locParts}` : "ლოკაცია მითითებული არ არის";
+        if (locEl) locEl.textContent = locParts ? `🇬🇪 ${locParts}` : "🇬🇪";
 
-        if (distEl) {
-          distEl.textContent = locParts ? `📍 ${locParts}` : "ლოკაცია მითითებული არ არის";
-        }
-        if (locEl) {
-          locEl.textContent = locParts ? `🇬🇪 ${locParts}` : "🇬🇪";
-        }
-
-        // ბიო / კონტაქტი
+        // ბიო / ტელეფონი
         const bioEl = document.getElementById("profileBio");
         if (bioEl) {
-          bioEl.textContent = data.bio || (data.phone ? `📞 ${data.phone}` : (data.email || ""));
+          bioEl.textContent = data.phone ? `📞 ${data.phone}` : (data.email || "");
         }
 
         // ავატარის ფოტო
@@ -537,9 +520,7 @@ if (profileNameEl) {
             avatarImg.src = data.photoUrl;
             avatarImg.style.display = "block";
           }
-          if (avatarSvg) {
-            avatarSvg.style.display = "none";
-          }
+          if (avatarSvg) avatarSvg.style.display = "none";
         } else {
           if (avatarImg) avatarImg.style.display = "none";
           if (avatarSvg) avatarSvg.style.display = "block";
@@ -552,7 +533,7 @@ if (profileNameEl) {
       profileNameEl.textContent = "შეცდომა ჩატვირთვისას";
     }
 
-    // 2. ავატარზე კლიკით ფოტოს არჩევა და Cloudflare R2-ში ატვირთვა
+    // ავატარზე დაჭერა და R2-ში ატვირთვა
     const avatarRingBtn = document.getElementById("avatarRingBtn");
     const avatarFileInput = document.getElementById("avatarFileInput");
     const uploadProgressText = document.getElementById("uploadProgressText");
@@ -568,41 +549,32 @@ if (profileNameEl) {
 
         if (uploadProgressText) uploadProgressText.textContent = "იტვირთება...";
 
-        uploadPhotoToR2(
-          file,
-          (percent) => {
-            if (uploadProgressText) uploadProgressText.textContent = `${percent}%`;
-          },
-          async (uploadedUrl) => {
-            if (uploadedUrl) {
-              try {
-                // Firestore-ში photoUrl ველის განახლება setDoc merge-ით (არ ერორდება updateDoc-ის იმპორტის გარეშეც)
-                await setDoc(userDocRef, {
-                  photoUrl: uploadedUrl
-                }, { merge: true });
+        uploadPhotoToR2(file, async (uploadedUrl) => {
+          if (uploadedUrl) {
+            try {
+              const userDocRef = doc(db, "users", currentUser.uid);
+              await setDoc(userDocRef, { photoUrl: uploadedUrl }, { merge: true });
 
-                // ავატარის ვიზუალური განახლება
-                if (avatarImg) {
-                  avatarImg.src = uploadedUrl;
-                  avatarImg.style.display = "block";
-                }
-                if (avatarSvg) avatarSvg.style.display = "none";
-
-                if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
-              } catch (updateErr) {
-                console.error("Firestore განახლების შეცდომა:", updateErr);
-                alert("ფოტოს შენახვა ბაზაში ვერ მოხერხდა");
-                if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
+              if (avatarImg) {
+                avatarImg.src = uploadedUrl;
+                avatarImg.style.display = "block";
               }
-            } else {
+              if (avatarSvg) avatarSvg.style.display = "none";
+              if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
+            } catch (err) {
+              console.error(err);
               if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
             }
+          } else {
+            if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
           }
-        );
+        });
       };
     }
   });
 }
+
+          
 
 
 
