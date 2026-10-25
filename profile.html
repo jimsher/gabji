@@ -72,11 +72,21 @@
 
       </div>
 
-      <!-- 3. ქვეყნის დროშა და მოქმედების ღილაკები -->
+      <!-- 3. ქვეყნის დროშა და ლოკაცია -->
       <div class="tt-bio-section">
-        <p class="tt-flag-bio" id="profileLocation">🇬🇪</p>
+        <p class="tt-flag-bio" id="profileLocation">🇬🇪 საქართველო</p>
       </div>
 
+      <!-- ახალი: TikTok-ის გამოწერის, შეტყობინების და რეკომენდაციის ღილაკები -->
+      <div class="tt-follow-action-row">
+        <button type="button" class="tt-btn-subscribe" id="btnFollowAction">გამოწერა</button>
+        <button type="button" class="tt-btn-message" id="btnMessageAction">შეტყობინება</button>
+        <button type="button" class="tt-btn-suggest" aria-label="Suggest User">
+          <img src="icons/user-plus-broken.svg" alt="User Plus" class="tt-suggest-icon">
+        </button>
+      </div>
+
+      <!-- ქვედა ჩიპსები: რედაქტირება, ბალანსი, პოპულარული -->
       <div class="tt-action-chips">
         <button type="button" class="tt-chip-btn active" id="btnEditProfile">
           <img src="icons/sparkles.svg" alt="Edit" class="tt-chip-icon">
@@ -160,43 +170,42 @@
     </div>
   </div>
 
-  <!-- ქვედა ნავიგაცია -->
   <!-- TikTok სტილის ქვედა ნავიგაცია -->
-<nav class="bottom-nav-bar">
-  <!-- 1. მთავარი / ფიდი -->
-  <a href="feed.html" class="nav-item">
-    <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
-    <span>ფიდი</span>
-  </a>
+  <nav class="bottom-nav-bar">
+    <!-- 1. მთავარი / ფიდი -->
+    <a href="feed.html" class="nav-item">
+      <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
+      <span>ფიდი</span>
+    </a>
 
-  <!-- 2. მეგობრები / რელსები -->
-  <a href="#" class="nav-item">
-    <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
-    <span>მეგობრები</span>
-  </a>
+    <!-- 2. მეგობრები / რელსები -->
+    <a href="#" class="nav-item">
+      <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
+      <span>მეგობრები</span>
+    </a>
 
-  <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
-  <div class="nav-item nav-upload-wrap">
-    <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
-      <span class="plus-symbol">+</span>
-    </button>
-  </div>
-
-  <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
-  <a href="#" class="nav-item nav-inbox-wrap">
-    <div class="nav-icon-badge-box">
-      <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
-      <span class="nav-unread-badge">26</span>
+    <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
+    <div class="nav-item nav-upload-wrap">
+      <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
+        <span class="plus-symbol">+</span>
+      </button>
     </div>
-    <span>შემოსულები</span>
-  </a>
 
-  <!-- 5. პროფილი -->
-  <a href="profile.html" class="nav-item active">
-    <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
-    <span>პროფილი</span>
-  </a>
-</nav>
+    <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
+    <a href="#" class="nav-item nav-inbox-wrap">
+      <div class="nav-icon-badge-box">
+        <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
+        <span class="nav-unread-badge">26</span>
+      </div>
+      <span>შემოსულები</span>
+    </a>
+
+    <!-- 5. პროფილი -->
+    <a href="profile.html" class="nav-item active">
+      <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
+      <span>პროფილი</span>
+    </a>
+  </nav>
 
   <script type="module" src="app.js"></script>
 </body>
