@@ -378,7 +378,8 @@ if (cardTitle) {
 }
 
 
-  /* ==========================================================================
+
+     /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
@@ -397,12 +398,19 @@ if (profileNameEl) {
       return;
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetUid = urlParams.get("uid") || currentUser.uid;
+
     const otherActions = document.getElementById("otherUserActions");
     if (otherActions) {
-      otherActions.style.display = "none";
+      if (targetUid === currentUser.uid) {
+        otherActions.style.display = "none";
+      } else {
+        otherActions.style.display = "flex";
+      }
     }
 
-    const userDocRef = doc(db, "users", currentUser.uid);
+    const userDocRef = doc(db, "users", targetUid);
 
     try {
       const userSnap = await getDoc(userDocRef);
@@ -502,6 +510,7 @@ if (profileNameEl) {
         );
       };
     }
+    
 
 
     // 3. გამოსვლის (Sign Out) ღილაკი
