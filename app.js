@@ -503,7 +503,6 @@ if (profileNameEl) {
       };
     }
 
-                
 
     // 3. გამოსვლის (Sign Out) ღილაკი
     const btnSettings = document.getElementById("btnSettingsProfile");
@@ -511,6 +510,121 @@ if (profileNameEl) {
       btnSettings.onclick = async () => {
         await signOut(auth);
         window.location.href = "index.html";
+      };
+    }
+  });
+}
+
+
+
+/* ==========================================================================
+   5. ხალხის სია (USERS.HTML & FIRESTORE)
+   ========================================================================== */
+const usersListContainer = document.getElementById("usersListContainer");
+
+if (usersListContainer) {
+  const userSearchInput = document.getElementById("userSearchInput");
+  let allUsersList = [];
+
+  const renderUsersList = (users, currentUid) => {
+    usersListContainer.innerHTML = "";
+
+    // საკუთარი თავი არ გამოჩნდეს სიაში
+    const filtered = users.filter((u) => u.uid !== currentUid);
+
+    if (filtered.length === 0) {
+      usersListContainer.innerHTML = '<div class="users-empty-state">მომხმარებელი ვერ მოიძებნა</div>';
+      return;
+    }
+
+    filtered.forEach((user) => {
+      const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim() || "მომხმარებელი";
+      const usernameTag = user.username ? `@${user.username}` : (user.email ? `@${user.email.split("@")[0]}` : "@user");
+
+      const row = document.createElement("div");
+      row.className = "user-list-item";
+
+      // თუ ფოტო არ აქვს, იდება icons/user-circle-linear.svg
+      let avatarHtml = "";
+      if (user.photoUrl) {
+        avatarHtml = `<img src="${user.photoUrl}" alt="${fullName}" class="user-row-avatar-img">`;
+      } else {
+        avatarHtml = `<img src="icons/user-circle-linear.svg" alt="Default Avatar" class="user-row-avatar-svg">`;
+      }
+
+      row.innerHTML = `
+        <div class="user-item-left">
+          <div class="user-row-avatar-box">
+            ${avatarHtml}
+          </div>
+          <div class="user-row-info">
+            <div class="user-row-name">${fullName}</div>
+            <div class="user-row-handle">${usernameTag}</div>
+          </div>
+        </div>
+        <div class="user-item-right">
+          <button type="button" class="btn-user-follow">გამოწერა</button>
+          <button type="button" class="btn-user-dots" aria-label="More">•••</button>
+        </div>
+      `;
+
+      // პროფილზე გადასვლა
+      const leftPart = row.querySelector(".user-item-left");
+      if (leftPart) {
+        leftPart.onclick = () => {
+          window.location.href = `profile.html?uid=${user.uid}`;
+        };
+      }
+
+      // გამოწერის ღილაკის გადართვა
+      const followBtn = row.querySelector(".btn-user-follow");
+      if (followBtn) {
+        followBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (followBtn.textContent === "გამოწერა") {
+            followBtn.textContent = "გამოწერილია";
+            followBtn.classList.add("following");
+          } else {
+            followBtn.textContent = "გამოწერა";
+            followBtn.classList.remove("following");
+          }
+        };
+      }
+
+      usersListContainer.appendChild(row);
+    });
+  };
+
+  onAuthStateChanged(auth, async (currentUser) => {
+    if (!currentUser) {
+      window.location.href = "index.html";
+      return;
+    }
+
+    try {
+      const snap = await getDocs(collection(db, "users"));
+      allUsersList = [];
+      snap.forEach((d) => {
+        allUsersList.push(d.data());
+      });
+      renderUsersList(allUsersList, currentUser.uid);
+    } catch (err) {
+      console.error("ხალხის წამოღების შეცდომა:", err);
+      usersListContainer.innerHTML = '<div class="users-empty-state">ჩატვირთვა ვერ მოხერხდა</div>';
+    }
+
+    // ძებნის გაფილტვრა
+    if (userSearchInput) {
+      userSearchInput.oninput = (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const matched = allUsersList.filter((u) => {
+          const fName = (u.firstName || "").toLowerCase();
+          const lName = (u.lastName || "").toLowerCase();
+          const email = (u.email || "").toLowerCase();
+          const uName = (u.username || "").toLowerCase();
+          return fName.includes(query) || lName.includes(query) || email.includes(query) || uName.includes(query);
+        });
+        renderUsersList(matched, currentUser.uid);
       };
     }
   });
