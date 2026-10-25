@@ -517,7 +517,7 @@ if (profileNameEl) {
 
 
 
-/* ==========================================================================
+ /* ==========================================================================
    5. ხალხის სია (USERS.HTML & FIRESTORE)
    ========================================================================== */
 const usersListContainer = document.getElementById("usersListContainer");
@@ -530,7 +530,7 @@ if (usersListContainer) {
     usersListContainer.innerHTML = "";
 
     // საკუთარი თავი არ გამოჩნდეს სიაში
-    const filtered = users.filter((u) => u.uid !== currentUid);
+    const filtered = users.filter((u) => u.userId !== currentUid && u.uid !== currentUid);
 
     if (filtered.length === 0) {
       usersListContainer.innerHTML = '<div class="users-empty-state">მომხმარებელი ვერ მოიძებნა</div>';
@@ -540,11 +540,11 @@ if (usersListContainer) {
     filtered.forEach((user) => {
       const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim() || "მომხმარებელი";
       const usernameTag = user.username ? `@${user.username}` : (user.email ? `@${user.email.split("@")[0]}` : "@user");
+      const targetId = user.userId || user.uid;
 
       const row = document.createElement("div");
       row.className = "user-list-item";
 
-      // თუ ფოტო არ აქვს, იდება icons/user-circle-linear.svg
       let avatarHtml = "";
       if (user.photoUrl) {
         avatarHtml = `<img src="${user.photoUrl}" alt="${fullName}" class="user-row-avatar-img">`;
@@ -553,7 +553,7 @@ if (usersListContainer) {
       }
 
       row.innerHTML = `
-        <div class="user-item-left">
+        <div class="user-item-left" style="cursor: pointer;">
           <div class="user-row-avatar-box">
             ${avatarHtml}
           </div>
@@ -568,15 +568,14 @@ if (usersListContainer) {
         </div>
       `;
 
-      // პროფილზე გადასვლა
+      // სწორედ ეს ხაზი გადაიყვანს კონკრეტული ადამიანის პროფილზე
       const leftPart = row.querySelector(".user-item-left");
       if (leftPart) {
         leftPart.onclick = () => {
-          window.location.href = `profile.html?uid=${user.uid}`;
+          window.location.href = `profile.html?uid=${targetId}`;
         };
       }
 
-      // გამოწერის ღილაკის გადართვა
       const followBtn = row.querySelector(".btn-user-follow");
       if (followBtn) {
         followBtn.onclick = (e) => {
@@ -605,7 +604,9 @@ if (usersListContainer) {
       const snap = await getDocs(collection(db, "users"));
       allUsersList = [];
       snap.forEach((d) => {
-        allUsersList.push(d.data());
+        const uData = d.data();
+        uData.userId = d.id; // ზუსტი უნიკალური ID ბაზიდან
+        allUsersList.push(uData);
       });
       renderUsersList(allUsersList, currentUser.uid);
     } catch (err) {
@@ -613,7 +614,6 @@ if (usersListContainer) {
       usersListContainer.innerHTML = '<div class="users-empty-state">ჩატვირთვა ვერ მოხერხდა</div>';
     }
 
-    // ძებნის გაფილტვრა
     if (userSearchInput) {
       userSearchInput.oninput = (e) => {
         const query = e.target.value.toLowerCase().trim();
