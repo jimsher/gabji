@@ -379,8 +379,7 @@ if (cardTitle) {
 
 
 
-     
-        /* ==========================================================================
+         /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
@@ -462,25 +461,57 @@ if (profileNameEl) {
           if (avatarSvg) avatarSvg.style.display = "block";
         }
 
-        // გამოწერის ღილაკის აქტივაცია
+        // გამოწერის სტატუსის შემოწმება Firestore-ში (უკვე გამოწერილი გყავს თუ არა)
         const btnFollow = document.getElementById("btnFollowAction");
-        if (btnFollow) {
-          let isFollowed = false;
-          btnFollow.onclick = () => {
-            let count = parseInt(statFollowers.textContent) || 0;
-            if (!isFollowed) {
-              btnFollow.textContent = "გამოწერილია";
-              btnFollow.style.background = "#252525";
-              if (statFollowers) statFollowers.textContent = count + 1;
-              isFollowed = true;
-            } else {
-              btnFollow.textContent = "გამოწერა";
-              btnFollow.style.background = "#fe2c55";
-              if (statFollowers) statFollowers.textContent = Math.max(0, count - 1);
-              isFollowed = false;
+        if (btnFollow && targetUid !== currentUser.uid) {
+          const followDocRef = doc(db, "users", currentUser.uid, "following", targetUid);
+          const followSnap = await getDoc(followDocRef);
+
+          let isFollowed = followSnap.exists();
+
+          if (isFollowed) {
+            btnFollow.textContent = "გამოწერილია";
+            btnFollow.style.background = "#252525";
+          } else {
+            btnFollow.textContent = "გამოწერა";
+            btnFollow.style.background = "#fe2c55";
+          }
+
+          // ბაზაში რეალური ჩაწერა / წაშლა
+          btnFollow.onclick = async () => {
+            btnFollow.disabled = true;
+            const currentCount = parseInt(statFollowers.textContent) || 0;
+
+            try {
+              if (!isFollowed) {
+                // 1. ვწერთ ბაზაში, რომ გამოიწერე
+                await setDoc(followDocRef, { timestamp: serverTimestamp() });
+                await updateDoc(userDocRef, { followersCount: increment(1) });
+                await updateDoc(doc(db, "users", currentUser.uid), { followingCount: increment(1) });
+
+                btnFollow.textContent = "გამოწერილია";
+                btnFollow.style.background = "#252525";
+                if (statFollowers) statFollowers.textContent = currentCount + 1;
+                isFollowed = true;
+              } else {
+                // 2. გამოწერის გაუქმება და ბაზიდან წაშლა
+                await deleteDoc(followDocRef);
+                await updateDoc(userDocRef, { followersCount: increment(-1) });
+                await updateDoc(doc(db, "users", currentUser.uid), { followingCount: increment(-1) });
+
+                btnFollow.textContent = "გამოწერა";
+                btnFollow.style.background = "#fe2c55";
+                if (statFollowers) statFollowers.textContent = Math.max(0, currentCount - 1);
+                isFollowed = false;
+              }
+            } catch (followErr) {
+              console.error("გამოწერის ბაზაში შენახვის შეცდომა:", followErr);
+            } finally {
+              btnFollow.disabled = false;
             }
           };
         }
+
       } else {
         profileNameEl.textContent = "პროფილი ვერ მოიძებნა";
       }
@@ -533,9 +564,8 @@ if (profileNameEl) {
         );
       };
     }
-     
-    
-
+ 
+                      
 
     // 3. გამოსვლის (Sign Out) ღილაკი
     const btnSettings = document.getElementById("btnSettingsProfile");
