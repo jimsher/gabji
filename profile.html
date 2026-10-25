@@ -77,8 +77,8 @@
         <p class="tt-flag-bio" id="profileLocation">🇬🇪 საქართველო</p>
       </div>
 
-      <!-- ახალი: TikTok-ის გამოწერის, შეტყობინების და რეკომენდაციის ღილაკები -->
-      <div class="tt-follow-action-row">
+      <!-- ახალი: TikTok-ის გამოწერის, შეტყობინების და რეკომენდაციის ღილაკები (დამალულია თქვენთვის) -->
+      <div class="tt-follow-action-row" id="otherUserActions" style="display: none;">
         <button type="button" class="tt-btn-subscribe" id="btnFollowAction">გამოწერა</button>
         <button type="button" class="tt-btn-message" id="btnMessageAction">შეტყობინება</button>
         <button type="button" class="tt-btn-suggest" aria-label="Suggest User">
@@ -87,7 +87,7 @@
       </div>
 
       <!-- ქვედა ჩიპსები: რედაქტირება, ბალანსი, პოპულარული -->
-      <div class="tt-action-chips">
+      <div class="tt-action-chips" id="myUserActions">
         <button type="button" class="tt-chip-btn active" id="btnEditProfile">
           <img src="icons/sparkles.svg" alt="Edit" class="tt-chip-icon">
           <span>რედაქტირება</span>
