@@ -12,69 +12,149 @@
   <div class="app-screen profile-screen">
     <div class="content-layer profile-layout">
 
-      <!-- ზედა ჰედერი (მხოლოდ უკან დაბრუნება, პარამეტრები და ავატარი) -->
-      <div class="profile-header-card">
-        <div class="profile-top-actions">
-          <a href="feed.html" class="icon-btn-round" aria-label="Back">
-            <img src="icons/undo-2.svg" alt="Back" class="svg-icon">
-          </a>
-          <button type="button" class="icon-btn-round" id="btnSettingsProfile" aria-label="Settings">
-            <img src="icons/settings.svg" alt="Settings" class="svg-icon">
+      <!-- 1. ზედა ნავიგაციის ზოლი -->
+      <div class="tt-top-bar">
+        <a href="feed.html" class="tt-icon-btn" aria-label="Edit/Back">
+          <img src="icons/pencil-line.svg" alt="Edit" class="svg-icon">
+        </a>
+        <div class="tt-top-right">
+          <button type="button" class="tt-icon-btn" aria-label="Add User">
+            <img src="icons/user-plus-broken.svg" alt="Add" class="svg-icon">
+          </button>
+          <button type="button" class="tt-icon-btn" id="btnSettingsProfile" aria-label="Menu">
+            <img src="icons/menu.svg" alt="Menu" class="svg-icon">
           </button>
         </div>
+      </div>
 
-        <!-- ავატარი და სტატუსი -->
-        <div class="profile-avatar-wrap">
-          <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
-          <div class="profile-avatar-ring" id="avatarRingBtn" style="cursor: pointer;" title="ფოტოს შეცვლა">
-            <img id="profileMainAvatar" src="" alt="Avatar" class="profile-avatar-img" style="display: none;">
-            <img id="profileAvatarPlaceholder" src="icons/user-circle-linear.svg" alt="User" class="avatar-placeholder-icon">
-            <span class="avatar-online-dot"></span>
+      <!-- 2. მთავარი პროფილის ბლოკი (სახელი მარცხნივ, ავატარი მარჯვნივ) -->
+      <div class="tt-profile-hero">
+        
+        <!-- მარცხენა მხარე: სახელები და სტატისტიკა -->
+        <div class="tt-profile-info">
+          <div class="tt-name-wrap">
+            <h2 class="tt-display-name" id="profileName">იტვირთება...</h2>
+            <img src="icons/undo-2.svg" alt="Arrow" class="tt-name-arrow">
           </div>
+          <span class="tt-username" id="profileUsername">@username</span>
 
-          <div class="profile-status-badge">
-            <span class="status-green-dot"></span>
-            <span id="uploadProgressText">აქტიურია</span>
+          <!-- რეალური სტატისტიკა (გამოწერები, გამომწერები, მოწონებები) -->
+          <div class="tt-stats-row">
+            <div class="tt-stat-col">
+              <span class="tt-stat-num" id="statFollowing">0</span>
+              <span class="tt-stat-lbl">გამოწერები</span>
+            </div>
+            <div class="tt-stat-col">
+              <span class="tt-stat-num" id="statFollowers">0</span>
+              <span class="tt-stat-lbl">გამომწერი</span>
+            </div>
+            <div class="tt-stat-col">
+              <span class="tt-stat-num" id="statLikes">0</span>
+              <span class="tt-stat-lbl">ლაიქები</span>
+            </div>
           </div>
         </div>
+
+        <!-- მარჯვენა მხარე: ავატარი + ღილაკით -->
+        <div class="tt-avatar-box">
+          <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+          <div class="tt-avatar-ring" id="avatarRingBtn" title="ფოტოს შეცვლა">
+            <img id="profileMainAvatar" src="" alt="Avatar" class="tt-avatar-img" style="display: none;">
+            <img id="profileAvatarPlaceholder" src="icons/user-circle-linear.svg" alt="User" class="tt-avatar-ph">
+            
+            <!-- პატარა ცისფერი პლუსის ღილაკი ფოტოს ასატვირთად -->
+            <div class="tt-avatar-plus-btn">
+              <img src="icons/user-round-plus.svg" alt="Add" class="tt-plus-icon">
+            </div>
+          </div>
+          <span class="tt-status-text" id="uploadProgressText">აქტიური</span>
+        </div>
+
       </div>
 
-      <!-- ღილაკები განლაგებულია ავატარისა და „აქტიურიას“ ქვემოთ -->
-      <div class="profile-mid-actions">
-        <!-- მარცხნივ: დაფოლოვება -->
-        <button type="button" class="action-mid-btn btn-follow" id="btnFollow">
-          <img src="icons/user-round-plus.svg" alt="Follow" class="btn-mid-icon">
-          <span>Follow</span>
-        </button>
+      <!-- 3. ქვეყნის დროშა და მოქმედების ღილაკები -->
+      <div class="tt-bio-section">
+        <p class="tt-flag-bio" id="profileLocation">🇬🇪</p>
+      </div>
 
-        <!-- ცენტრში: რედაქტირება -->
-        <button type="button" class="action-mid-btn btn-edit-center" id="btnEditProfile">
-          <img src="icons/pencil-line.svg" alt="Edit" class="btn-mid-icon">
+      <div class="tt-action-chips">
+        <button type="button" class="tt-chip-btn active" id="btnEditProfile">
+          <img src="icons/sparkles.svg" alt="Edit" class="tt-chip-icon">
           <span>რედაქტირება</span>
         </button>
-
-        <!-- მარჯვნივ: ჩატი -->
-        <button type="button" class="action-mid-btn btn-message" id="btnMessage">
-          <img src="icons/send.svg" alt="Send" class="btn-mid-icon">
-          <span>ჩატი</span>
+        <button type="button" class="tt-chip-btn" id="btnShare">
+          <img src="icons/wallet.svg" alt="Wallet" class="tt-chip-icon">
+          <span>ბალანსი</span>
+        </button>
+        <button type="button" class="tt-chip-btn" id="btnBoost">
+          <img src="icons/flame.svg" alt="Fire" class="tt-chip-icon">
+          <span>პოპულარული</span>
         </button>
       </div>
 
-      <!-- ფოტოების 6-იანი გალერეა -->
-      <div class="profile-gallery-grid" id="profileGallery">
-        <div class="gallery-photo-slot"></div>
-        <div class="gallery-photo-slot"></div>
-        <div class="gallery-photo-slot"></div>
-        <div class="gallery-photo-slot"></div>
-        <div class="gallery-photo-slot"></div>
-        <div class="gallery-photo-slot"></div>
+      <!-- 4. ტაბების მენიუ (Grid / Private / Liked) -->
+      <div class="tt-tabs-bar">
+        <button type="button" class="tt-tab-item active">
+          <img src="icons/gallery-broken.svg" alt="Feed" class="tt-tab-icon">
+        </button>
+        <button type="button" class="tt-tab-item">
+          <img src="icons/lock-bold.svg" alt="Private" class="tt-tab-icon">
+        </button>
+        <button type="button" class="tt-tab-item">
+          <img src="icons/restart-broken.svg" alt="Reposts" class="tt-tab-icon">
+        </button>
+        <button type="button" class="tt-tab-item">
+          <img src="icons/bookmark.svg" alt="Saved" class="tt-tab-icon">
+        </button>
+        <button type="button" class="tt-tab-item">
+          <img src="icons/heart.svg" alt="Liked" class="tt-tab-icon">
+        </button>
       </div>
 
-      <!-- მომხმარებლის დეტალები -->
-      <div class="profile-info-block">
-        <h2 class="profile-name" id="profileName">იტვირთება...</h2>
-        <p class="profile-distance" id="profileDistance">ლოკაცია</p>
-        <p class="profile-bio" id="profileBio"></p>
+      <!-- 5. ფოტოების/ვიდეოების ბადე (3 სვეტად, ვერტიკალური, ნახვების რაოდენობით) -->
+      <div class="tt-gallery-grid" id="profileGallery">
+        <div class="tt-post-card">
+          <div class="tt-post-thumb"></div>
+          <div class="tt-post-views">
+            <span class="tt-play-triangle">▷</span>
+            <span class="tt-views-count">85</span>
+          </div>
+        </div>
+        <div class="tt-post-card">
+          <div class="tt-post-thumb"></div>
+          <div class="tt-post-views">
+            <span class="tt-play-triangle">▷</span>
+            <span class="tt-views-count">7587</span>
+          </div>
+        </div>
+        <div class="tt-post-card">
+          <div class="tt-post-thumb"></div>
+          <div class="tt-post-views">
+            <span class="tt-play-triangle">▷</span>
+            <span class="tt-views-count">232</span>
+          </div>
+        </div>
+        <div class="tt-post-card">
+          <div class="tt-post-thumb"></div>
+          <div class="tt-post-views">
+            <span class="tt-play-triangle">▷</span>
+            <span class="tt-views-count">8219</span>
+          </div>
+        </div>
+        <div class="tt-post-card">
+          <div class="tt-post-thumb"></div>
+          <div class="tt-post-views">
+            <span class="tt-play-triangle">▷</span>
+            <span class="tt-views-count">260</span>
+          </div>
+        </div>
+        <div class="tt-post-card">
+          <div class="tt-post-thumb"></div>
+          <div class="tt-post-views">
+            <span class="tt-play-triangle">▷</span>
+            <span class="tt-views-count">271</span>
+          </div>
+        </div>
       </div>
 
     </div>
