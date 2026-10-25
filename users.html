@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GABJI - ხალხი</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-screen users-screen">
+    <div class="content-layer users-layout">
+
+      <!-- ზედა საძიებო ზოლი -->
+      <div class="users-search-bar">
+        <div class="users-search-box">
+          <img src="icons/search.svg" alt="Search" class="search-mini-icon">
+          <input type="text" id="userSearchInput" placeholder="ძებნა...">
+        </div>
+      </div>
+
+      <!-- მომხმარებელთა სია (Firestore-დან იტვირთება) -->
+      <div class="users-list-container" id="usersListContainer">
+        <div class="users-loading-state">იტვირთება მომხმარებლები...</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TikTok სტილის ქვედა ნავიგაცია -->
+  <nav class="bottom-nav-bar">
+    <a href="feed.html" class="nav-item">
+      <img src="icons/home-outline.svg" alt="Feed" class="nav-svg-icon">
+      <span>ფიდი</span>
+    </a>
+    <a href="users.html" class="nav-item active">
+      <img src="icons/users-group-rounded-bold.svg" alt="Users" class="nav-svg-icon">
+      <span>ხალხი</span>
+    </a>
+    <div class="nav-item nav-upload-wrap">
+      <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
+        <span class="plus-symbol">+</span>
+      </button>
+    </div>
+    <a href="#" class="nav-item nav-inbox-wrap">
+      <div class="nav-icon-badge-box">
+        <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
+        <span class="nav-unread-badge">26</span>
+      </div>
+      <span>შემოსულები</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+      <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
+      <span>პროფილი</span>
+    </a>
+  </nav>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
