@@ -5,13 +5,15 @@ import {
   createUserWithEmailAndPassword, 
   signInWithPopup, 
   GoogleAuthProvider, 
-  onAuthStateChanged 
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { 
   getFirestore, 
   doc, 
   getDoc, 
   setDoc, 
+  updateDoc,
   collection, 
   getDocs, 
   serverTimestamp 
@@ -46,6 +48,95 @@ onAuthStateChanged(auth, (user) => {
 });
 
 /* ==========================================================================
+   0. Cloudflare R2 ატვირთვა (თქვენი ზუსტი კონფიგურაციით)
+   ========================================================================== */
+function uploadPhotoToR2(file, onProgress, callback) {
+  if (!file) {
+    callback(null);
+    return;
+  }
+
+  // Canvas ოპტიმიზატორი (ზომის შემცირება)
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = (e) => {
+    const img = new Image();
+    img.src = e.target.result;
+    img.onload = () => {
+      const maxDimension = 960;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > maxDimension) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        }
+      } else {
+        if (height > maxDimension) {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob((optimizedBlob) => {
+        proceedUpload(optimizedBlob || file);
+      }, "image/jpeg", 0.8);
+    };
+    img.onerror = () => proceedUpload(file);
+  };
+  reader.onerror = () => proceedUpload(file);
+
+  function proceedUpload(blob) {
+    // ზუსტი Cloudflare S3 ინიციალიზაცია
+    const r2S3 = new AWS.S3({
+      endpoint: "https://b06701b6405e891a274a6d40ae52c940.r2.cloudflarestorage.com",
+      accessKeyId: "fca43a92ab1d3b3e7c89912f8d525977",
+      secretAccessKey: "d051531e40a19cfaedade242eac6b6d506dad44be370224ba2e5c3ea298f1ad6",
+      signatureVersion: "v4",
+      region: "auto",
+      s3ForcePathStyle: true
+    });
+
+    const fileKey = "avatars/" + Date.now() + "_" + Math.random().toString(36).substring(2, 7) + ".jpg";
+
+    const params = {
+      Bucket: "emigrantbook-videos",
+      Key: fileKey,
+      Body: blob,
+      ContentType: "image/jpeg",
+      CacheControl: "public, max-age=31536000, immutable"
+    };
+
+    const uploader = r2S3.upload(params);
+
+    uploader.on("httpUploadProgress", (evt) => {
+      if (evt.total && typeof onProgress === "function") {
+        const percent = Math.round((evt.loaded / evt.total) * 100);
+        onProgress(percent);
+      }
+    });
+
+    uploader.send((err, data) => {
+      if (err) {
+        console.error("R2 Upload Error:", err);
+        alert("ატვირთვის შეცდომა: " + err.message);
+        callback(null);
+      } else {
+        const publicUrl = "https://pub-d077cb13f6ec46cebeca95f2f25b9a08.r2.dev/" + fileKey;
+        callback(publicUrl);
+      }
+    });
+  }
+}
+
+/* ==========================================================================
    1. შესვლა / მოდალი (index.html)
    ========================================================================== */
 const loginModal = document.getElementById("loginModal");
@@ -64,14 +155,12 @@ if (closeModalBtn && loginModal) {
   closeModalBtn.onclick = () => loginModal.style.display = "none";
 }
 
-// მოდალის გარეთ დაკლიკებისას დახურვა
 window.addEventListener("click", (e) => {
   if (loginModal && e.target === loginModal) {
     loginModal.style.display = "none";
   }
 });
 
-// Email & პაროლით შესვლა
 if (submitLoginBtn) {
   submitLoginBtn.onclick = async () => {
     const emailEl = document.getElementById("loginEmail");
@@ -98,7 +187,6 @@ if (submitLoginBtn) {
   };
 }
 
-// Google-ით შესვლა
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 if (googleLoginBtn) {
   googleLoginBtn.onclick = async () => {
@@ -112,9 +200,8 @@ if (googleLoginBtn) {
 }
 
 /* ==========================================================================
-   2. რეგისტრაცია და მონაცემების შენახვა (signup.html & Firestore)
+   2. რეგისტრაცია (signup.html) - ტელეფონისა და ფოტოს გარეშე
    ========================================================================== */
-// ინტერესების ტეგების მონიშვნა
 const interestBtns = document.querySelectorAll(".interest-pill");
 interestBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -122,7 +209,6 @@ interestBtns.forEach((btn) => {
   });
 });
 
-// ფორმის გაგზავნა (ტელეფონისა და ფოტოს ველების გარეშე)
 const signupForm = document.getElementById("signupForm");
 const submitBtn = document.getElementById("submitBtn");
 
@@ -138,7 +224,6 @@ if (signupForm) {
     const email = document.getElementById("regEmail")?.value.trim() || "";
     const password = document.getElementById("regPassword")?.value.trim() || "";
 
-    // მონიშნული ინტერესების ამოღება
     const selectedInterests = [];
     document.querySelectorAll(".interest-pill.active").forEach((tag) => {
       selectedInterests.push(tag.textContent.trim());
@@ -150,11 +235,9 @@ if (signupForm) {
     }
 
     try {
-      // 1. იქმნება იუზერი Firebase Authentication-ში
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // 2. მონაცემები იწერება Firestore ბაზაში 'users' კოლექციაში
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         firstName: firstName,
@@ -169,7 +252,6 @@ if (signupForm) {
       });
 
       window.location.href = "feed.html";
-
     } catch (error) {
       console.error("Firebase Error:", error);
       alert("შეცდომა რეგისტრაციისას: " + error.message);
@@ -182,7 +264,7 @@ if (signupForm) {
 }
 
 /* ==========================================================================
-   3. ფიდზე მონაცემების წამოღება (FEED.HTML & FIRESTORE)
+   3. ფიდი (feed.html)
    ========================================================================== */
 const cardTitle = document.querySelector(".card-user-title");
 
@@ -190,7 +272,6 @@ if (cardTitle) {
   let feedProfiles = [];
   let currentCardIndex = 0;
 
-  // ასაკის დათვლა
   const calculateAge = (dateStr) => {
     if (!dateStr) return "";
     const birth = new Date(dateStr);
@@ -198,7 +279,6 @@ if (cardTitle) {
     return Math.abs(new Date(diff).getUTCFullYear() - 1970);
   };
 
-  // ბარათზე მონაცემების გამოჩენა
   const displayProfile = (index) => {
     const nameEl = document.querySelector(".card-user-title");
     const locEl = document.querySelector(".card-distance-text");
@@ -217,23 +297,19 @@ if (cardTitle) {
     const item = feedProfiles[index];
     const age = calculateAge(item.birthDate);
 
-    // სახელი და ასაკი
     if (nameEl) {
       nameEl.textContent = `${item.firstName || ""} ${item.lastName || ""}${age ? ", " + age : ""}`.trim();
     }
 
-    // ლოკაცია (ქალაქი, ქვეყანა)
     if (locEl) {
       const fullLoc = [item.city, item.country].filter(Boolean).join(", ");
       locEl.textContent = fullLoc ? `📍 ${fullLoc}` : "";
     }
 
-    // კონტაქტი / მეილი
     if (bioEl) {
       bioEl.textContent = item.email || "";
     }
 
-    // ინტერესების ტეგები
     if (pillsWrap) {
       pillsWrap.innerHTML = "";
       if (Array.isArray(item.interests)) {
@@ -246,7 +322,6 @@ if (cardTitle) {
       }
     }
 
-    // ფოტო (თუ აქვს)
     if (photoBox) {
       const oldImg = photoBox.querySelector(".profile-pic");
       if (oldImg) oldImg.remove();
@@ -268,7 +343,6 @@ if (cardTitle) {
     }
   };
 
-  // ბაზიდან წამოღება
   const getProfilesFromDb = async () => {
     try {
       const snapshot = await getDocs(collection(db, "users"));
@@ -283,7 +357,6 @@ if (cardTitle) {
     }
   };
 
-  // Like და Pass ღილაკებით შემდეგ მომხმარებელზე გადასვლა
   const likeBtn = document.getElementById("likeBtn");
   const passBtn = document.getElementById("passBtn");
 
@@ -301,17 +374,15 @@ if (cardTitle) {
     };
   }
 
-  // მონაცემების წამოღების გაშვება
   getProfilesFromDb();
 }
 
 /* ==========================================================================
-   4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
+   4. პროფილის მონაცემები & ფოტოს ატვირთვა R2-ში (profile.html)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
 
 if (profileNameEl) {
-  // ასაკის დათვლა პროფილისთვის
   const getAge = (dateStr) => {
     if (!dateStr) return "";
     const birth = new Date(dateStr);
@@ -325,31 +396,29 @@ if (profileNameEl) {
       return;
     }
 
+    const userDocRef = doc(db, "users", currentUser.uid);
+
+    // 1. მონაცემების გამოჩენა
     try {
-      const userDocRef = doc(db, "users", currentUser.uid);
       const userSnap = await getDoc(userDocRef);
 
       if (userSnap.exists()) {
         const data = userSnap.data();
         const age = getAge(data.birthDate);
 
-        // სახელი და ასაკი
         profileNameEl.textContent = `${data.firstName || ""} ${data.lastName || ""}${age ? ", " + age : ""}`.trim() || "მომხმარებელი";
 
-        // ლოკაცია
         const distEl = document.getElementById("profileDistance");
         if (distEl) {
           const locParts = [data.city, data.country].filter(Boolean).join(", ");
           distEl.textContent = locParts ? `📍 ${locParts}` : "ლოკაცია მითითებული არ არის";
         }
 
-        // ბიო / კონტაქტი
         const bioEl = document.getElementById("profileBio");
         if (bioEl) {
           bioEl.textContent = data.email || "";
         }
 
-        // ავატარის ფოტო
         const avatarImg = document.getElementById("profileMainAvatar");
         const avatarSvg = document.getElementById("profileAvatarPlaceholder");
 
@@ -358,19 +427,73 @@ if (profileNameEl) {
             avatarImg.src = data.photoUrl;
             avatarImg.style.display = "block";
           }
-          if (avatarSvg) {
-            avatarSvg.style.display = "none";
-          }
+          if (avatarSvg) avatarSvg.style.display = "none";
         } else {
           if (avatarImg) avatarImg.style.display = "none";
           if (avatarSvg) avatarSvg.style.display = "block";
         }
-      } else {
-        profileNameEl.textContent = "პროფილი ვერ მოიძებნა";
       }
     } catch (err) {
       console.error("პროფილის ჩატვირთვის შეცდომა:", err);
-      profileNameEl.textContent = "შეცდომა ჩატვირთვისას";
+    }
+
+    // 2. ავატარზე კლიკით ფოტოს არჩევა და Cloudflare R2-ში ატვირთვა
+    const avatarRingBtn = document.getElementById("avatarRingBtn");
+    const avatarFileInput = document.getElementById("avatarFileInput");
+    const uploadProgressText = document.getElementById("uploadProgressText");
+    const avatarImg = document.getElementById("profileMainAvatar");
+    const avatarSvg = document.getElementById("profileAvatarPlaceholder");
+
+    if (avatarRingBtn && avatarFileInput) {
+      avatarRingBtn.onclick = () => avatarFileInput.click();
+
+      avatarFileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (uploadProgressText) uploadProgressText.textContent = "იტვირთება...";
+
+        uploadPhotoToR2(
+          file,
+          (percent) => {
+            if (uploadProgressText) uploadProgressText.textContent = `${percent}%`;
+          },
+          async (uploadedUrl) => {
+            if (uploadedUrl) {
+              try {
+                // Firestore-ში photoUrl ველის განახლება
+                await updateDoc(userDocRef, {
+                  photoUrl: uploadedUrl
+                });
+
+                // ავატარის ვიზუალური განახლება
+                if (avatarImg) {
+                  avatarImg.src = uploadedUrl;
+                  avatarImg.style.display = "block";
+                }
+                if (avatarSvg) avatarSvg.style.display = "none";
+
+                if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
+              } catch (updateErr) {
+                console.error("Firestore განახლების შეცდომა:", updateErr);
+                alert("ფოტოს შენახვა ბაზაში ვერ მოხერხდა");
+                if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
+              }
+            } else {
+              if (uploadProgressText) uploadProgressText.textContent = "აქტიურია";
+            }
+          }
+        );
+      };
+    }
+
+    // 3. გამოსვლის (Sign Out) ღილაკი
+    const btnSettings = document.getElementById("btnSettingsProfile");
+    if (btnSettings) {
+      btnSettings.onclick = async () => {
+        await signOut(auth);
+        window.location.href = "index.html";
+      };
     }
   });
 }
