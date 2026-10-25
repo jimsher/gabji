@@ -378,7 +378,6 @@ if (cardTitle) {
 }
 
 
-
   /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
@@ -396,6 +395,11 @@ if (profileNameEl) {
     if (!currentUser) {
       window.location.href = "index.html";
       return;
+    }
+
+    const otherActions = document.getElementById("otherUserActions");
+    if (otherActions) {
+      otherActions.style.display = "none";
     }
 
     const userDocRef = doc(db, "users", currentUser.uid);
@@ -499,6 +503,7 @@ if (profileNameEl) {
       };
     }
 
+                
 
     // 3. გამოსვლის (Sign Out) ღილაკი
     const btnSettings = document.getElementById("btnSettingsProfile");
