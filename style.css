@@ -688,6 +688,8 @@ input:checked + .toggle-slider:before {
 }
 
 
+
+
 /* ==========================================================================
    8. პროფილის გვერდი (PROFILE SCREEN)
    ========================================================================== */
@@ -735,6 +737,13 @@ input:checked + .toggle-slider:before {
   text-decoration: none;
 }
 
+.svg-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
 /* ავატარი და ონლაინ სტატუსი */
 .profile-avatar-wrap {
   position: absolute;
@@ -768,6 +777,13 @@ input:checked + .toggle-slider:before {
   object-fit: cover;
 }
 
+.avatar-placeholder-icon {
+  width: 48px;
+  height: 48px;
+  opacity: 0.4;
+  filter: brightness(0) invert(1);
+}
+
 .avatar-online-dot {
   position: absolute;
   bottom: 4px;
@@ -799,12 +815,66 @@ input:checked + .toggle-slider:before {
   border-radius: 50%;
 }
 
+/* ღილაკები ავატარისა და სტატუსის დაბლა */
+.profile-mid-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 52px; /* ადგილი, რომ ჩამოვიდეს ავატარის ქვემოთ */
+  padding: 0 4px;
+}
+
+.action-mid-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease;
+}
+
+.action-mid-btn:active {
+  transform: scale(0.96);
+}
+
+.btn-mid-icon {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
+.btn-follow {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  flex: 1;
+}
+
+.btn-edit-center {
+  background: linear-gradient(90deg, #c3597b 0%, #7e4b99 100%);
+  color: #ffffff;
+  flex: 1.3;
+}
+
+.btn-message {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  flex: 1;
+}
+
 /* ფოტოების ბადე (3x2) */
 .profile-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-top: 48px;
+  margin-top: 6px;
 }
 
 .gallery-photo-slot {
@@ -847,37 +917,14 @@ input:checked + .toggle-slider:before {
   margin-top: 2px;
 }
 
-/* ღილაკები */
-.profile-action-row {
-  display: flex;
-  gap: 12px;
-  margin-top: 6px;
+/* ქვედა მენიუს აიქონები */
+.nav-svg-icon {
+  width: 22px;
+  height: 22px;
+  opacity: 0.6;
+  filter: brightness(0) invert(1);
 }
 
-.profile-btn {
-  flex: 1;
-  padding: 12px 0;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.15s ease;
+.nav-item.active .nav-svg-icon {
+  opacity: 1;
 }
-
-.profile-btn:active {
-  transform: scale(0.97);
-}
-
-.btn-edit {
-  background: #c3597b;
-  border: 1px solid #c3597b;
-  color: #ffffff;
-}
-
-.btn-settings {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-}
-
