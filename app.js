@@ -406,19 +406,43 @@ if (profileNameEl) {
         const data = userSnap.data();
         const age = getAge(data.birthDate);
 
+        // სახელი და ასაკი
         profileNameEl.textContent = `${data.firstName || ""} ${data.lastName || ""}${age ? ", " + age : ""}`.trim() || "მომხმარებელი";
 
+        // @username (თუ არსებობს ელემენტი)
+        const userTag = document.getElementById("profileUsername");
+        if (userTag) {
+          userTag.textContent = data.username ? `@${data.username}` : (data.email ? `@${data.email.split("@")[0]}` : "@user");
+        }
+
+        // რეალური სტატისტიკა ბაზიდან (გამოწერები, გამომწერები, მოწონებები)
+        const statFollowing = document.getElementById("statFollowing");
+        const statFollowers = document.getElementById("statFollowers");
+        const statLikes = document.getElementById("statLikes");
+
+        if (statFollowing) statFollowing.textContent = data.followingCount ?? 0;
+        if (statFollowers) statFollowers.textContent = data.followersCount ?? 0;
+        if (statLikes) statLikes.textContent = data.likesCount ?? 0;
+
+        // ლოკაცია
         const distEl = document.getElementById("profileDistance");
+        const locEl = document.getElementById("profileLocation");
+        const locParts = [data.city, data.country].filter(Boolean).join(", ");
+
         if (distEl) {
-          const locParts = [data.city, data.country].filter(Boolean).join(", ");
           distEl.textContent = locParts ? `📍 ${locParts}` : "ლოკაცია მითითებული არ არის";
         }
-
-        const bioEl = document.getElementById("profileBio");
-        if (bioEl) {
-          bioEl.textContent = data.email || "";
+        if (locEl) {
+          locEl.textContent = locParts ? `🇬🇪 ${locParts}` : "🇬🇪";
         }
 
+        // ბიო / კონტაქტი
+        const bioEl = document.getElementById("profileBio");
+        if (bioEl) {
+          bioEl.textContent = data.bio || (data.phone ? `📞 ${data.phone}` : (data.email || ""));
+        }
+
+        // ავატარის ფოტო
         const avatarImg = document.getElementById("profileMainAvatar");
         const avatarSvg = document.getElementById("profileAvatarPlaceholder");
 
@@ -427,14 +451,19 @@ if (profileNameEl) {
             avatarImg.src = data.photoUrl;
             avatarImg.style.display = "block";
           }
-          if (avatarSvg) avatarSvg.style.display = "none";
+          if (avatarSvg) {
+            avatarSvg.style.display = "none";
+          }
         } else {
           if (avatarImg) avatarImg.style.display = "none";
           if (avatarSvg) avatarSvg.style.display = "block";
         }
+      } else {
+        profileNameEl.textContent = "პროფილი ვერ მოიძებნა";
       }
     } catch (err) {
       console.error("პროფილის ჩატვირთვის შეცდომა:", err);
+      profileNameEl.textContent = "შეცდომა ჩატვირთვისას";
     }
 
     // 2. ავატარზე კლიკით ფოტოს არჩევა და Cloudflare R2-ში ატვირთვა
@@ -486,6 +515,9 @@ if (profileNameEl) {
         );
       };
     }
+  });
+}
+
 
     // 3. გამოსვლის (Sign Out) ღილაკი
     const btnSettings = document.getElementById("btnSettingsProfile");
