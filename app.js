@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { 
   getAuth, 
   signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword,
+  createUserWithEmailAndPassword, 
   signInWithPopup, 
   GoogleAuthProvider, 
   onAuthStateChanged 
@@ -10,14 +10,14 @@ import {
 import { 
   getFirestore, 
   doc, 
-  getDoc,
+  getDoc, 
   setDoc, 
   collection, 
   getDocs, 
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// შენი ორიგინალი Firebase კონფიგურაცია
+// Firebase კონფიგურაცია
 const firebaseConfig = {
   apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
   authDomain: "gabji-b583c.firebaseapp.com",
@@ -114,7 +114,6 @@ if (googleLoginBtn) {
 /* ==========================================================================
    2. რეგისტრაცია და მონაცემების შენახვა (signup.html & Firestore)
    ========================================================================== */
-
 // ინტერესების ტეგების მონიშვნა
 const interestBtns = document.querySelectorAll(".interest-pill");
 interestBtns.forEach((btn) => {
@@ -123,22 +122,7 @@ interestBtns.forEach((btn) => {
   });
 });
 
-// ფოტოს არჩევა (Base64-ის გარეშე)
-const userPhotoInput = document.getElementById("userPhoto");
-const uploadCard = document.getElementById("uploadCard");
-const uploadLabel = document.getElementById("uploadLabel");
-
-if (uploadCard && userPhotoInput) {
-  uploadCard.addEventListener("click", () => userPhotoInput.click());
-  userPhotoInput.addEventListener("change", () => {
-    if (userPhotoInput.files && userPhotoInput.files[0]) {
-      const file = userPhotoInput.files[0];
-      if (uploadLabel) uploadLabel.textContent = "არჩეულია: " + file.name;
-    }
-  });
-}
-
-// ფორმის გაგზავნა
+// ფორმის გაგზავნა (ტელეფონისა და ფოტოს ველების გარეშე)
 const signupForm = document.getElementById("signupForm");
 const submitBtn = document.getElementById("submitBtn");
 
@@ -153,7 +137,6 @@ if (signupForm) {
     const city = document.getElementById("regCity")?.value.trim() || "";
     const email = document.getElementById("regEmail")?.value.trim() || "";
     const password = document.getElementById("regPassword")?.value.trim() || "";
-    const phone = document.getElementById("regPhone")?.value.trim() || "";
 
     // მონიშნული ინტერესების ამოღება
     const selectedInterests = [];
@@ -180,7 +163,6 @@ if (signupForm) {
         country: country,
         city: city,
         email: email,
-        phone: phone,
         photoUrl: null,
         interests: selectedInterests,
         createdAt: serverTimestamp()
@@ -193,7 +175,7 @@ if (signupForm) {
       alert("შეცდომა რეგისტრაციისას: " + error.message);
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerText = "შესვლა";
+        submitBtn.innerText = "რეგისტრაცია";
       }
     }
   });
@@ -246,9 +228,9 @@ if (cardTitle) {
       locEl.textContent = fullLoc ? `📍 ${fullLoc}` : "";
     }
 
-    // ტელეფონი / კონტაქტი
+    // კონტაქტი / მეილი
     if (bioEl) {
-      bioEl.textContent = item.phone ? `📞 ${item.phone}` : (item.email || "");
+      bioEl.textContent = item.email || "";
     }
 
     // ინტერესების ტეგები
@@ -264,7 +246,7 @@ if (cardTitle) {
       }
     }
 
-    // ფოტო
+    // ფოტო (თუ აქვს)
     if (photoBox) {
       const oldImg = photoBox.querySelector(".profile-pic");
       if (oldImg) oldImg.remove();
@@ -364,7 +346,7 @@ if (profileNameEl) {
         // ბიო / კონტაქტი
         const bioEl = document.getElementById("profileBio");
         if (bioEl) {
-          bioEl.textContent = data.phone ? `📞 ${data.phone}` : (data.email || "");
+          bioEl.textContent = data.email || "";
         }
 
         // ავატარის ფოტო
