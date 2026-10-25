@@ -315,41 +315,117 @@ body {
 }
 
 /* ქვედა ნავიგაცია */
-.bottom-nav-bar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 12px 0 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  height: 60px;
-  flex-shrink: 0;
-  width: 100%;
-}
+/* ==========================================================================
+   TIKTOK სტილის ქვედა ნავიგაციის ზოლი (BOTTOM NAV BAR)
+   ========================================================================== */
 
+.bottom-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 412px;
+  height: 58px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 10px;
+  z-index: 9999;
+}
 
 .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  color: #6d6682;
-  font-size: 11px;
-  cursor: pointer;
+  justify-content: center;
+  gap: 3px;
+  color: #7a7a7a;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 500;
+  flex: 1;
+  height: 100%;
 }
 
 .nav-item.active {
   color: #ffffff;
 }
 
+.nav-svg-icon {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}
+
+.nav-item.active .nav-svg-icon {
+  opacity: 1;
+}
+
+/* ცენტრალური TikTok (+) ღილაკი */
+.nav-upload-wrap {
+  flex: 0 0 54px;
+}
+
+.tiktok-plus-btn {
+  position: relative;
+  width: 44px;
+  height: 28px;
+  background: #ffffff;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* ცისფერი მარცხნივ, ვარდისფერი/წითელი მარჯვნივ */
+  box-shadow: -3px 0 0 #00f2fe, 3px 0 0 #fe0979;
+}
+
+.tiktok-plus-btn:active {
+  transform: scale(0.94);
+}
+
+.plus-symbol {
+  font-size: 20px;
+  font-weight: 900;
+  color: #000000;
+  line-height: 1;
+  margin-top: -1px;
+}
+
+/* ჩატის აიკონი შეტყობინებების წითელი ბეიჯით */
+.nav-icon-badge-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-unread-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: #fe2c55;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 10px;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
 
 
 /* ==========================================================================
    7. ფიდის გვერდი (FEED / CARDS)
    ========================================================================== */
- /* ==========================================================================
-   7. ფიდის გვერდი (FEED / CARDS)
-   ========================================================================== */
-
 .feed-screen {
   padding: 12px 18px 8px;
 }
