@@ -90,30 +90,42 @@
   </div>
 
   <!-- სრულიად დამოუკიდებელი ქვედა ნავიგაცია (კონტეინერების გარეთ) -->
-  <nav class="bottom-nav-bar">
-    <a href="feed.html" class="nav-item active">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="16" y1="2" x2="16" y2="6"></line>
-        <line x1="8" y1="2" x2="8" y2="6"></line>
-        <line x1="3" y1="10" x2="21" y2="10"></line>
-      </svg>
-      <span>ფიდი</span>
-    </a>
-    <a href="#" class="nav-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-      </svg>
-      <span>ჩატი</span>
-    </a>
-    <a href="profile.html" class="nav-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>
-      <span>პროფილი</span>
-    </a>
-  </nav>
+  <!-- TikTok სტილის ქვედა ნავიგაცია -->
+<nav class="bottom-nav-bar">
+  <!-- 1. მთავარი / ფიდი -->
+  <a href="feed.html" class="nav-item">
+    <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
+    <span>ფიდი</span>
+  </a>
+
+  <!-- 2. მეგობრები / რელსები -->
+  <a href="#" class="nav-item">
+    <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
+    <span>მეგობრები</span>
+  </a>
+
+  <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
+  <div class="nav-item nav-upload-wrap">
+    <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
+      <span class="plus-symbol">+</span>
+    </button>
+  </div>
+
+  <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
+  <a href="#" class="nav-item nav-inbox-wrap">
+    <div class="nav-icon-badge-box">
+      <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
+      <span class="nav-unread-badge">26</span>
+    </div>
+    <span>შემოსულები</span>
+  </a>
+
+  <!-- 5. პროფილი -->
+  <a href="profile.html" class="nav-item active">
+    <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
+    <span>პროფილი</span>
+  </a>
+</nav>
 
   <script type="module" src="app.js"></script>
 </body>
