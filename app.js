@@ -377,12 +377,98 @@ if (cardTitle) {
   getProfilesFromDb();
 }
 
+
 /* ==========================================================================
    4. პროფილის მონაცემები & ფოტოს ატვირთვა R2-ში (profile.html)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
 
 if (profileNameEl) {
+  // Cloudflare R2 ატვირთვის დამხმარე ფუნქცია
+  function uploadPhotoToR2(file, onProgress, callback) {
+    if (!file || typeof AWS === "undefined") {
+      if (typeof callback === "function") callback(null);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(e) {
+      const img = new Image();
+      img.src = e.target.result;
+      img.onload = function() {
+        const maxDimension = 960;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxDimension) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          }
+        } else {
+          if (height > maxDimension) {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(function(blob) {
+          proceedUpload(blob || file);
+        }, "image/jpeg", 0.8);
+      };
+      img.onerror = function() { proceedUpload(file); };
+    };
+    reader.onerror = function() { proceedUpload(file); };
+
+    function proceedUpload(blob) {
+      const r2S3 = new AWS.S3({
+        endpoint: "https://b06701b6405e891a274a6d40ae52c940.r2.cloudflarestorage.com",
+        accessKeyId: "fca43a92ab1d3b3e7c89912f8d525977",
+        secretAccessKey: "d051531e40a19cfaedade242eac6b6d506dad44be370224ba2e5c3ea298f1ad6",
+        signatureVersion: "v4",
+        region: "auto",
+        s3ForcePathStyle: true
+      });
+
+      const fileKey = "avatars/" + Date.now() + "_" + Math.random().toString(36).substring(2, 7) + ".jpg";
+
+      const params = {
+        Bucket: "emigrantbook-videos",
+        Key: fileKey,
+        Body: blob,
+        ContentType: "image/jpeg",
+        CacheControl: "public, max-age=31536000, immutable"
+      };
+
+      const uploader = r2S3.upload(params);
+
+      uploader.on("httpUploadProgress", function(evt) {
+        if (evt.total && typeof onProgress === "function") {
+          const percent = Math.round((evt.loaded / evt.total) * 100);
+          onProgress(percent);
+        }
+      });
+
+      uploader.send(function(err, data) {
+        if (err) {
+          console.error("R2 Upload Error:", err);
+          alert("ატვირთვის შეცდომა: " + err.message);
+          if (typeof callback === "function") callback(null);
+        } else {
+          const publicUrl = "https://pub-d077cb13f6ec46cebeca95f2f25b9a08.r2.dev/" + fileKey;
+          if (typeof callback === "function") callback(publicUrl);
+        }
+      });
+    }
+  }
+
   const getAge = (dateStr) => {
     if (!dateStr) return "";
     const birth = new Date(dateStr);
@@ -420,9 +506,9 @@ if (profileNameEl) {
         const statFollowers = document.getElementById("statFollowers");
         const statLikes = document.getElementById("statLikes");
 
-        if (statFollowing) statFollowing.textContent = data.followingCount ?? 0;
-        if (statFollowers) statFollowers.textContent = data.followersCount ?? 0;
-        if (statLikes) statLikes.textContent = data.likesCount ?? 0;
+        if (statFollowing) statFollowing.textContent = (data.followingCount !== undefined && data.followingCount !== null) ? data.followingCount : 0;
+        if (statFollowers) statFollowers.textContent = (data.followersCount !== undefined && data.followersCount !== null) ? data.followersCount : 0;
+        if (statLikes) statLikes.textContent = (data.likesCount !== undefined && data.likesCount !== null) ? data.likesCount : 0;
 
         // ლოკაცია
         const distEl = document.getElementById("profileDistance");
@@ -490,10 +576,10 @@ if (profileNameEl) {
           async (uploadedUrl) => {
             if (uploadedUrl) {
               try {
-                // Firestore-ში photoUrl ველის განახლება
-                await updateDoc(userDocRef, {
+                // Firestore-ში photoUrl ველის განახლება setDoc merge-ით (არ ერორდება updateDoc-ის იმპორტის გარეშეც)
+                await setDoc(userDocRef, {
                   photoUrl: uploadedUrl
-                });
+                }, { merge: true });
 
                 // ავატარის ვიზუალური განახლება
                 if (avatarImg) {
@@ -517,6 +603,7 @@ if (profileNameEl) {
     }
   });
 }
+
 
 
     // 3. გამოსვლის (Sign Out) ღილაკი
