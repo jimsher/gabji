@@ -467,7 +467,7 @@ if (profileNameEl) {
           const followDocRef = doc(db, "users", currentUser.uid, "following", targetUid);
           const followSnap = await getDoc(followDocRef);
 
-          let isFollowed = followSnap.exists();
+          let isFollowed = followSnap.exists() && followSnap.data()?.active === true;
 
           if (isFollowed) {
             btnFollow.textContent = "გამოწერილია";
@@ -480,28 +480,43 @@ if (profileNameEl) {
           // ბაზაში რეალური ჩაწერა / წაშლა
           btnFollow.onclick = async () => {
             btnFollow.disabled = true;
-            const currentCount = parseInt(statFollowers.textContent) || 0;
+            let currentCount = parseInt(statFollowers?.textContent) || 0;
 
             try {
               if (!isFollowed) {
-                // 1. ვწერთ ბაზაში, რომ გამოიწერე
-                await setDoc(followDocRef, { timestamp: serverTimestamp() });
-                await updateDoc(userDocRef, { followersCount: increment(1) });
-                await updateDoc(doc(db, "users", currentUser.uid), { followingCount: increment(1) });
+                // 1. იქმნება following ქვეკოლექცია
+                await setDoc(followDocRef, { 
+                  followedUid: targetUid,
+                  active: true,
+                  timestamp: serverTimestamp() 
+                });
+
+                // 2. რიცხვების განახლება users დოკუმენტებში merge-ით
+                currentCount += 1;
+                await setDoc(userDocRef, { followersCount: currentCount }, { merge: true });
+                const myRef = doc(db, "users", currentUser.uid);
+                const mySnap = await getDoc(myRef);
+                const myFollowing = (mySnap.exists() && Number(mySnap.data().followingCount)) || 0;
+                await setDoc(myRef, { followingCount: myFollowing + 1 }, { merge: true });
 
                 btnFollow.textContent = "გამოწერილია";
                 btnFollow.style.background = "#252525";
-                if (statFollowers) statFollowers.textContent = currentCount + 1;
+                if (statFollowers) statFollowers.textContent = currentCount;
                 isFollowed = true;
               } else {
-                // 2. გამოწერის გაუქმება და ბაზიდან წაშლა
-                await deleteDoc(followDocRef);
-                await updateDoc(userDocRef, { followersCount: increment(-1) });
-                await updateDoc(doc(db, "users", currentUser.uid), { followingCount: increment(-1) });
+                // გამოწერის გაუქმება
+                await setDoc(followDocRef, { active: false }, { merge: true });
+
+                currentCount = Math.max(0, currentCount - 1);
+                await setDoc(userDocRef, { followersCount: currentCount }, { merge: true });
+                const myRef = doc(db, "users", currentUser.uid);
+                const mySnap = await getDoc(myRef);
+                const myFollowing = (mySnap.exists() && Number(mySnap.data().followingCount)) || 0;
+                await setDoc(myRef, { followingCount: Math.max(0, myFollowing - 1) }, { merge: true });
 
                 btnFollow.textContent = "გამოწერა";
                 btnFollow.style.background = "#fe2c55";
-                if (statFollowers) statFollowers.textContent = Math.max(0, currentCount - 1);
+                if (statFollowers) statFollowers.textContent = currentCount;
                 isFollowed = false;
               }
             } catch (followErr) {
@@ -564,6 +579,7 @@ if (profileNameEl) {
         );
       };
     }
+
  
                       
 
