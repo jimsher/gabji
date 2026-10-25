@@ -379,7 +379,8 @@ if (cardTitle) {
 
 
 
-     /* ==========================================================================
+     
+        /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
@@ -401,13 +402,15 @@ if (profileNameEl) {
     const urlParams = new URLSearchParams(window.location.search);
     const targetUid = urlParams.get("uid") || currentUser.uid;
 
+    const myActions = document.getElementById("myUserActions");
     const otherActions = document.getElementById("otherUserActions");
-    if (otherActions) {
-      if (targetUid === currentUser.uid) {
-        otherActions.style.display = "none";
-      } else {
-        otherActions.style.display = "flex";
-      }
+
+    if (targetUid === currentUser.uid) {
+      if (otherActions) otherActions.style.display = "none";
+      if (myActions) myActions.style.display = "flex";
+    } else {
+      if (otherActions) otherActions.style.display = "flex";
+      if (myActions) myActions.style.display = "none";
     }
 
     const userDocRef = doc(db, "users", targetUid);
@@ -457,6 +460,26 @@ if (profileNameEl) {
         } else {
           if (avatarImg) avatarImg.style.display = "none";
           if (avatarSvg) avatarSvg.style.display = "block";
+        }
+
+        // გამოწერის ღილაკის აქტივაცია
+        const btnFollow = document.getElementById("btnFollowAction");
+        if (btnFollow) {
+          let isFollowed = false;
+          btnFollow.onclick = () => {
+            let count = parseInt(statFollowers.textContent) || 0;
+            if (!isFollowed) {
+              btnFollow.textContent = "გამოწერილია";
+              btnFollow.style.background = "#252525";
+              if (statFollowers) statFollowers.textContent = count + 1;
+              isFollowed = true;
+            } else {
+              btnFollow.textContent = "გამოწერა";
+              btnFollow.style.background = "#fe2c55";
+              if (statFollowers) statFollowers.textContent = Math.max(0, count - 1);
+              isFollowed = false;
+            }
+          };
         }
       } else {
         profileNameEl.textContent = "პროფილი ვერ მოიძებნა";
@@ -510,6 +533,7 @@ if (profileNameEl) {
         );
       };
     }
+     
     
 
 
