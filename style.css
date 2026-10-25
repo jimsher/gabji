@@ -1069,3 +1069,87 @@ input:checked + .toggle-slider:before {
 .tt-play-triangle {
   font-size: 11px;
 }
+
+
+
+
+/* TikTok-ის გამოწერა / შეტყობინება / დამატება ზოლი */
+.tt-follow-action-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+
+/* წითელი გამოწერის ღილაკი */
+.tt-btn-subscribe {
+  flex: 1.2;
+  height: 44px;
+  background: #fe2c55;
+  color: #ffffff;
+  border: none;
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.tt-btn-subscribe:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+/* მუქი შეტყობინების ღილაკი */
+.tt-btn-message {
+  flex: 1.2;
+  height: 44px;
+  background: #252525;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.tt-btn-message:active {
+  transform: scale(0.97);
+  background: #333333;
+}
+
+/* პატარა მრგვალი ღილაკი აიქონით */
+.tt-btn-suggest {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: #252525;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.tt-btn-suggest:active {
+  transform: scale(0.95);
+  background: #333333;
+}
+
+.tt-suggest-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
