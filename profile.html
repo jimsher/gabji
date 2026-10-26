@@ -38,7 +38,7 @@
           </div>
           <span class="tt-username" id="profileUsername">@username</span>
 
-          <!-- რეალური სტატისტიკა (გამოწერები, გამომწერები, მოწონებები) -->
+          <!-- რეალური სტატისტიკა -->
           <div class="tt-stats-row">
             <div class="tt-stat-col">
               <span class="tt-stat-num" id="statFollowing">0</span>
@@ -62,7 +62,6 @@
             <img id="profileMainAvatar" src="" alt="Avatar" class="tt-avatar-img" style="display: none;">
             <img id="profileAvatarPlaceholder" src="icons/user-circle-linear.svg" alt="User" class="tt-avatar-ph">
             
-            <!-- პატარა ცისფერი პლუსის ღილაკი ფოტოს ასატვირთად -->
             <div class="tt-avatar-plus-btn">
               <img src="icons/user-round-plus.svg" alt="Add" class="tt-plus-icon">
             </div>
@@ -77,7 +76,7 @@
         <p class="tt-flag-bio" id="profileLocation">🇬🇪 საქართველო</p>
       </div>
 
-      <!-- ახალი: TikTok-ის გამოწერის, შეტყობინების და რეკომენდაციის ღილაკები (დამალულია თქვენთვის) -->
+      <!-- TikTok-ის გამოწერის/შეტყობინების ღილაკები სხვებისთვის -->
       <div class="tt-follow-action-row" id="otherUserActions" style="display: none;">
         <button type="button" class="tt-btn-subscribe" id="btnFollowAction">გამოწერა</button>
         <button type="button" class="tt-btn-message" id="btnMessageAction">შეტყობინება</button>
@@ -102,68 +101,34 @@
         </button>
       </div>
 
-      <!-- 4. ტაბების მენიუ (Grid / Private / Liked) -->
+      <!-- 4. ტაბების მენიუ (მოძრავი ინდიკატორით) -->
       <div class="tt-tabs-bar">
-        <button type="button" class="tt-tab-item active">
+        <button type="button" class="tt-tab-item active" id="tabGalleryBtn">
           <img src="icons/gallery-broken.svg" alt="Feed" class="tt-tab-icon">
         </button>
-        <button type="button" class="tt-tab-item">
-          <img src="icons/clapperboard-play-broken.svg" alt="Reposts" class="tt-tab-icon">
+        <button type="button" class="tt-tab-item" id="tabReelsBtn">
+          <img src="icons/clapperboard-play-broken.svg" alt="Reels" class="tt-tab-icon">
         </button>
-        <button type="button" class="tt-tab-item">
+        <button type="button" class="tt-tab-item" id="tabPrivateBtn">
           <img src="icons/lock-bold.svg" alt="Private" class="tt-tab-icon">
         </button>
-        <button type="button" class="tt-tab-item">
+        <button type="button" class="tt-tab-item" id="tabSavedBtn">
           <img src="icons/bookmark-outline.svg" alt="Saved" class="tt-tab-icon">
         </button>
-        <button type="button" class="tt-tab-item">
+        <button type="button" class="tt-tab-item" id="tabLikedBtn">
           <img src="icons/heart.svg" alt="Liked" class="tt-tab-icon">
         </button>
+        <div class="tt-tab-indicator" id="tabIndicator"></div>
       </div>
 
-      <!-- 5. ფოტოების/ვიდეოების ბადე (3 სვეტად, ვერტიკალური, ნახვების რაოდენობით) -->
-      <div class="tt-gallery-grid" id="profileGallery">
-        <div class="tt-post-card">
-          <div class="tt-post-thumb"></div>
-          <div class="tt-post-views">
-            <span class="tt-play-triangle">▷</span>
-            <span class="tt-views-count">85</span>
-          </div>
-        </div>
-        <div class="tt-post-card">
-          <div class="tt-post-thumb"></div>
-          <div class="tt-post-views">
-            <span class="tt-play-triangle">▷</span>
-            <span class="tt-views-count">7587</span>
-          </div>
-        </div>
-        <div class="tt-post-card">
-          <div class="tt-post-thumb"></div>
-          <div class="tt-post-views">
-            <span class="tt-play-triangle">▷</span>
-            <span class="tt-views-count">232</span>
-          </div>
-        </div>
-        <div class="tt-post-card">
-          <div class="tt-post-thumb"></div>
-          <div class="tt-post-views">
-            <span class="tt-play-triangle">▷</span>
-            <span class="tt-views-count">8219</span>
-          </div>
-        </div>
-        <div class="tt-post-card">
-          <div class="tt-post-thumb"></div>
-          <div class="tt-post-views">
-            <span class="tt-play-triangle">▷</span>
-            <span class="tt-views-count">260</span>
-          </div>
-        </div>
-        <div class="tt-post-card">
-          <div class="tt-post-thumb"></div>
-          <div class="tt-post-views">
-            <span class="tt-play-triangle">▷</span>
-            <span class="tt-views-count">271</span>
-          </div>
+      <!-- 5. ბადეების სლაიდერ-კონტეინერი (Swipe / Slide სტილი) -->
+      <div class="tt-grids-viewport">
+        <div class="tt-grids-slider" id="gridsSlider">
+          <!-- პანელი 1: ფოტოების/პოსტების ბადე -->
+          <div class="tt-gallery-grid" id="profileGalleryGrid"></div>
+          
+          <!-- პანელი 2: რელსების ბადე (მარჯვნიდან შემოსასვლელი) -->
+          <div class="tt-gallery-grid" id="profileReelsGrid"></div>
         </div>
       </div>
 
@@ -172,26 +137,22 @@
 
   <!-- TikTok სტილის ქვედა ნავიგაცია -->
   <nav class="bottom-nav-bar">
-    <!-- 1. მთავარი / ფიდი -->
     <a href="feed.html" class="nav-item">
       <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
       <span>ფიდი</span>
     </a>
 
-    <!-- 2. მეგობრები / რელსები -->
-    <a href="#" class="nav-item">
+    <a href="users.html" class="nav-item">
       <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
-      <span>მეგობრები</span>
+      <span>ხალხი</span>
     </a>
 
-    <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
     <div class="nav-item nav-upload-wrap">
-      <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
+      <button type="button" class="tiktok-plus-btn" onclick="window.location.href='camera.html'" aria-label="Upload">
         <span class="plus-symbol">+</span>
       </button>
     </div>
 
-    <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
     <a href="#" class="nav-item nav-inbox-wrap">
       <div class="nav-icon-badge-box">
         <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
@@ -200,7 +161,6 @@
       <span>შემოსულები</span>
     </a>
 
-    <!-- 5. პროფილი -->
     <a href="profile.html" class="nav-item active">
       <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
       <span>პროფილი</span>
