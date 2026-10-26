@@ -1155,6 +1155,114 @@ input:checked + .toggle-slider:before {
 
 
 /* ==========================================================================
+   TIKTOK SLIDING TABS & REELS GRID ANIMATION
+   ========================================================================== */
+
+/* ტაბების ზოლი და მოძრავი თეთრი ხაზი */
+.tt-tabs-bar {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tt-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 20%;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ბადეების სლაიდერის ხედი */
+.tt-grids-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.tt-grids-slider {
+  display: flex;
+  width: 200%;
+  transform: translateX(0%);
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.tt-grids-slider.show-reels {
+  transform: translateX(-50%);
+}
+
+/* ბადის განლაგება */
+.tt-gallery-grid {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  min-height: 240px;
+  align-content: start;
+  padding-bottom: 80px;
+}
+
+/* ვიდეოს ბარათი */
+.tt-post-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background-color: #121019;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.tt-post-thumb {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #000000;
+}
+
+.tt-post-thumb-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.tt-post-views {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  z-index: 2;
+}
+
+.tt-play-triangle {
+  font-size: 10px;
+}
+
+.reels-empty-grid {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 16px;
+  color: #6d6682;
+  font-size: 14px;
+  text-align: center;
+}
+
+
+/* ==========================================================================
    ხალხის გვერდის დიზაინი (USERS.HTML)
    ========================================================================== */
 
