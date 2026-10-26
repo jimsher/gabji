@@ -688,14 +688,53 @@ if (profileNameEl) {
     // ვიდეოების წინასწარ წამოღება
     loadUserReels();
 
-    // 3. გამოსვლის (Sign Out) ღილაკი
-    const btnSettings = document.getElementById("btnSettingsProfile");
-    if (btnSettings) {
-      btnSettings.onclick = async () => {
-        await signOut(auth);
-        window.location.href = "index.html";
+    
+
+        // ბურგერ მენიუს გახსნა / დახურვა
+    const btnMenu = document.getElementById("btnSettingsProfile");
+    const menuDrawer = document.getElementById("menuDrawer");
+    const menuBackdrop = document.getElementById("menuBackdrop");
+
+    const openMenuDrawer = () => {
+      if (menuDrawer && menuBackdrop) {
+        menuDrawer.classList.add("active");
+        menuBackdrop.classList.add("active");
+      }
+    };
+
+    const closeMenuDrawer = () => {
+      if (menuDrawer && menuBackdrop) {
+        menuDrawer.classList.remove("active");
+        menuBackdrop.classList.remove("active");
+      }
+    };
+
+    if (btnMenu) {
+      btnMenu.onclick = (e) => {
+        e.stopPropagation();
+        openMenuDrawer();
       };
     }
+
+    if (menuBackdrop) {
+      menuBackdrop.onclick = closeMenuDrawer;
+    }
+
+    // მარცხნიდან მარჯვნივ გაწევით (Swipe-ით) დახურვა
+    let touchStartX = 0;
+    if (menuDrawer) {
+      menuDrawer.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+
+      menuDrawer.addEventListener("touchend", (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        if (touchEndX - touchStartX > 50) {
+          closeMenuDrawer();
+        }
+      }, { passive: true });
+    }
+
   });
 }
       
