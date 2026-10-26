@@ -379,7 +379,7 @@ if (cardTitle) {
 
 
 
-         /* ==========================================================================
+   /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
@@ -580,8 +580,95 @@ if (profileNameEl) {
       };
     }
 
- 
-                      
+    /* ==========================================================================
+       🔥 ახალი: რელსების ბადის ჩატვირთვა და მარჯვნიდან მარცხნივ სლაიდი
+       ========================================================================== */
+    const reelsGrid = document.getElementById("profileReelsGrid");
+    const galleryGrid = document.getElementById("profileGalleryGrid");
+    const gridsSlider = document.getElementById("gridsSlider");
+    const tabReelsBtn = document.getElementById("tabReelsBtn");
+    const tabGalleryBtn = document.getElementById("tabGalleryBtn");
+    const tabIndicator = document.getElementById("tabIndicator");
+
+    // რეალური ვიდეოების წამოღება მხოლოდ ამ მომხმარებლისთვის
+    const loadUserReels = async () => {
+      if (!reelsGrid) return;
+      reelsGrid.innerHTML = '<div class="reels-empty-grid">ვიდეოები იტვირთება...</div>';
+
+      try {
+        const q = query(collection(db, "reels"), where("authorUid", "==", targetUid));
+        const snap = await getDocs(q);
+
+        reelsGrid.innerHTML = "";
+
+        if (snap.empty) {
+          reelsGrid.innerHTML = '<div class="reels-empty-grid">ატვირთული ვიდეოები არ არის</div>';
+          return;
+        }
+
+        snap.forEach((docSnap) => {
+          const reel = docSnap.data();
+          const card = document.createElement("div");
+          card.className = "tt-post-card";
+
+          // რეალური ნახვები ბაზიდან
+          const views = reel.viewsCount || reel.views || 0;
+
+          card.innerHTML = `
+            <div class="tt-post-thumb">
+              <video src="${reel.videoUrl}#t=0.5" class="tt-post-thumb-video" preload="metadata" muted playsinline></video>
+            </div>
+            <div class="tt-post-views">
+              <span class="tt-play-triangle">▷</span>
+              <span class="tt-views-count">${views}</span>
+            </div>
+          `;
+
+          // ვიდეოზე შეხებისას პირდაპირ გადადის რელსებზე
+          card.onclick = () => {
+            window.location.href = `reels.html?reelId=${docSnap.id}`;
+          };
+
+          reelsGrid.appendChild(card);
+        });
+      } catch (err) {
+        console.error("რელსების ბადის ჩატვირთვის შეცდომა:", err);
+        reelsGrid.innerHTML = '<div class="reels-empty-grid">ვიდეოების ჩატვირთვა ვერ მოხერხდა</div>';
+      }
+    };
+
+    // ტაბების გადართვისა და მარჯვნიდან სლაიდის ლოგიკა
+    if (tabReelsBtn && gridsSlider) {
+      tabReelsBtn.onclick = () => {
+        document.querySelectorAll(".tt-tab-item").forEach((btn) => btn.classList.remove("active"));
+        tabReelsBtn.classList.add("active");
+
+        // ბადე მოცურდება მარჯვნიდან მარცხნივ
+        gridsSlider.classList.add("show-reels");
+
+        // მოძრავი თეთრი ხაზი გადადის მე-2 პოზიციაზე
+        if (tabIndicator) tabIndicator.style.transform = "translateX(100%)";
+
+        // ვიდეოების ჩატვირთვა ბაზიდან
+        loadUserReels();
+      };
+    }
+
+    if (tabGalleryBtn && gridsSlider) {
+      tabGalleryBtn.onclick = () => {
+        document.querySelectorAll(".tt-tab-item").forEach((btn) => btn.classList.remove("active"));
+        tabGalleryBtn.classList.add("active");
+
+        // ბადე ბრუნდება პირველ პოზიციაზე
+        gridsSlider.classList.remove("show-reels");
+
+        // მოძრავი თეთრი ხაზი ბრუნდება მე-1 პოზიციაზე
+        if (tabIndicator) tabIndicator.style.transform = "translateX(0%)";
+      };
+    }
+
+    // ვიდეოების წინასწარ წამოღება
+    loadUserReels();
 
     // 3. გამოსვლის (Sign Out) ღილაკი
     const btnSettings = document.getElementById("btnSettingsProfile");
@@ -593,6 +680,8 @@ if (profileNameEl) {
     }
   });
 }
+      
+
 
 
 
