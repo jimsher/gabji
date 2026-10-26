@@ -597,6 +597,9 @@ if (profileNameEl) {
       if (!reelsGrid) return;
       reelsGrid.innerHTML = '<div class="reels-empty-grid">ვიდეოები იტვირთება...</div>';
 
+      // 1x1 გამჭვირვალე Base64 პოსტერი სისტემური Play ღილაკის დასაბლოკად
+      const blackPoster = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
+
       try {
         const snap = await getDocs(collection(db, "reels"));
 
@@ -624,7 +627,13 @@ if (profileNameEl) {
 
           card.innerHTML = `
             <div class="tt-post-thumb">
-              <video src="${reel.videoUrl}#t=0.5" class="tt-post-thumb-video" preload="metadata" muted playsinline></video>
+              <video src="${reel.videoUrl}#t=0.1" 
+                     poster="${blackPoster}" 
+                     class="tt-post-thumb-video" 
+                     preload="metadata" 
+                     muted 
+                     playsinline 
+                     webkit-playsinline></video>
             </div>
             <div class="tt-post-views">
               <span class="tt-play-triangle">▷</span>
@@ -644,6 +653,7 @@ if (profileNameEl) {
         reelsGrid.innerHTML = '<div class="reels-empty-grid">ვიდეოების ჩატვირთვა ვერ მოხერხდა</div>';
       }
     };
+
 
     // ტაბების გადართვისა და მარჯვნიდან სლაიდის ლოგიკა
     if (tabReelsBtn && gridsSlider) {
