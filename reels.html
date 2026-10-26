@@ -458,30 +458,30 @@
 
             <button class="action-item btn-like" data-id="${item.id}">
               <div class="action-icon-wrap">
-                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <img src="icons/heart.svg" class="reel-action-icon" alt="Like">
               </div>
               <span class="action-count like-count">${item.likes || 0}</span>
             </button>
 
             <button class="action-item btn-comment">
               <div class="action-icon-wrap">
-                <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                <img src="icons/chat-round-dots-linear.svg" class="reel-action-icon" alt="Comment">
               </div>
-              <span class="action-count">${item.comments || "Первый"}</span>
+              <span class="action-count">${item.comments || 0}</span>
             </button>
 
             <button class="action-item btn-save">
               <div class="action-icon-wrap">
-                <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                <img src="icons/bookmark.svg" class="reel-action-icon" alt="Save">
               </div>
               <span class="action-count">${item.saves || 0}</span>
             </button>
 
             <button class="action-item btn-share">
               <div class="action-icon-wrap">
-                <svg viewBox="0 0 24 24"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
+                <img src="icons/forward-right-linear.svg" class="reel-action-icon" alt="Share">
               </div>
-              <span class="action-count">Поделиться</span>
+              <span class="action-count">${item.shares || 0}</span>
             </button>
 
             <div class="music-disc-wrap">
@@ -494,11 +494,12 @@
             <div class="meta-username" onclick="window.location.href='profile.html?uid=${item.authorUid}'">@${item.username}</div>
             <div class="meta-description">${item.description}</div>
             <div class="meta-music">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              <img src="icons/music.svg" style="width: 14px; height: 14px; filter: brightness(0) invert(1);" alt="Music">
               <span>${item.music}</span>
             </div>
           </div>
         `;
+
 
         // ვიდეოზე შეხებისას Pause / Play
         const video = itemEl.querySelector(".reel-video");
