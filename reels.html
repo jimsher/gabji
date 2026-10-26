@@ -444,11 +444,9 @@
         console.warn("Firestore Reels Collection ცარიელია, გამოიყენება სტანდარტული ვიდეო:", e);
       }
 
-      renderReels(reelsData, currentUser);
-      initIntersectionObserver();
-    });
-
-    function renderReels(items, currentUser) {
+      
+      
+     function renderReels(items, currentUser) {
       container.innerHTML = "";
 
       items.forEach((item, index) => {
@@ -458,7 +456,7 @@
 
         itemEl.innerHTML = `
           <!-- ვიდეო პლეიერი -->
-          <video class="reel-video" src="${item.videoUrl}" loop playsinline preload="metadata"></video>
+          <video class="reel-video" src="${item.videoUrl}" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" loop playsinline preload="metadata"></video>
 
           <!-- მარჯვენა მოქმედების პანელი -->
           <div class="reels-sidebar">
@@ -574,6 +572,8 @@
         container.appendChild(itemEl);
       });
     }
+
+        
 
     // ავტომატური Play / Pause სქროლვისას (Intersection Observer)
     function initIntersectionObserver() {
