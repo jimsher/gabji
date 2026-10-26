@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ანგარიშის მონაცემები - GABJI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: #0b0813;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .data-screen {
+      width: 100%;
+      max-width: 412px;
+      min-height: 100vh;
+      background-color: #0b0813;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ჰედერი */
+    .data-header {
+      position: sticky;
+      top: 0;
+      height: 52px;
+      background-color: #0b0813;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .header-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* შიგთავსი */
+    .data-content {
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .data-card {
+      background-color: #171324;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 16px;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.15s ease;
+    }
+
+    .data-row:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .data-row:active {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .row-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .row-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .row-val {
+      font-size: 14.5px;
+      color: #928ca8;
+      letter-spacing: 0.2px;
+    }
+
+    .row-arrow {
+      color: #625b77;
+      font-size: 18px;
+    }
+
+    .region-card {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .region-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .region-hint {
+      font-size: 12.5px;
+      line-height: 1.4;
+      color: #7d7793;
+    }
+
+    /* მოდალური ფანჯრის დაბნელება */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    /* ცენტრალური ბარათი */
+    .modal-box {
+      width: 100%;
+      max-width: 320px;
+      background-color: #262133;
+      border-radius: 18px;
+      padding: 26px 20px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-icon-circle {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-icon-svg {
+      width: 38px;
+      height: 38px;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      line-height: 1.45;
+      color: #a49ebd;
+      margin-bottom: 22px;
+      padding: 0 4px;
+    }
+
+    .modal-btn {
+      width: 100%;
+      padding: 13px 0;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      transition: opacity 0.15s ease;
+    }
+
+    .modal-btn:active {
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="data-screen">
+
+    <!-- ჰედერი -->
+    <header class="data-header">
+      <button class="btn-back" onclick="window.location.href='account.html'" aria-label="უკან">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+      <h1 class="header-title">ანგარიშის მონაცემები</h1>
+    </header>
+
+    <main class="data-content">
+
+      <!-- ზედა ბლოკი: ტელეფონი, ფოსტა, დაბადების თარიღი -->
+      <div class="data-card">
+        <div class="data-row" id="rowPhone">
+          <span class="row-title">ტელეფონის ნომერი</span>
+          <div class="row-right">
+            <span class="row-val" id="valPhone">+39*****909</span>
+            <span class="row-arrow">›</span>
+          </div>
+        </div>
+
+        <div class="data-row" id="rowEmail">
+          <span class="row-title">ფოსტა</span>
+          <div class="row-right">
+            <span class="row-val" id="valEmail">j***0@gmail.com</span>
+            <span class="row-arrow">›</span>
+          </div>
+        </div>
+
+        <div class="data-row" id="rowBirthDate">
+          <span class="row-title">დაბადების თარიღი</span>
+          <div class="row-right">
+            <span class="row-val" id="valBirthDate">16 მაისი 1980 წ.</span>
+            <span class="row-arrow">›</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ქვედა ბლოკი: რეგიონი -->
+      <div class="data-card region-card">
+        <div class="region-row">
+          <span class="row-title">ანგარიშის რეგიონი</span>
+          <div class="row-right">
+            <span class="row-val" id="valRegion">საქართველო</span>
+            <span class="row-arrow">›</span>
+          </div>
+        </div>
+        <p class="region-hint">თქვენი ანგარიშის რეგიონი თავდაპირველად მითითებულია რეგისტრაციის დროისა და ადგილმდებარეობის გათვალისწინებით.</p>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- მოდალური ფანჯარა: ტელეფონის დიალოგი -->
+  <div class="modal-backdrop" id="modalPhone">
+    <div class="modal-box">
+      <div class="modal-icon-circle">
+        <svg class="modal-icon-svg" viewBox="0 0 24 24">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+      </div>
+      <h3 class="modal-title" id="modalPhoneTitle">თქვენი ტელეფონის ნომერი:<br><span id="modalPhoneVal">+39*****909</span></h3>
+      <p class="modal-desc">ეს ტელეფონის ნომერი მიბმულია თქვენს ანგარიშზე და მას მხოლოდ თქვენ ხედავთ. თუ მას შეცვლით, ინფორმაცია შეინახება ანგარიშის აღდგენის შემთხვევისთვის.</p>
+      <button class="modal-btn" id="btnChangePhone">ტელეფონის შეცვლა</button>
+      <button class="modal-btn" id="btnUnlinkPhone">ტელეფონის მოხსნა</button>
+    </div>
+  </div>
+
+  <!-- მოდალური ფანჯარა: ელფოსტის დიალოგი -->
+  <div class="modal-backdrop" id="modalEmail">
+    <div class="modal-box">
+      <div class="modal-icon-circle">
+        <svg class="modal-icon-svg" viewBox="0 0 24 24">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+      </div>
+      <h3 class="modal-title" id="modalEmailTitle">თქვენი ელ. ფოსტის მისამართი:<br><span id="modalEmailVal">j***0@gmail.com</span></h3>
+      <p class="modal-desc">ეს ელ. ფოსტა მიბმულია თქვენს ანგარიშზე და მას მხოლოდ თქვენ ხედავთ. თუ მას შეცვლით, ინფორმაცია შეინახება ანგარიშის აღდგენის შემთხვევისთვის.</p>
+      <button class="modal-btn" id="btnChangeEmail">ელ. ფოსტის შეცვლა</button>
+      <button class="modal-btn" id="btnUnlinkEmail">ელ. ფოსტის მოხსნა</button>
+    </div>
+  </div>
+
+  <!-- მონაცემების ავტომატური ამოღება და მოდალების კონტროლი -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
+      authDomain: "gabji-b583c.firebaseapp.com",
+      projectId: "gabji-b583c",
+      storageBucket: "gabji-b583c.firebasestorage.app",
+      messagingSenderId: "359136388859",
+      appId: "1:359136388859:web:5c3448fecd29052755f25e",
+      measurementId: "G-CM03PR8K8S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ტექსტის დაფარვა TikTok-ის სტილში (Masking)
+    function maskPhone(phone) {
+      if (!phone) return "მითითებული არ არის";
+      if (phone.length <= 5) return phone;
+      return phone.slice(0, 3) + "*****" + phone.slice(-3);
+    }
+
+    function maskEmail(email) {
+      if (!email) return "მითითებული არ არის";
+      const parts = email.split("@");
+      if (parts.length < 2) return email;
+      const name = parts[0];
+      const domain = parts[1];
+      if (name.length <= 2) return name[0] + "***@" + domain;
+      return name[0] + "***" + name.slice(-1) + "@" + domain;
+    }
+
+    // მოდალების ელემენტები
+    const modalPhone = document.getElementById("modalPhone");
+    const modalEmail = document.getElementById("modalEmail");
+    const rowPhone = document.getElementById("rowPhone");
+    const rowEmail = document.getElementById("rowEmail");
+
+    rowPhone.onclick = () => modalPhone.classList.add("show");
+    rowEmail.onclick = () => modalEmail.classList.add("show");
+
+    // მოდალის დახურვა გარე ფონზე დაჭერით
+    modalPhone.onclick = (e) => {
+      if (e.target === modalPhone) modalPhone.classList.remove("show");
+    };
+    modalEmail.onclick = (e) => {
+      if (e.target === modalEmail) modalEmail.classList.remove("show");
+    };
+
+    // მომხმარებლის რეალური მონაცემების ამოღება
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      try {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const d = userDoc.data();
+
+          const maskedP = maskPhone(d.phone);
+          const maskedE = maskEmail(d.email || user.email);
+
+          document.getElementById("valPhone").textContent = maskedP;
+          document.getElementById("modalPhoneVal").textContent = maskedP;
+
+          document.getElementById("valEmail").textContent = maskedE;
+          document.getElementById("modalEmailVal").textContent = maskedE;
+
+          if (d.birthDate) {
+            document.getElementById("valBirthDate").textContent = d.birthDate;
+          }
+          if (d.country) {
+            document.getElementById("valRegion").textContent = d.country;
+          }
+        }
+      } catch (err) {
+        console.error("მონაცემების ჩატვირთვის შეცდომა:", err);
+      }
+    });
+  </script>
+</body>
+</html>
