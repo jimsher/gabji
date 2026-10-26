@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>პირადი ანგარიში - GABJI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: #0b0813;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .privacy-screen {
+      width: 100%;
+      max-width: 412px;
+      min-height: 100vh;
+      background-color: #0b0813;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ზედა ჰედერი */
+    .privacy-header {
+      position: sticky;
+      top: 0;
+      height: 52px;
+      background-color: #0b0813;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .header-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* შიგთავსი */
+    .privacy-content {
+      padding: 16px 14px;
+    }
+
+    .privacy-card {
+      background-color: #171324;
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .privacy-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .privacy-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .privacy-desc {
+      font-size: 13px;
+      line-height: 1.45;
+      color: #7d7793;
+    }
+
+    /* TikTok სტილის ტოგლი (Toggle Switch) */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #3b364c;
+      transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 28px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #ffffff;
+      transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    input:checked + .slider {
+      background-color: #25c974; /* ჩართვისას TikTok მწვანე */
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="privacy-screen">
+
+    <!-- ჰედერი -->
+    <header class="privacy-header">
+      <button class="btn-back" onclick="window.location.href='settings.html'" aria-label="უკან">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+      <h1 class="header-title">პირადი ანგარიში</h1>
+    </header>
+
+    <main class="privacy-content">
+      <div class="privacy-card">
+        <div class="privacy-row-top">
+          <span class="privacy-title">პირადი ანგარიში</span>
+          <label class="switch">
+            <input type="checkbox" id="privateAccountToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="privacy-desc">პირადი ანგარიშის შემთხვევაში თქვენს ვიდეოებს მხოლოდ თქვენ მიერ დადასტურებული გამომწერები ნახავენ. ეს არ იმოქმედებს თქვენს არსებულ გამომწერებზე.</p>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- რეალური Firestore ინტეგრაცია -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
+      authDomain: "gabji-b583c.firebaseapp.com",
+      projectId: "gabji-b583c",
+      storageBucket: "gabji-b583c.firebasestorage.app",
+      messagingSenderId: "359136388859",
+      appId: "1:359136388859:web:5c3448fecd29052755f25e",
+      measurementId: "G-CM03PR8K8S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const toggle = document.getElementById("privateAccountToggle");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      const userDocRef = doc(db, "users", user.uid);
+
+      // მიმდინარე სტატუსის ამოღება ბაზიდან
+      try {
+        const userSnap = await getDoc(userDocRef);
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          toggle.checked = data.isPrivate === true;
+        }
+      } catch (err) {
+        console.error("სტატუსის წაკითხვის შეცდომა:", err);
+      }
+
+      // შეცვლა და ბაზაში რეალური განახლება
+      toggle.addEventListener("change", async () => {
+        const isPrivate = toggle.checked;
+        try {
+          await updateDoc(userDocRef, { isPrivate: isPrivate });
+        } catch (err) {
+          console.error("სტატუსის შენახვის შეცდომა:", err);
+          toggle.checked = !isPrivate; // შეცდომისას უკან დაბრუნება
+          alert("სტატუსის შენახვა ვერ მოხერხდა");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
