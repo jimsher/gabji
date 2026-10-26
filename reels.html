@@ -311,26 +311,25 @@
     }
 
     .reel-action-icon {
-  width: 28px;
-  height: 28px;
-  display: block;
-  filter: brightness(0) invert(1);
-  pointer-events: none;
-}
+      width: 28px;
+      height: 28px;
+      display: block;
+      filter: brightness(0) invert(1);
+      pointer-events: none;
+    }
+    
+    /* სისტემური Play ღილაკის გაქრობა */
+    video::-webkit-media-controls,
+    video::-webkit-media-controls-start-playback-button,
+    video::-webkit-media-controls-overlay-play-button {
+      display: none !important;
+      -webkit-appearance: none !important;
+      opacity: 0 !important;
+    }
 
-/* სისტემური Play ღილაკის გაქრობა */
-video::-webkit-media-controls,
-video::-webkit-media-controls-start-playback-button,
-video::-webkit-media-controls-overlay-play-button {
-  display: none !important;
-  -webkit-appearance: none !important;
-  opacity: 0 !important;
-}
-
-.reel-video {
-  background-color: #000000;
-}
-
+    .reel-video {
+      background-color: #000000;
+    }
   </style>
 </head>
 <body>
@@ -364,43 +363,42 @@ video::-webkit-media-controls-overlay-play-button {
 
     <!-- ქვედა ნავიგაცია -->
     <!-- TikTok სტილის ქვედა ნავიგაცია -->
-  <nav class="bottom-nav-bar">
-    <!-- 1. მთავარი / ფიდი -->
-    <a href="feed.html" class="nav-item">
-      <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
-      <span>ფიდი</span>
-    </a>
+    <nav class="bottom-nav-bar">
+      <!-- 1. მთავარი / ფიდი -->
+      <a href="feed.html" class="nav-item">
+        <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
+        <span>ფიდი</span>
+      </a>
 
-    <!-- 2. მეგობრები / რელსები -->
-    <a href="#" class="nav-item">
-      <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
-      <span>მეგობრები</span>
-    </a>
+      <!-- 2. მეგობრები / რელსები -->
+      <a href="#" class="nav-item">
+        <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
+        <span>მეგობრები</span>
+      </a>
 
-    <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
-    <div class="nav-item nav-upload-wrap">
-      <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
-        <span class="plus-symbol">+</span>
-      </button>
-    </div>
-
-    <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
-    <a href="#" class="nav-item nav-inbox-wrap">
-      <div class="nav-icon-badge-box">
-        <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
-        <span class="nav-unread-badge">26</span>
+      <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
+      <div class="nav-item nav-upload-wrap">
+        <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
+          <span class="plus-symbol">+</span>
+        </button>
       </div>
-      <span>შემოსულები</span>
-    </a>
 
-    <!-- 5. პროფილი -->
-    <a href="profile.html" class="nav-item active">
-      <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
-      <span>პროფილი</span>
-    </a>
-  </nav>
+      <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
+      <a href="#" class="nav-item nav-inbox-wrap">
+        <div class="nav-icon-badge-box">
+          <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
+          <span class="nav-unread-badge">26</span>
+        </div>
+        <span>შემოსულები</span>
+      </a>
+
+      <!-- 5. პროფილი -->
+      <a href="profile.html" class="nav-item active">
+        <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
+        <span>პროფილი</span>
+      </a>
+    </nav>
     
-
   </div>
 
   <!-- Firebase და Reels-ის მუშა ლოგიკა -->
@@ -425,6 +423,9 @@ video::-webkit-media-controls-overlay-play-button {
 
     const container = document.getElementById("reelsContainer");
 
+    // 1x1 შავი პოსტერი Base64-ში, რათა სისტემური Play ღილაკი WebView-მ არ დახატოს
+    const blackPoster = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
+
     // სადემონსტრაციო / რეალური ვიდეოების სია (ავტომატურად გაიშვება Firestore-დან)
     let reelsData = [
       {
@@ -437,7 +438,8 @@ video::-webkit-media-controls-overlay-play-button {
         videoUrl: "https://pub-d077cb13f6ec46cebeca95f2f25b9a08.r2.dev/sample-video.mp4",
         likes: 7,
         comments: 1,
-        saves: 2
+        saves: 2,
+        shares: 0
       }
     ];
 
@@ -455,134 +457,136 @@ video::-webkit-media-controls-overlay-play-button {
         console.warn("Firestore Reels Collection ცარიელია, გამოიყენება სტანდარტული ვიდეო:", e);
       }
 
-      
-      
       function renderReels(items, currentUser) {
-      container.innerHTML = "";
+        container.innerHTML = "";
 
-      items.forEach((item, index) => {
-        const itemEl = document.createElement("div");
-        itemEl.className = "reel-item";
-        itemEl.dataset.id = item.id;
+        items.forEach((item, index) => {
+          const itemEl = document.createElement("div");
+          itemEl.className = "reel-item";
+          itemEl.dataset.id = item.id;
 
-        itemEl.innerHTML = `
-          <!-- ვიდეო პლეიერი -->
-          <video class="reel-video" src="${item.videoUrl}" loop muted playsinline webkit-playsinline preload="metadata"></video>
+          itemEl.innerHTML = `
+            <!-- ვიდეო პლეიერი Base64 პოსტერით -->
+            <video class="reel-video" src="${item.videoUrl}" poster="${blackPoster}" loop muted playsinline webkit-playsinline preload="metadata"></video>
 
-          <!-- მარჯვენა მოქმედების პანელი -->
-          <div class="reels-sidebar">
-            <div class="author-avatar-wrap">
-              <img src="${item.authorPhoto || 'icons/user-circle-linear.svg'}" class="author-avatar-img" alt="Avatar">
-              <button class="btn-avatar-plus" data-uid="${item.authorUid}">+</button>
+            <!-- მარჯვენა მოქმედების პანელი -->
+            <div class="reels-sidebar">
+              <div class="author-avatar-wrap">
+                <img src="${item.authorPhoto || 'icons/user-circle-linear.svg'}" class="author-avatar-img" alt="Avatar">
+                <button class="btn-avatar-plus" data-uid="${item.authorUid}">+</button>
+              </div>
+
+              <button class="action-item btn-like" data-id="${item.id}">
+                <div class="action-icon-wrap">
+                  <img src="icons/heart.svg" class="reel-action-icon" alt="Like">
+                </div>
+                <span class="action-count like-count">${item.likes || 0}</span>
+              </button>
+
+              <button class="action-item btn-comment">
+                <div class="action-icon-wrap">
+                  <img src="icons/chat-round-dots-linear.svg" class="reel-action-icon" alt="Comment">
+                </div>
+                <span class="action-count">${item.comments || 0}</span>
+              </button>
+
+              <button class="action-item btn-save">
+                <div class="action-icon-wrap">
+                  <img src="icons/bookmark.svg" class="reel-action-icon" alt="Save">
+                </div>
+                <span class="action-count">${item.saves || 0}</span>
+              </button>
+
+              <button class="action-item btn-share">
+                <div class="action-icon-wrap">
+                  <img src="icons/forward-right-linear.svg" class="reel-action-icon" alt="Share">
+                </div>
+                <span class="action-count">${item.shares || 0}</span>
+              </button>
+
+              <div class="music-disc-wrap">
+                <img src="${item.authorPhoto || 'icons/user-circle-linear.svg'}" alt="Disc">
+              </div>
             </div>
 
-            <button class="action-item btn-like" data-id="${item.id}">
-              <div class="action-icon-wrap">
-                <img src="icons/heart.svg" class="reel-action-icon" alt="Like">
+            <!-- ქვედა მეტა ინფორმაცია -->
+            <div class="reel-meta">
+              <div class="meta-username" onclick="window.location.href='profile.html?uid=${item.authorUid}'">@${item.username}</div>
+              <div class="meta-description">${item.description}</div>
+              <div class="meta-music">
+                <img src="icons/music.svg" style="width: 14px; height: 14px; filter: brightness(0) invert(1);" alt="Music">
+                <span>${item.music}</span>
               </div>
-              <span class="action-count like-count">${item.likes || 0}</span>
-            </button>
-
-            <button class="action-item btn-comment">
-              <div class="action-icon-wrap">
-                <img src="icons/chat-round-dots-linear.svg" class="reel-action-icon" alt="Comment">
-              </div>
-              <span class="action-count">${item.comments || 0}</span>
-            </button>
-
-            <button class="action-item btn-save">
-              <div class="action-icon-wrap">
-                <img src="icons/bookmark.svg" class="reel-action-icon" alt="Save">
-              </div>
-              <span class="action-count">${item.saves || 0}</span>
-            </button>
-
-            <button class="action-item btn-share">
-              <div class="action-icon-wrap">
-                <img src="icons/forward-right-linear.svg" class="reel-action-icon" alt="Share">
-              </div>
-              <span class="action-count">${item.shares || 0}</span>
-            </button>
-
-            <div class="music-disc-wrap">
-              <img src="${item.authorPhoto || 'icons/user-circle-linear.svg'}" alt="Disc">
             </div>
-          </div>
+          `;
 
-          <!-- ქვედა მეტა ინფორმაცია -->
-          <div class="reel-meta">
-            <div class="meta-username" onclick="window.location.href='profile.html?uid=${item.authorUid}'">@${item.username}</div>
-            <div class="meta-description">${item.description}</div>
-            <div class="meta-music">
-              <img src="icons/music.svg" style="width: 14px; height: 14px; filter: brightness(0) invert(1);" alt="Music">
-              <span>${item.music}</span>
-            </div>
-          </div>
-        `;
-
-        // ვიდეოზე შეხებისას Pause / Play და ხმის ჩართვა
-        const video = itemEl.querySelector(".reel-video");
-        video.onclick = () => {
-          if (video.paused) {
-            video.muted = false;
-            video.play();
-          } else {
-            video.pause();
-          }
-        };
-
-        // Like-ის ფუნქციონალი ბაზასთან კავშირში
-        const likeBtn = itemEl.querySelector(".btn-like");
-        const likeCountEl = itemEl.querySelector(".like-count");
-        let isLiked = false;
-
-        likeBtn.onclick = async () => {
-          let count = parseInt(likeCountEl.textContent) || 0;
-          if (!isLiked) {
-            count += 1;
-            likeBtn.classList.add("liked");
-            isLiked = true;
-          } else {
-            count = Math.max(0, count - 1);
-            likeBtn.classList.remove("liked");
-            isLiked = false;
-          }
-          likeCountEl.textContent = count;
-
-          if (currentUser) {
-            try {
-              await setDoc(doc(db, "reels", item.id, "likes", currentUser.uid), {
-                liked: isLiked,
-                time: serverTimestamp()
-              });
-            } catch (err) {
-              console.error("Like Error:", err);
+          // ვიდეოზე შეხებისას Pause / Play და ხმის ჩართვა
+          const video = itemEl.querySelector(".reel-video");
+          video.onclick = () => {
+            if (video.paused) {
+              video.muted = false;
+              video.play();
+            } else {
+              video.pause();
             }
-          }
-        };
+          };
 
-        // ავტორის გამოწერა პირდაპირ ვიდეოდან (+)
-        const plusBtn = itemEl.querySelector(".btn-avatar-plus");
-        plusBtn.onclick = async (e) => {
-          e.stopPropagation();
-          if (currentUser) {
-            try {
-              await setDoc(doc(db, "users", currentUser.uid, "following", item.authorUid), {
-                followedUid: item.authorUid,
-                active: true,
-                createdAt: serverTimestamp()
-              });
-              plusBtn.style.display = "none";
-            } catch (e) {
-              console.error("Follow Error:", e);
+          // Like-ის ფუნქციონალი ბაზასთან კავშირში
+          const likeBtn = itemEl.querySelector(".btn-like");
+          const likeCountEl = itemEl.querySelector(".like-count");
+          let isLiked = false;
+
+          likeBtn.onclick = async () => {
+            let count = parseInt(likeCountEl.textContent) || 0;
+            if (!isLiked) {
+              count += 1;
+              likeBtn.classList.add("liked");
+              isLiked = true;
+            } else {
+              count = Math.max(0, count - 1);
+              likeBtn.classList.remove("liked");
+              isLiked = false;
             }
-          }
-        };
+            likeCountEl.textContent = count;
 
-        container.appendChild(itemEl);
-      });
-    }
-       
+            if (currentUser) {
+              try {
+                await setDoc(doc(db, "reels", item.id, "likes", currentUser.uid), {
+                  liked: isLiked,
+                  time: serverTimestamp()
+                });
+              } catch (err) {
+                console.error("Like Error:", err);
+              }
+            }
+          };
+
+          // ავტორის გამოწერა პირდაპირ ვიდეოდან (+)
+          const plusBtn = itemEl.querySelector(".btn-avatar-plus");
+          plusBtn.onclick = async (e) => {
+            e.stopPropagation();
+            if (currentUser) {
+              try {
+                await setDoc(doc(db, "users", currentUser.uid, "following", item.authorUid), {
+                  followedUid: item.authorUid,
+                  active: true,
+                  createdAt: serverTimestamp()
+                });
+                plusBtn.style.display = "none";
+              } catch (e) {
+                console.error("Follow Error:", e);
+              }
+            }
+          };
+
+          container.appendChild(itemEl);
+        });
+      }
+
+      // გამოძახება ეკრანზე დასახატად
+      renderReels(reelsData, currentUser);
+      initIntersectionObserver();
+    });
 
     // ავტომატური Play / Pause სქროლვისას (Intersection Observer)
     function initIntersectionObserver() {
