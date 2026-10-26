@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Reels - GABJI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* მობილურის ეკრანის კონტეინერი */
+    .reels-screen {
+      position: relative;
+      width: 100%;
+      max-width: 412px;
+      height: 100vh;
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* ვერტიკალური Snap სქროლერი */
+    .reels-feed {
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none; /* Firefox */
+    }
+    .reels-feed::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    /* ერთი ვიდეოს ბარათი */
+    .reel-item {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .reel-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ზედა ზოლი (ლაივი, ჩანართები, ძებნა) */
+    .reels-top-bar {
+      position: absolute;
+      top: 14px;
+      left: 0;
+      width: 100%;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    .btn-live {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.7);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .top-tabs {
+      display: flex;
+      gap: 16px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .tab-item {
+      color: rgba(255, 255, 255, 0.65);
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .tab-item.active {
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .tab-item.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      width: 70%;
+      height: 2px;
+      background: #ffffff;
+      border-radius: 2px;
+    }
+
+    .top-search-btn {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    /* მარჯვენა მოქმედების ღილაკები */
+    .reels-sidebar {
+      position: absolute;
+      right: 12px;
+      bottom: 85px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    /* ავატარი პლუსით */
+    .author-avatar-wrap {
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    .author-avatar-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      object-fit: cover;
+    }
+
+    .btn-avatar-plus {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      background: #fe2c55;
+      color: #ffffff;
+      border-radius: 50%;
+      border: none;
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .action-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .action-icon-wrap {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+    }
+
+    .action-icon-wrap svg {
+      width: 32px;
+      height: 32px;
+      fill: #ffffff;
+    }
+
+    .action-count {
+      font-size: 12px;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    .btn-like.liked svg {
+      fill: #fe2c55;
+    }
+
+    /* მბრუნავი მუსიკალური დისკი */
+    .music-disc-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #252525;
+      padding: 7px;
+      border: 7px solid #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spin 5s linear infinite;
+    }
+
+    .music-disc-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ქვედა ინფორმაცია (ავტორი, აღწერა, მუსიკა) */
+    .reel-meta {
+      position: absolute;
+      left: 14px;
+      bottom: 80px;
+      max-width: 78%;
+      z-index: 10;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    .meta-username {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .meta-description {
+      font-size: 13.5px;
+      line-height: 1.35;
+      color: #f1f1f1;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .meta-music {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #fff;
+    }
+
+    /* ქვედა ნავიგაცია (TikTok სტილის ზუსტი მენიუ) */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.9);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 600;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .nav-btn.active {
+      color: #ffffff;
+    }
+
+    .nav-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: -3px;
+      right: 0px;
+      background: #fe2c55;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 8px;
+    }
+
+    /* ცენტრალური შექმნის პლუს ღილაკი */
+    .btn-create-reel {
+      position: relative;
+      width: 44px;
+      height: 30px;
+      background: #ffffff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .btn-create-reel::before,
+    .btn-create-reel::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 100%;
+      border-radius: 6px;
+      z-index: -1;
+    }
+    .btn-create-reel::before {
+      left: -4px;
+      background: #20d5ec;
+    }
+    .btn-create-reel::after {
+      right: -4px;
+      background: #fe2c55;
+    }
+    .btn-create-reel svg {
+      stroke: #000000;
+      width: 18px;
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reels-screen">
+
+    <!-- ზედა ფიქსირებული ზოლი -->
+    <header class="reels-top-bar">
+      <button class="btn-live">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>
+        LIVE
+      </button>
+
+      <div class="top-tabs">
+        <div class="tab-item" id="tabFollowing">გამოწერები</div>
+        <div class="tab-item active" id="tabForYou">რეკომენდაციები</div>
+      </div>
+
+      <button class="top-search-btn" aria-label="ძებნა">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- ვიდეოების სქროლ კონტეინერი -->
+    <main class="reels-feed" id="reelsContainer">
+      <!-- JavaScript ჩატვირთავს ვიდეოებს დინამიკურად Firebase / R2-დან -->
+    </main>
+
+    <!-- ქვედა ნავიგაცია -->
+    <nav class="bottom-nav">
+      <a href="feed.html" class="nav-btn active">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+        <span>მთავარი</span>
+      </a>
+
+      <a href="users.html" class="nav-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>მეგობრები</span>
+      </a>
+
+      <div class="btn-create-reel" id="btnUploadModal">
+        <svg viewBox="0 0 24 24" stroke-width="3" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      </div>
+
+      <a href="#" class="nav-btn">
+        <span class="nav-badge">27</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>შემოსულები</span>
+      </a>
+
+      <a href="profile.html" class="nav-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span>პროფილი</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- Firebase და Reels-ის მუშა ლოგიკა -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
+      authDomain: "gabji-b583c.firebaseapp.com",
+      projectId: "gabji-b583c",
+      storageBucket: "gabji-b583c.firebasestorage.app",
+      messagingSenderId: "359136388859",
+      appId: "1:359136388859:web:5c3448fecd29052755f25e",
+      measurementId: "G-CM03PR8K8S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const container = document.getElementById("reelsContainer");
+
+    // სადემონსტრაციო / რეალური ვიდეოების სია (ავტომატურად გაიშვება Firestore-დან)
+    let reelsData = [
+      {
+        id: "reel_1",
+        authorUid: "demo_uid_1",
+        username: "georgia_from_jeep",
+        authorPhoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+        description: "Распаковка совершенно нового Rubicon в Тбилиси... #jeep #tbilisi #rubicon",
+        music: "Оригинальный звук - georgia_from_jeep",
+        videoUrl: "https://pub-d077cb13f6ec46cebeca95f2f25b9a08.r2.dev/sample-video.mp4",
+        likes: 7,
+        comments: 1,
+        saves: 2
+      }
+    ];
+
+    onAuthStateChanged(auth, async (currentUser) => {
+      // 1. ვკითხულობთ ვიდეოებს Firestore-დან (კოლექცია: reels)
+      try {
+        const snap = await getDocs(collection(db, "reels"));
+        if (!snap.empty) {
+          reelsData = [];
+          snap.forEach(d => {
+            reelsData.push({ id: d.id, ...d.data() });
+          });
+        }
+      } catch (e) {
+        console.warn("Firestore Reels Collection ცარიელია, გამოიყენება სტანდარტული ვიდეო:", e);
+      }
+
+      renderReels(reelsData, currentUser);
+      initIntersectionObserver();
+    });
+
+    function renderReels(items, currentUser) {
+      container.innerHTML = "";
+
+      items.forEach((item, index) => {
+        const itemEl = document.createElement("div");
+        itemEl.className = "reel-item";
+        itemEl.dataset.id = item.id;
+
+        itemEl.innerHTML = `
+          <!-- ვიდეო პლეიერი -->
+          <video class="reel-video" src="${item.videoUrl}" loop playsinline preload="metadata"></video>
+
+          <!-- მარჯვენა მოქმედების პანელი -->
+          <div class="reels-sidebar">
+            <div class="author-avatar-wrap">
+              <img src="${item.authorPhoto || 'icons/user-circle-linear.svg'}" class="author-avatar-img" alt="Avatar">
+              <button class="btn-avatar-plus" data-uid="${item.authorUid}">+</button>
+            </div>
+
+            <button class="action-item btn-like" data-id="${item.id}">
+              <div class="action-icon-wrap">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <span class="action-count like-count">${item.likes || 0}</span>
+            </button>
+
+            <button class="action-item btn-comment">
+              <div class="action-icon-wrap">
+                <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+              </div>
+              <span class="action-count">${item.comments || "Первый"}</span>
+            </button>
+
+            <button class="action-item btn-save">
+              <div class="action-icon-wrap">
+                <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+              </div>
+              <span class="action-count">${item.saves || 0}</span>
+            </button>
+
+            <button class="action-item btn-share">
+              <div class="action-icon-wrap">
+                <svg viewBox="0 0 24 24"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
+              </div>
+              <span class="action-count">Поделиться</span>
+            </button>
+
+            <div class="music-disc-wrap">
+              <img src="${item.authorPhoto || 'icons/user-circle-linear.svg'}" alt="Disc">
+            </div>
+          </div>
+
+          <!-- ქვედა მეტა ინფორმაცია -->
+          <div class="reel-meta">
+            <div class="meta-username" onclick="window.location.href='profile.html?uid=${item.authorUid}'">@${item.username}</div>
+            <div class="meta-description">${item.description}</div>
+            <div class="meta-music">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              <span>${item.music}</span>
+            </div>
+          </div>
+        `;
+
+        // ვიდეოზე შეხებისას Pause / Play
+        const video = itemEl.querySelector(".reel-video");
+        video.onclick = () => {
+          if (video.paused) {
+            video.play();
+          } else {
+            video.pause();
+          }
+        };
+
+        // Like-ის ფუნქციონალი ბაზასთან კავშირში
+        const likeBtn = itemEl.querySelector(".btn-like");
+        const likeCountEl = itemEl.querySelector(".like-count");
+        let isLiked = false;
+
+        likeBtn.onclick = async () => {
+          let count = parseInt(likeCountEl.textContent) || 0;
+          if (!isLiked) {
+            count += 1;
+            likeBtn.classList.add("liked");
+            isLiked = true;
+          } else {
+            count = Math.max(0, count - 1);
+            likeBtn.classList.remove("liked");
+            isLiked = false;
+          }
+          likeCountEl.textContent = count;
+
+          // თუ მომხმარებელი შესულია, ვწერთ ბაზაში
+          if (currentUser) {
+            try {
+              await setDoc(doc(db, "reels", item.id, "likes", currentUser.uid), {
+                liked: isLiked,
+                time: serverTimestamp()
+              });
+            } catch (err) {
+              console.error("Like Error:", err);
+            }
+          }
+        };
+
+        // ავტორის გამოწერა პირდაპირ ვიდეოდან (+)
+        const plusBtn = itemEl.querySelector(".btn-avatar-plus");
+        plusBtn.onclick = async (e) => {
+          e.stopPropagation();
+          if (currentUser) {
+            try {
+              await setDoc(doc(db, "users", currentUser.uid, "following", item.authorUid), {
+                followedUid: item.authorUid,
+                active: true,
+                createdAt: serverTimestamp()
+              });
+              plusBtn.style.display = "none";
+            } catch (e) {
+              console.error("Follow Error:", e);
+            }
+          }
+        };
+
+        container.appendChild(itemEl);
+      });
+    }
+
+    // ავტომატური Play / Pause სქროლვისას (Intersection Observer)
+    function initIntersectionObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target.querySelector(".reel-video");
+          if (video) {
+            if (entry.isIntersecting) {
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+              video.currentTime = 0;
+            }
+          }
+        });
+      }, { threshold: 0.6 });
+
+      document.querySelectorAll(".reel-item").forEach((el) => observer.observe(el));
+    }
+  </script>
+</body>
+</html>
