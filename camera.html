@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>კამერა და ატვირთვა - GABJI</title>
+
+  <!-- AWS SDK Cloudflare R2-ში ვიდეოს პირდაპირი ატვირთვისთვის -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1692.0.min.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -39,7 +43,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transform: scaleX(-1); /* სარკისებური წინა კამერისთვის */
+      transform: scaleX(-1);
     }
 
     /* ზედა პანელი */
@@ -107,7 +111,7 @@
       font-weight: 600;
     }
 
-    /* ქვედა ჩაწერისა და რეჟიმების ბლოკი */
+    /* ქვედა მართვის ბლოკი */
     .bottom-camera-controls {
       position: absolute;
       bottom: 0;
@@ -121,7 +125,6 @@
       background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
     }
 
-    /* დროის რეჟიმები (10 წთ, 60 წმ, 15 წმ) */
     .timer-modes {
       display: flex;
       gap: 18px;
@@ -142,7 +145,6 @@
       border-radius: 12px;
     }
 
-    /* ჩაწერის ცენტრალური რიგი */
     .record-row {
       width: 100%;
       padding: 0 24px;
@@ -152,7 +154,7 @@
       margin-bottom: 20px;
     }
 
-    /* მარცხენა გალერეის ღილაკი (ფოტოს ზუსტი ასლი) */
+    /* გალერეის ღილაკი */
     .btn-gallery-box {
       width: 44px;
       height: 44px;
@@ -180,12 +182,12 @@
     }
 
     .btn-gallery-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
     }
 
-    /* წითელი ჩამწერი ღილაკი */
+    /* ჩამწერი წითელი ღილაკი */
     .btn-record-main {
       width: 76px;
       height: 76px;
@@ -207,12 +209,6 @@
       transition: all 0.2s ease;
     }
 
-    .btn-record-main.recording .record-inner-circle {
-      border-radius: 8px;
-      transform: scale(0.6);
-    }
-
-    /* ეფექტების ღილაკი მარჯვნივ */
     .btn-effects-box {
       display: flex;
       flex-direction: column;
@@ -234,7 +230,6 @@
       object-fit: cover;
     }
 
-    /* ქვედა ტექსტური მენიუ: კამერა / შემოქმედება */
     .bottom-mode-text-row {
       display: flex;
       gap: 24px;
@@ -249,14 +244,14 @@
       color: rgba(255,255,255,0.45);
     }
 
-    /* ატვირთვის პროგრესის მოდალი */
+    /* ატვირთვის მოდალი */
     .upload-overlay-screen {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.9);
       display: none;
       flex-direction: column;
       align-items: center;
@@ -300,6 +295,15 @@
       cursor: pointer;
     }
 
+    .btn-cancel-upload {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 13px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
     .progress-bar-bg {
       width: 100%;
       height: 6px;
@@ -322,10 +326,8 @@
 
   <div class="camera-screen">
 
-    <!-- კამერის ცოცხალი ვიდეო -->
     <video id="cameraStream" autoplay playsinline muted></video>
 
-    <!-- ზედა მართვის ზოლი -->
     <div class="top-controls">
       <button class="btn-close-cam" id="btnCloseCamera" aria-label="დახურვა">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -339,41 +341,29 @@
       <div style="width: 24px;"></div>
     </div>
 
-    <!-- მარჯვენა ინსტრუმენტების სვეტი -->
     <div class="right-tools">
       <button class="tool-btn" id="btnFlipCamera">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0-4.418-3.582-8-8-8s-8 3.582-8 8c0 1.5.4 2.9 1.1 4.1L3 16l4.5-.5c.7.4 1.5.7 2.3.9M4 14c0 4.418 3.582 8 8 8s8-3.582 8-8c0-1.5-.4-2.9-1.1-4.1L21 8l-4.5.5c-.7-.4-1.5-.7-2.3-.9"/></svg>
       </button>
-      <button class="tool-btn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-      </button>
-      <button class="tool-btn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </button>
     </div>
 
-    <!-- ქვედა მართვა -->
     <div class="bottom-camera-controls">
-      <!-- დროის რეჟიმები -->
       <div class="timer-modes">
         <span class="mode-item">10 წთ</span>
         <span class="mode-item active">60 წმ</span>
         <span class="mode-item">15 წმ</span>
       </div>
 
-      <!-- ჩაწერის ბლოკი -->
       <div class="record-row">
-        <!-- მარცხენა გალერეის ღილაკი -->
+        <!-- გალერეის ღილაკი -->
         <div class="btn-gallery-box" id="btnOpenGallery" title="გალერეა">
-          <img src="icons/gallery-bold.svg" onerror="this.src='icons/user-circle-linear.svg'" id="galleryThumbPreview" alt="Gallery">
+          <img src="icons/gallery-bold.svg" onerror="this.src='icons/bookmark.svg'" alt="Gallery">
         </div>
 
-        <!-- ჩამწერი ღილაკი -->
         <button class="btn-record-main" id="btnRecordVideo">
           <div class="record-inner-circle"></div>
         </button>
 
-        <!-- ეფექტები -->
         <div class="btn-effects-box">
           <div class="effects-avatar-circle">
             <img src="icons/user-circle-linear.svg" alt="Effects">
@@ -381,23 +371,23 @@
         </div>
       </div>
 
-      <!-- ქვედა რეჟიმის ტექსტები -->
       <div class="bottom-mode-text-row">
         <span class="active-mode">კამერა</span>
         <span class="inactive-mode">შემოქმედება</span>
       </div>
     </div>
 
-    <!-- ფარული File Input გალერეისთვის (ვიდეოების ასარჩევად) -->
+    <!-- გალერეიდან ვიდეოს ასარჩევი ფაილის ინპუთი -->
     <input type="file" id="reelVideoInput" accept="video/*" style="display: none;">
 
-    <!-- ატვირთვის ფანჯარა -->
+    <!-- ატვირთვის მოდალი -->
     <div class="upload-overlay-screen" id="uploadOverlay">
       <div class="upload-box">
         <h3 style="font-size: 17px; margin-bottom: 6px;">ვიდეოს გამოქვეყნება</h3>
-        <textarea class="upload-desc-input" id="reelDescriptionInput" rows="3" placeholder="დაწერეთ აღწერა და ჰეშთეგები..."></textarea>
+        <textarea class="upload-desc-input" id="reelDescriptionInput" rows="3" placeholder="დაწერეთ აღწერა..."></textarea>
         
         <button class="btn-confirm-upload" id="btnStartPublish">გამოქვეყნება</button>
+        <button type="button" class="btn-cancel-upload" id="btnCancelPublish">გაუქმება</button>
 
         <div class="progress-bar-bg" id="uploadProgressBar">
           <div class="progress-bar-fill" id="progressFill"></div>
@@ -408,10 +398,11 @@
 
   </div>
 
+  <!-- Firebase და R2 ლოგიკა -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
@@ -434,21 +425,20 @@
     const videoInput = document.getElementById("reelVideoInput");
     const uploadOverlay = document.getElementById("uploadOverlay");
     const btnPublish = document.getElementById("btnStartPublish");
+    const btnCancel = document.getElementById("btnCancelPublish");
     const descInput = document.getElementById("reelDescriptionInput");
     const progressBg = document.getElementById("uploadProgressBar");
     const progressFill = document.getElementById("progressFill");
     const statusText = document.getElementById("uploadStatusText");
 
     let currentStream = null;
-    let facingMode = "user"; // "user" (წინა) ან "environment" (უკანა)
+    let facingMode = "user";
     let selectedVideoFile = null;
     let currentAuthUser = null;
 
-    // 1. კამერის გაშვება
+    // 1. ცოცხალი კამერა
     async function startCamera() {
-      if (currentStream) {
-        currentStream.getTracks().forEach(t => t.stop());
-      }
+      if (currentStream) currentStream.getTracks().forEach(t => t.stop());
       try {
         currentStream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: facingMode, width: { ideal: 1080 }, height: { ideal: 1920 } },
@@ -457,30 +447,24 @@
         videoEl.srcObject = currentStream;
         videoEl.style.transform = facingMode === "user" ? "scaleX(-1)" : "none";
       } catch (err) {
-        console.warn("კამერაზე წვდომა ვერ მოხერხდა:", err);
+        console.warn("კამერა ვერ ჩაირთო:", err);
       }
     }
-
     startCamera();
 
-    // კამერის დახურვა და უკან დაბრუნება
     btnClose.onclick = () => {
       if (currentStream) currentStream.getTracks().forEach(t => t.stop());
       window.history.back();
     };
 
-    // წინა/უკანა კამერის გადართვა
     btnFlip.onclick = () => {
       facingMode = facingMode === "user" ? "environment" : "user";
       startCamera();
     };
 
-    // 2. მარცხენა ქვედა ღილაკზე დაჭერით გალერეის გახსნა
-    btnGallery.onclick = () => {
-      videoInput.click();
-    };
+    // 2. გალერეის გახსნა
+    btnGallery.onclick = () => videoInput.click();
 
-    // ვიდეო ფაილის არჩევა გალერეიდან
     videoInput.onchange = (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -488,7 +472,12 @@
       uploadOverlay.style.display = "flex";
     };
 
-    // ავტორიზაციის შემოწმება
+    btnCancel.onclick = () => {
+      uploadOverlay.style.display = "none";
+      selectedVideoFile = null;
+      videoInput.value = "";
+    };
+
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.href = "index.html";
@@ -497,53 +486,85 @@
       currentAuthUser = user;
     });
 
-    // 3. ვიდეოს R2-ში ატვირთვა და Firestore-ში შენახვა
-    btnPublish.onclick = async () => {
-      if (!selectedVideoFile) return;
+    // 3. R2-ში ატვირთვის ფუნქცია AWS SDK-ით (შენი ზუსტი გასაღებებით)
+    function uploadReelToR2(file, onProgress, onComplete) {
+      const r2S3 = new AWS.S3({
+        endpoint: 'https://b06701b6405e891a274a6d40ae52c940.r2.cloudflarestorage.com',
+        accessKeyId: 'fca43a92ab1d3b3e7c89912f8d525977',
+        secretAccessKey: 'd051531e40a19cfaedade242eac6b6d506dad44be370224ba2e5c3ea298f1ad6',
+        signatureVersion: 'v4',
+        region: 'auto',
+        s3ForcePathStyle: true
+      });
+
+      const fileExt = file.name && file.name.match(/\.(mp4|mov|avi|mkv|webm)$/i) ? file.name.match(/\.(mp4|mov|avi|mkv|webm)$/i)[0] : '.mp4';
+      const fileKey = 'videos/' + Date.now() + '_' + Math.random().toString(36).substring(2, 7) + fileExt;
+
+      const params = {
+        Bucket: 'emigrantbook-videos',
+        Key: fileKey,
+        Body: file,
+        ContentType: file.type || 'video/mp4',
+        CacheControl: 'public, max-age=31536000, immutable'
+      };
+
+      const uploader = r2S3.upload(params);
+
+      uploader.on('httpUploadProgress', (evt) => {
+        if (evt.total && typeof onProgress === 'function') {
+          const percent = Math.round((evt.loaded / evt.total) * 100);
+          onProgress(percent);
+        }
+      });
+
+      uploader.send((err, data) => {
+        if (err) {
+          console.error("R2 Upload Error:", err);
+          onComplete(null, err);
+        } else {
+          const publicUrl = "https://pub-d077cb13f6ec46cebeca95f2f25b9a08.r2.dev/" + fileKey;
+          onComplete(publicUrl, null);
+        }
+      });
+    }
+
+    // 4. გამოქვეყნების ღილაკი: R2 -> Firestore
+    btnPublish.onclick = () => {
+      if (!selectedVideoFile || !currentAuthUser) return;
 
       btnPublish.disabled = true;
+      btnCancel.style.display = "none";
       progressBg.style.display = "block";
-      statusText.textContent = "ვიდეო იტვირთება Cloudflare R2-ზე...";
+      statusText.textContent = "ვიდეო იტვირთება R2-ზე (0%)...";
 
-      try {
-        // ვიდეოს სახელი
-        const fileExt = selectedVideoFile.name.split('.').pop() || "mp4";
-        const fileName = `reels_${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-
-        // პირდაპირი PUT მოთხოვნა Cloudflare Worker / R2-ის Presigned URL-ზე ან API-ზე
-        // (შენი არსებული uploadPhotoToR2 ლოგიკის ანალოგიურად)
-        const uploadUrl = `https://gabji-worker.gabji.workers.dev/upload?filename=${encodeURIComponent(fileName)}`;
-
-        // XMLHttpRequest პროგრესის დასათვლელად
-        const xhr = new XMLHttpRequest();
-        xhr.open("PUT", uploadUrl, true);
-        xhr.setRequestHeader("Content-Type", selectedVideoFile.type || "video/mp4");
-
-        xhr.upload.onprogress = (evt) => {
-          if (evt.lengthComputable) {
-            const percent = Math.round((evt.loaded / evt.total) * 100);
-            progressFill.style.width = percent + "%";
-            statusText.textContent = `იტვირთება: ${percent}%`;
+      uploadReelToR2(
+        selectedVideoFile,
+        (percent) => {
+          progressFill.style.width = percent + "%";
+          statusText.textContent = `ვიდეო იტვირთება R2-ზე (${percent}%)...`;
+        },
+        async (publicVideoUrl, uploadErr) => {
+          if (uploadErr || !publicVideoUrl) {
+            statusText.textContent = "ატვირთვის შეცდომა: " + (uploadErr ? uploadErr.message : "უცნობია");
+            btnPublish.disabled = false;
+            btnCancel.style.display = "block";
+            return;
           }
-        };
 
-        xhr.onload = async () => {
-          if (xhr.status === 200 || xhr.status === 201) {
-            statusText.textContent = "ინახება ბაზაში...";
+          statusText.textContent = "ინახება ბაზაში...";
 
-            // R2 Public URL
-            const publicVideoUrl = `https://pub-d077cb13f6ec46cebeca95f2f25b9a08.r2.dev/${fileName}`;
-
-            // მომხმარებლის პროფილის ამოღება
-            let userDoc = await getDoc(doc(db, "users", currentAuthUser.uid));
-            let userData = userDoc.exists() ? userDoc.data() : {};
+          try {
+            // ავტორის მონაცემების წამოღება users კოლექციიდან
+            let userData = {};
+            const userSnap = await getDoc(doc(db, "users", currentAuthUser.uid));
+            if (userSnap.exists()) userData = userSnap.data();
 
             const reelId = `reel_${Date.now()}`;
             await setDoc(doc(db, "reels", reelId), {
               authorUid: currentAuthUser.uid,
               username: userData.username || (userData.firstName ? `${userData.firstName} ${userData.lastName || ""}`.trim() : "user"),
               authorPhoto: userData.photoUrl || "",
-              description: descInput.value.trim() || "",
+              description: descInput.value.trim(),
               music: "ორიგინალი აუდიო",
               videoUrl: publicVideoUrl,
               likesCount: 0,
@@ -553,28 +574,20 @@
               createdAt: serverTimestamp()
             });
 
-            statusText.textContent = "წარმატებით გამოქვეყნდა!";
+            statusText.textContent = "ვიდეო წარმატებით გამოქვეყნდა!";
             setTimeout(() => {
+              if (currentStream) currentStream.getTracks().forEach(t => t.stop());
               window.location.href = "reels.html";
             }, 800);
-          } else {
-            statusText.textContent = "ატვირთვის შეცდომა (სტატუსი: " + xhr.status + ")";
+
+          } catch (dbErr) {
+            console.error("Firestore შეცდომა:", dbErr);
+            statusText.textContent = "ბაზაში შენახვის შეცდომა: " + dbErr.message;
             btnPublish.disabled = false;
+            btnCancel.style.display = "block";
           }
-        };
-
-        xhr.onerror = () => {
-          statusText.textContent = "ქსელის შეცდომა ვიდეოს ატვირთვისას";
-          btnPublish.disabled = false;
-        };
-
-        xhr.send(selectedVideoFile);
-
-      } catch (err) {
-        console.error("ატვირთვის შეცდომა:", err);
-        statusText.textContent = "შეცდომა: " + err.message;
-        btnPublish.disabled = false;
-      }
+        }
+      );
     };
   </script>
 </body>
