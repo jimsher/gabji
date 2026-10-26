@@ -371,7 +371,7 @@
       </a>
 
       <!-- 2. მეგობრები / რელსები -->
-      <a href="#" class="nav-item">
+      <a href="users.html" class="nav-item">
         <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
         <span>მეგობრები</span>
       </a>
@@ -426,39 +426,77 @@
     // 1x1 შავი პოსტერი Base64-ში, რათა სისტემური Play ღილაკი WebView-მ არ დახატოს
     const blackPoster = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
 
-    // სადემონსტრაციო / რეალური ვიდეოების სია (ავტომატურად გაიშვება Firestore-დან)
-    let reelsData = [
-      {
-        id: "reel_1",
-        authorUid: "demo_uid_1",
-        username: "georgia_from_jeep",
-        authorPhoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
-        description: "Распаковка совершенно нового Rubicon в Тбилиси... #jeep #tbilisi #rubicon",
-        music: "Оригинальный звук - georgia_from_jeep",
-        videoUrl: "https://pub-d077cb13f6ec46cebeca95f2f25b9a08.r2.dev/sample-video.mp4",
-        likes: 7,
-        comments: 1,
-        saves: 2,
-        shares: 0
-      }
-    ];
+    // რეალური მონაცემების მასივი (მაკეტების გარეშე)
+    let reelsData = [];
 
     onAuthStateChanged(auth, async (currentUser) => {
-      // 1. ვკითხულობთ ვიდეოებს Firestore-დან (კოლექცია: reels)
+      // 1. რეალური ვიდეოების წამოღება Firestore-დან (კოლექცია: reels)
       try {
         const snap = await getDocs(collection(db, "reels"));
+        reelsData = [];
+
         if (!snap.empty) {
-          reelsData = [];
-          snap.forEach(d => {
-            reelsData.push({ id: d.id, ...d.data() });
-          });
+          for (const d of snap.docs) {
+            const rData = d.data();
+            let authorName = rData.username || "";
+            let authorPhoto = rData.authorPhoto || rData.photoUrl || "";
+
+            // თუ reel დოკუმენტში ავტორის პროფილი არ წერია, წამოვიღოთ users-დან
+            if ((!authorName || !authorPhoto) && rData.authorUid) {
+              try {
+                const uSnap = await getDoc(doc(db, "users", rData.authorUid));
+                if (uSnap.exists()) {
+                  const uData = uSnap.data();
+                  if (!authorName) {
+                    authorName = uData.username ? `@${uData.username}` : `${uData.firstName || ""} ${uData.lastName || ""}`.trim();
+                  }
+                  if (!authorPhoto && uData.photoUrl) {
+                    authorPhoto = uData.photoUrl;
+                  }
+                }
+              } catch (uErr) {
+                console.error("ავტორის ჩატვირთვის შეცდომა:", uErr);
+              }
+            }
+
+            reelsData.push({
+              id: d.id,
+              authorUid: rData.authorUid || rData.userId || "",
+              username: authorName || "user",
+              authorPhoto: authorPhoto || "icons/user-circle-linear.svg",
+              description: rData.description || "",
+              music: rData.music || "ორიგინალი აუდიო",
+              videoUrl: rData.videoUrl || "",
+              likes: rData.likesCount || rData.likes || 0,
+              comments: rData.commentsCount || rData.comments || 0,
+              saves: rData.savesCount || rData.saves || 0,
+              shares: rData.sharesCount || rData.shares || 0
+            });
+          }
         }
       } catch (e) {
-        console.warn("Firestore Reels Collection ცარიელია, გამოიყენება სტანდარტული ვიდეო:", e);
+        console.error("Firestore Reels Collection შეცდომა:", e);
       }
 
       function renderReels(items, currentUser) {
         container.innerHTML = "";
+
+        // თუ ბაზაში ვიდეო არ დევს, ყალბი მაკეტის ნაცვლად გამოდის სუფთა განულებული მდგომარეობა
+        if (!items || items.length === 0) {
+          container.innerHTML = `
+            <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; color:#888; font-size:15px; text-align:center; padding:20px;">
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#6d6682" stroke-width="1.8" style="margin-bottom:12px;">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                <line x1="7" y1="2" x2="7" y2="22"></line>
+                <line x1="17" y1="2" x2="17" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+              </svg>
+              <div style="font-size:16px; font-weight:600; color:#ffffff; margin-bottom:6px;">ვიდეოები ჯერ არ არის</div>
+              <div style="font-size:13px; color:#6d6682;">Firestore-ში ვიდეო არ მოიძებნა</div>
+            </div>
+          `;
+          return;
+        }
 
         items.forEach((item, index) => {
           const itemEl = document.createElement("div");
@@ -492,7 +530,7 @@
 
               <button class="action-item btn-save">
                 <div class="action-icon-wrap">
-                  <img src="icons/bookmark-outline.svg" class="reel-action-icon" alt="Save">
+                  <img src="icons/bookmark.svg" class="reel-action-icon" alt="Save">
                 </div>
                 <span class="action-count">${item.saves || 0}</span>
               </button>
@@ -511,7 +549,7 @@
 
             <!-- ქვედა მეტა ინფორმაცია -->
             <div class="reel-meta">
-              <div class="meta-username" onclick="window.location.href='profile.html?uid=${item.authorUid}'">@${item.username}</div>
+              <div class="meta-username" onclick="window.location.href='profile.html?uid=${item.authorUid}'">${item.username.startsWith('@') ? item.username : '@' + item.username}</div>
               <div class="meta-description">${item.description}</div>
               <div class="meta-music">
                 <img src="icons/music.svg" style="width: 14px; height: 14px; filter: brightness(0) invert(1);" alt="Music">
@@ -583,7 +621,7 @@
         });
       }
 
-      // გამოძახება ეკრანზე დასახატად
+      // გამოძახება ეკრანზე რეალური მონაცემების დასახატად
       renderReels(reelsData, currentUser);
       initIntersectionObserver();
     });
