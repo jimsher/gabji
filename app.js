@@ -598,18 +598,24 @@ if (profileNameEl) {
       reelsGrid.innerHTML = '<div class="reels-empty-grid">ვიდეოები იტვირთება...</div>';
 
       try {
-        const q = query(collection(db, "reels"), where("authorUid", "==", targetUid));
-        const snap = await getDocs(q);
+        const snap = await getDocs(collection(db, "reels"));
 
         reelsGrid.innerHTML = "";
 
-        if (snap.empty) {
+        const myReels = [];
+        snap.forEach((docSnap) => {
+          const r = docSnap.data();
+          if (r.authorUid === targetUid || r.userId === targetUid) {
+            myReels.push({ id: docSnap.id, ...r });
+          }
+        });
+
+        if (myReels.length === 0) {
           reelsGrid.innerHTML = '<div class="reels-empty-grid">ატვირთული ვიდეოები არ არის</div>';
           return;
         }
 
-        snap.forEach((docSnap) => {
-          const reel = docSnap.data();
+        myReels.forEach((reel) => {
           const card = document.createElement("div");
           card.className = "tt-post-card";
 
@@ -628,7 +634,7 @@ if (profileNameEl) {
 
           // ვიდეოზე შეხებისას პირდაპირ გადადის რელსებზე
           card.onclick = () => {
-            window.location.href = `reels.html?reelId=${docSnap.id}`;
+            window.location.href = `reels.html?reelId=${reel.id}`;
           };
 
           reelsGrid.appendChild(card);
