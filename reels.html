@@ -388,32 +388,43 @@
     </main>
 
     <!-- ქვედა ნავიგაცია -->
-    <nav class="bottom-nav">
-      <a href="feed.html" class="nav-btn active">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-        <span>მთავარი</span>
-      </a>
+    <!-- TikTok სტილის ქვედა ნავიგაცია -->
+  <nav class="bottom-nav-bar">
+    <!-- 1. მთავარი / ფიდი -->
+    <a href="feed.html" class="nav-item">
+      <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
+      <span>ფიდი</span>
+    </a>
 
-      <a href="users.html" class="nav-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        <span>მეგობრები</span>
-      </a>
+    <!-- 2. მეგობრები / რელსები -->
+    <a href="#" class="nav-item">
+      <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
+      <span>მეგობრები</span>
+    </a>
 
-      <div class="btn-create-reel" id="btnUploadModal">
-        <svg viewBox="0 0 24 24" stroke-width="3" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
+    <div class="nav-item nav-upload-wrap">
+      <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
+        <span class="plus-symbol">+</span>
+      </button>
+    </div>
+
+    <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
+    <a href="#" class="nav-item nav-inbox-wrap">
+      <div class="nav-icon-badge-box">
+        <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
+        <span class="nav-unread-badge">26</span>
       </div>
+      <span>შემოსულები</span>
+    </a>
 
-      <a href="#" class="nav-btn">
-        <span class="nav-badge">27</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>შემოსულები</span>
-      </a>
-
-      <a href="profile.html" class="nav-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        <span>პროფილი</span>
-      </a>
-    </nav>
+    <!-- 5. პროფილი -->
+    <a href="profile.html" class="nav-item active">
+      <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
+      <span>პროფილი</span>
+    </a>
+  </nav>
+    
 
   </div>
 
