@@ -448,12 +448,8 @@
       initIntersectionObserver();
     });
 
-
-        function renderReels(items, currentUser) {
+    function renderReels(items, currentUser) {
       container.innerHTML = "";
-
-      // 1x1 გამჭვირვალე შავი პიქსელი Base64-ში სისტემური Play ღილაკის დასაბლოკად
-      const blackPoster = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
       items.forEach((item, index) => {
         const itemEl = document.createElement("div");
@@ -461,15 +457,8 @@
         itemEl.dataset.id = item.id;
 
         itemEl.innerHTML = `
-          <!-- ვიდეო პლეიერი Base64 პოსტერით და სისტემური ღილაკების ბლოკით -->
-          <video class="reel-video" 
-                 src="${item.videoUrl}" 
-                 poster="${blackPoster}"
-                 loop 
-                 muted
-                 playsinline 
-                 webkit-playsinline
-                 preload="auto"></video>
+          <!-- ვიდეო პლეიერი -->
+          <video class="reel-video" src="${item.videoUrl}" loop playsinline preload="metadata"></video>
 
           <!-- მარჯვენა მოქმედების პანელი -->
           <div class="reels-sidebar">
@@ -494,7 +483,7 @@
 
             <button class="action-item btn-save">
               <div class="action-icon-wrap">
-                <img src="icons/bookmark.svg" class="reel-action-icon" alt="Save">
+                <img src="icons/bookmark-outline.svg" class="reel-action-icon" alt="Save">
               </div>
               <span class="action-count">${item.saves || 0}</span>
             </button>
@@ -522,21 +511,16 @@
           </div>
         `;
 
-        // ვიდეოზე შეხებისას Pause / Play და ხმის ჩართვა
+
+        // ვიდეოზე შეხებისას Pause / Play
         const video = itemEl.querySelector(".reel-video");
         video.onclick = () => {
           if (video.paused) {
-            video.muted = false; // პირველივე შეხებაზე ხმას რთავს
             video.play();
           } else {
             video.pause();
           }
         };
-
-        container.appendChild(itemEl);
-      });
-      }
-
 
         // Like-ის ფუნქციონალი ბაზასთან კავშირში
         const likeBtn = itemEl.querySelector(".btn-like");
