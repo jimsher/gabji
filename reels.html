@@ -461,7 +461,7 @@ video::-webkit-media-controls-overlay-play-button {
 
       
       
-     function renderReels(items, currentUser) {
+      function renderReels(items, currentUser) {
       container.innerHTML = "";
 
       items.forEach((item, index) => {
@@ -471,7 +471,7 @@ video::-webkit-media-controls-overlay-play-button {
 
         itemEl.innerHTML = `
           <!-- ვიდეო პლეიერი -->
-          <video class="reel-video" src="${item.videoUrl}" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" loop playsinline preload="metadata"></video>
+          <video class="reel-video" src="${item.videoUrl}" loop muted playsinline webkit-playsinline preload="metadata"></video>
 
           <!-- მარჯვენა მოქმედების პანელი -->
           <div class="reels-sidebar">
@@ -496,7 +496,7 @@ video::-webkit-media-controls-overlay-play-button {
 
             <button class="action-item btn-save">
               <div class="action-icon-wrap">
-                <img src="icons/bookmark-outline.svg" class="reel-action-icon" alt="Save">
+                <img src="icons/bookmark.svg" class="reel-action-icon" alt="Save">
               </div>
               <span class="action-count">${item.saves || 0}</span>
             </button>
@@ -524,11 +524,11 @@ video::-webkit-media-controls-overlay-play-button {
           </div>
         `;
 
-
-        // ვიდეოზე შეხებისას Pause / Play
+        // ვიდეოზე შეხებისას Pause / Play და ხმის ჩართვა
         const video = itemEl.querySelector(".reel-video");
         video.onclick = () => {
           if (video.paused) {
+            video.muted = false;
             video.play();
           } else {
             video.pause();
@@ -553,7 +553,6 @@ video::-webkit-media-controls-overlay-play-button {
           }
           likeCountEl.textContent = count;
 
-          // თუ მომხმარებელი შესულია, ვწერთ ბაზაში
           if (currentUser) {
             try {
               await setDoc(doc(db, "reels", item.id, "likes", currentUser.uid), {
@@ -587,6 +586,7 @@ video::-webkit-media-controls-overlay-play-button {
         container.appendChild(itemEl);
       });
     }
+       
 
         
 
