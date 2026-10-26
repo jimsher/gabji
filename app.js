@@ -596,6 +596,7 @@ if (profileNameEl) {
 
 
 
+
  /* ==========================================================================
    5. ხალხის სია (USERS.HTML & FIRESTORE)
    ========================================================================== */
@@ -604,6 +605,7 @@ const usersListContainer = document.getElementById("usersListContainer");
 if (usersListContainer) {
   const userSearchInput = document.getElementById("userSearchInput");
   let allUsersList = [];
+  let myFollowedSet = new Set(); // ბაზიდან უკვე გამოწერილების ID-ების სია
 
   const renderUsersList = (users, currentUid) => {
     usersListContainer.innerHTML = "";
@@ -620,6 +622,9 @@ if (usersListContainer) {
       const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim() || "მომხმარებელი";
       const usernameTag = user.username ? `@${user.username}` : (user.email ? `@${user.email.split("@")[0]}` : "@user");
       const targetId = user.userId || user.uid;
+
+      // ვამოწმებთ, უკვე გამოწერილი გვყავს თუ არა ბაზაში
+      let isFollowed = myFollowedSet.has(targetId);
 
       const row = document.createElement("div");
       row.className = "user-list-item";
@@ -642,7 +647,7 @@ if (usersListContainer) {
           </div>
         </div>
         <div class="user-item-right">
-          <button type="button" class="btn-user-follow">გამოწერა</button>
+          <button type="button" class="btn-user-follow ${isFollowed ? 'following' : ''}" style="${isFollowed ? 'background: #252525;' : ''}">${isFollowed ? 'გამოწერილია' : 'გამოწერა'}</button>
           <button type="button" class="btn-user-dots" aria-label="More">•••</button>
         </div>
       `;
@@ -657,14 +662,36 @@ if (usersListContainer) {
 
       const followBtn = row.querySelector(".btn-user-follow");
       if (followBtn) {
-        followBtn.onclick = (e) => {
+        followBtn.onclick = async (e) => {
           e.stopPropagation();
-          if (followBtn.textContent === "გამოწერა") {
-            followBtn.textContent = "გამოწერილია";
-            followBtn.classList.add("following");
-          } else {
-            followBtn.textContent = "გამოწერა";
-            followBtn.classList.remove("following");
+          followBtn.disabled = true;
+
+          const followDocRef = doc(db, "users", currentUid, "following", targetId);
+
+          try {
+            if (!isFollowed) {
+              await setDoc(followDocRef, {
+                followedUid: targetId,
+                active: true,
+                createdAt: serverTimestamp()
+              });
+              myFollowedSet.add(targetId);
+              followBtn.textContent = "გამოწერილია";
+              followBtn.style.background = "#252525";
+              followBtn.classList.add("following");
+              isFollowed = true;
+            } else {
+              await setDoc(followDocRef, { active: false }, { merge: true });
+              myFollowedSet.delete(targetId);
+              followBtn.textContent = "გამოწერა";
+              followBtn.style.background = "";
+              followBtn.classList.remove("following");
+              isFollowed = false;
+            }
+          } catch (err) {
+            console.error("გამოწერის ბაზაში შენახვის შეცდომა:", err);
+          } finally {
+            followBtn.disabled = false;
           }
         };
       }
@@ -680,6 +707,17 @@ if (usersListContainer) {
     }
 
     try {
+      // 1. ვკითხულობთ, ვინ გვყავს უკვე გამოწერილი
+      const followSnap = await getDocs(collection(db, "users", currentUser.uid, "following"));
+      myFollowedSet.clear();
+      followSnap.forEach((docItem) => {
+        const itemData = docItem.data();
+        if (itemData.active !== false) {
+          myFollowedSet.add(docItem.id);
+        }
+      });
+
+      // 2. გამოგვაქვს ხალხის სია
       const snap = await getDocs(collection(db, "users"));
       allUsersList = [];
       snap.forEach((d) => {
