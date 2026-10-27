@@ -251,7 +251,18 @@ export const translations = {
     lbl_interests: "Mga Interes",
     tag_interests: "Mga Interes",
     tag_new: "Bag-o",
-    btn_register: "Pagrehistro"
+    btn_register: "Pagrehistro",
+
+    // ფიდი
+    ph_search: "Pangitaa",
+  lbl_filter: "Pagsala:",
+  btn_like: "Ganahan",
+  btn_pass: "Laktaw",
+  nav_feed: "Feed",
+  nav_people: "Katawhan",
+  nav_reels: "Reels",
+  nav_inbox: "Inbox",
+  nav_profile: "Profile"
   },
 
   // 8. Čeština
@@ -278,7 +289,18 @@ export const translations = {
     lbl_interests: "Zájmy",
     tag_interests: "Zájmy",
     tag_new: "Nové",
-    btn_register: "Registrovat se"
+    btn_register: "Registrovat se",
+
+    // ფიდი
+    ph_search: "Hledat",
+  lbl_filter: "Filtr:",
+  btn_like: "To se mi líbí",
+  btn_pass: "Přeskočit",
+  nav_feed: "Kanál",
+  nav_people: "Lidé",
+  nav_reels: "Reels",
+  nav_inbox: "Doručené",
+  nav_profile: "Profil"
   },
 
   // 9. Dansk
