@@ -9,7 +9,21 @@ export const translations = {
     login_title: "ავტორიზაცია",
     ph_email: "ელექტრონული ფოსტა",
     ph_password: "პაროლი",
-    btn_cancel: "გაუქმება"
+    btn_cancel: "გაუქმება",
+    signup_title: "შექმენი პროფილი",
+    signup_sub: "პროფილის პერსონალიზებული დაყენება",
+    lbl_first_name: "სახელი",
+    lbl_last_name: "გვარი",
+    lbl_birth_date: "დაბადების თარიღი",
+    lbl_country: "ქვეყანა",
+    lbl_city: "ქალაქი",
+    lbl_email: "ელ-ფოსტა",
+    lbl_password: "პაროლი",
+    ph_password_min: "მინიმუმ 6 სიმბოლო",
+    lbl_interests: "ინტერესები",
+    tag_interests: "ინტერესები",
+    tag_new: "ახალი",
+    btn_register: "რეგისტრაცია"
   },
 
   // 2. Azərbaycan
@@ -22,7 +36,21 @@ export const translations = {
     login_title: "Giriş",
     ph_email: "E-poçt ünvanı",
     ph_password: "Şifrə",
-    btn_cancel: "Ləğv et"
+    btn_cancel: "Ləğv et",
+    signup_title: "Profil yarat",
+    signup_sub: "Fərdiləşdirilmiş profil quraşdırması",
+    lbl_first_name: "Ad",
+    lbl_last_name: "Soyad",
+    lbl_birth_date: "Doğum tarixi",
+    lbl_country: "Ölkə",
+    lbl_city: "Şəhər",
+    lbl_email: "E-poçt",
+    lbl_password: "Şifrə",
+    ph_password_min: "Ən azı 6 simvol",
+    lbl_interests: "Maraqlar",
+    tag_interests: "Maraqlar",
+    tag_new: "Yeni",
+    btn_register: "Qeydiyyatdan keç"
   },
 
   // 3. Bahasa Indonesia
@@ -35,7 +63,21 @@ export const translations = {
     login_title: "Masuk",
     ph_email: "Alamat email",
     ph_password: "Kata sandi",
-    btn_cancel: "Batal"
+    btn_cancel: "Batal",
+    signup_title: "Buat Profil",
+    signup_sub: "Pengaturan orientasi yang dipersonalisasi",
+    lbl_first_name: "Nama depan",
+    lbl_last_name: "Nama belakang",
+    lbl_birth_date: "Tanggal lahir",
+    lbl_country: "Negara",
+    lbl_city: "Kota",
+    lbl_email: "Email",
+    lbl_password: "Kata sandi",
+    ph_password_min: "Minimal 6 karakter",
+    lbl_interests: "Minat",
+    tag_interests: "Minat",
+    tag_new: "Baru",
+    btn_register: "Daftar"
   },
 
   // 4. Bahasa Melayu
@@ -48,7 +90,21 @@ export const translations = {
     login_title: "Log masuk",
     ph_email: "Alamat e-mel",
     ph_password: "Kata laluan",
-    btn_cancel: "Batal"
+    btn_cancel: "Batal",
+    signup_title: "Cipta Profil",
+    signup_sub: "Persediaan profil yang diperibadikan",
+    lbl_first_name: "Nama pertama",
+    lbl_last_name: "Nama akhir",
+    lbl_birth_date: "Tarikh lahir",
+    lbl_country: "Negara",
+    lbl_city: "Bandar",
+    lbl_email: "E-mel",
+    lbl_password: "Kata laluan",
+    ph_password_min: "Sekurang-kurangnya 6 aksara",
+    lbl_interests: "Minat",
+    tag_interests: "Minat",
+    tag_new: "Baharu",
+    btn_register: "Daftar"
   },
 
   // 5. Basa Jawa
@@ -61,7 +117,21 @@ export const translations = {
     login_title: "Mlebu",
     ph_email: "Alamat email",
     ph_password: "Tembung sandhi",
-    btn_cancel: "Batal"
+    btn_cancel: "Batal",
+    signup_title: "Gawe Profil",
+    signup_sub: "Setelan profil sing dipersonalisasi",
+    lbl_first_name: "Jeneng ngarep",
+    lbl_last_name: "Jeneng mburi",
+    lbl_birth_date: "Tanggal lahir",
+    lbl_country: "Negara",
+    lbl_city: "Kutha",
+    lbl_email: "Email",
+    lbl_password: "Tembung sandhi",
+    ph_password_min: "Paling ora 6 karakter",
+    lbl_interests: "Minat",
+    tag_interests: "Minat",
+    tag_new: "Anyar",
+    btn_register: "Ndhaptar"
   },
 
   // 6. Català
@@ -74,7 +144,21 @@ export const translations = {
     login_title: "Iniciar sessió",
     ph_email: "Correu electrònic",
     ph_password: "Contrasenya",
-    btn_cancel: "Cancel·la"
+    btn_cancel: "Cancel·la",
+    signup_title: "Crea un perfil",
+    signup_sub: "Configuració de perfil personalitzada",
+    lbl_first_name: "Nom",
+    lbl_last_name: "Cognom",
+    lbl_birth_date: "Data de naixement",
+    lbl_country: "País",
+    lbl_city: "Ciutat",
+    lbl_email: "Correu electrònic",
+    lbl_password: "Contrasenya",
+    ph_password_min: "Com a mínim 6 caràcters",
+    lbl_interests: "Interessos",
+    tag_interests: "Interessos",
+    tag_new: "Nou",
+    btn_register: "Registra't"
   },
 
   // 7. Cebuano
@@ -87,7 +171,21 @@ export const translations = {
     login_title: "Pagsulod",
     ph_email: "Email address",
     ph_password: "Password",
-    btn_cancel: "Kanselahon"
+    btn_cancel: "Kanselahon",
+    signup_title: "Paghimo og Profile",
+    signup_sub: "Nahiangay nga onboarding setup",
+    lbl_first_name: "Ngalan",
+    lbl_last_name: "Apelyido",
+    lbl_birth_date: "Petsa sa pagkatawo",
+    lbl_country: "Nasod",
+    lbl_city: "Dakbayan",
+    lbl_email: "Email",
+    lbl_password: "Password",
+    ph_password_min: "Labing menos 6 ka karakter",
+    lbl_interests: "Mga Interes",
+    tag_interests: "Mga Interes",
+    tag_new: "Bag-o",
+    btn_register: "Pagrehistro"
   },
 
   // 8. Čeština
@@ -100,7 +198,21 @@ export const translations = {
     login_title: "Přihlášení",
     ph_email: "E-mailová adresa",
     ph_password: "Heslo",
-    btn_cancel: "Zrušit"
+    btn_cancel: "Zrušit",
+    signup_title: "Vytvořit profil",
+    signup_sub: "Personalizované nastavení profilu",
+    lbl_first_name: "Jméno",
+    lbl_last_name: "Příjmení",
+    lbl_birth_date: "Datum narození",
+    lbl_country: "Země",
+    lbl_city: "Město",
+    lbl_email: "E-mail",
+    lbl_password: "Heslo",
+    ph_password_min: "Alespoň 6 znaků",
+    lbl_interests: "Zájmy",
+    tag_interests: "Zájmy",
+    tag_new: "Nové",
+    btn_register: "Registrovat se"
   },
 
   // 9. Dansk
@@ -113,7 +225,21 @@ export const translations = {
     login_title: "Log ind",
     ph_email: "E-mailadresse",
     ph_password: "Adgangskode",
-    btn_cancel: "Annuller"
+    btn_cancel: "Annuller",
+    signup_title: "Opret profil",
+    signup_sub: "Personlig profilopsætning",
+    lbl_first_name: "Fornavn",
+    lbl_last_name: "Efternavn",
+    lbl_birth_date: "Fødselsdato",
+    lbl_country: "Land",
+    lbl_city: "By",
+    lbl_email: "E-mail",
+    lbl_password: "Adgangskode",
+    ph_password_min: "Mindst 6 tegn",
+    lbl_interests: "Interesser",
+    tag_interests: "Interesser",
+    tag_new: "Nyt",
+    btn_register: "Opret profil"
   },
 
   // 10. Deutsch
@@ -126,7 +252,21 @@ export const translations = {
     login_title: "Anmeldung",
     ph_email: "E-Mail-Adresse",
     ph_password: "Passwort",
-    btn_cancel: "Abbrechen"
+    btn_cancel: "Abbrechen",
+    signup_title: "Profil erstellen",
+    signup_sub: "Personalisiertes Onboarding-Setup",
+    lbl_first_name: "Vorname",
+    lbl_last_name: "Nachname",
+    lbl_birth_date: "Geburtsdatum",
+    lbl_country: "Land",
+    lbl_city: "Stadt",
+    lbl_email: "E-Mail",
+    lbl_password: "Passwort",
+    ph_password_min: "Mindestens 6 Zeichen",
+    lbl_interests: "Interessen",
+    tag_interests: "Interessen",
+    tag_new: "Neu",
+    btn_register: "Registrieren"
   },
 
   // 11. Eesti
@@ -139,7 +279,21 @@ export const translations = {
     login_title: "Sisselogimine",
     ph_email: "E-posti aadress",
     ph_password: "Parool",
-    btn_cancel: "Tühista"
+    btn_cancel: "Tühista",
+    signup_title: "Loo profiil",
+    signup_sub: "Isikupärastatud häälestus",
+    lbl_first_name: "Eesnimi",
+    lbl_last_name: "Perekonnanimi",
+    lbl_birth_date: "Sünnikuupäev",
+    lbl_country: "Riik",
+    lbl_city: "Linn",
+    lbl_email: "E-post",
+    lbl_password: "Parool",
+    ph_password_min: "Vähemalt 6 tähemärki",
+    lbl_interests: "Huvid",
+    tag_interests: "Huvid",
+    tag_new: "Uus",
+    btn_register: "Registreeru"
   },
 
   // 12. English (UK)
@@ -152,7 +306,21 @@ export const translations = {
     login_title: "Log in",
     ph_email: "Email address",
     ph_password: "Password",
-    btn_cancel: "Cancel"
+    btn_cancel: "Cancel",
+    signup_title: "Create profile",
+    signup_sub: "Personalised onboard setup",
+    lbl_first_name: "First name",
+    lbl_last_name: "Last name",
+    lbl_birth_date: "Date of birth",
+    lbl_country: "Country",
+    lbl_city: "City",
+    lbl_email: "Email",
+    lbl_password: "Password",
+    ph_password_min: "At least 6 characters",
+    lbl_interests: "Interests",
+    tag_interests: "Interests",
+    tag_new: "New",
+    btn_register: "Register"
   },
 
   // 13. English (US)
@@ -165,7 +333,21 @@ export const translations = {
     login_title: "Log in",
     ph_email: "Email address",
     ph_password: "Password",
-    btn_cancel: "Cancel"
+    btn_cancel: "Cancel",
+    signup_title: "Create profile",
+    signup_sub: "Personalized onboard setup",
+    lbl_first_name: "First name",
+    lbl_last_name: "Last name",
+    lbl_birth_date: "Date of birth",
+    lbl_country: "Country",
+    lbl_city: "City",
+    lbl_email: "Email",
+    lbl_password: "Password",
+    ph_password_min: "At least 6 characters",
+    lbl_interests: "Interests",
+    tag_interests: "Interests",
+    tag_new: "New",
+    btn_register: "Sign up"
   },
 
   // 14. Español
@@ -178,7 +360,21 @@ export const translations = {
     login_title: "Iniciar sesión",
     ph_email: "Correo electrónico",
     ph_password: "Contraseña",
-    btn_cancel: "Cancelar"
+    btn_cancel: "Cancelar",
+    signup_title: "Crear perfil",
+    signup_sub: "Configuración personalizada de bienvenida",
+    lbl_first_name: "Nombre",
+    lbl_last_name: "Apellido",
+    lbl_birth_date: "Fecha de nacimiento",
+    lbl_country: "País",
+    lbl_city: "Ciudad",
+    lbl_email: "Correo",
+    lbl_password: "Contraseña",
+    ph_password_min: "Al menos 6 caracteres",
+    lbl_interests: "Intereses",
+    tag_interests: "Intereses",
+    tag_new: "Nuevo",
+    btn_register: "Registrarse"
   },
 
   // 15. Español (Latinoamérica)
@@ -191,7 +387,21 @@ export const translations = {
     login_title: "Iniciar sesión",
     ph_email: "Correo electrónico",
     ph_password: "Contraseña",
-    btn_cancel: "Cancelar"
+    btn_cancel: "Cancelar",
+    signup_title: "Crear perfil",
+    signup_sub: "Configuración personalizada de incorporación",
+    lbl_first_name: "Nombre",
+    lbl_last_name: "Apellido",
+    lbl_birth_date: "Fecha de nacimiento",
+    lbl_country: "País",
+    lbl_city: "Ciudad",
+    lbl_email: "Correo",
+    lbl_password: "Contraseña",
+    ph_password_min: "Al menos 6 caracteres",
+    lbl_interests: "Intereses",
+    tag_interests: "Intereses",
+    tag_new: "Nuevo",
+    btn_register: "Registrarse"
   },
 
   // 16. Filipino
@@ -204,7 +414,21 @@ export const translations = {
     login_title: "Mag-log in",
     ph_email: "Email address",
     ph_password: "Password",
-    btn_cancel: "Kanselahin"
+    btn_cancel: "Kanselahin",
+    signup_title: "Gumawa ng Profile",
+    signup_sub: "Personalized na onboarding setup",
+    lbl_first_name: "Pangalan",
+    lbl_last_name: "Apelyido",
+    lbl_birth_date: "Araw ng kapanganakan",
+    lbl_country: "Bansa",
+    lbl_city: "Lungsod",
+    lbl_email: "Email",
+    lbl_password: "Password",
+    ph_password_min: "Hindi bababa sa 6 na character",
+    lbl_interests: "Mga Interes",
+    tag_interests: "Mga Interes",
+    tag_new: "Bago",
+    btn_register: "Mag-rehistro"
   },
 
   // 17. Français
@@ -217,7 +441,21 @@ export const translations = {
     login_title: "Connexion",
     ph_email: "Adresse e-mail",
     ph_password: "Mot de passe",
-    btn_cancel: "Annuler"
+    btn_cancel: "Annuler",
+    signup_title: "Créer un profil",
+    signup_sub: "Configuration d'accueil personnalisée",
+    lbl_first_name: "Prénom",
+    lbl_last_name: "Nom",
+    lbl_birth_date: "Date de naissance",
+    lbl_country: "Pays",
+    lbl_city: "Ville",
+    lbl_email: "E-mail",
+    lbl_password: "Mot de passe",
+    ph_password_min: "Au moins 6 caractères",
+    lbl_interests: "Centres d'intérêt",
+    tag_interests: "Centres d'intérêt",
+    tag_new: "Nouveau",
+    btn_register: "S'inscrire"
   },
 
   // 18. Français (Canada)
@@ -230,7 +468,21 @@ export const translations = {
     login_title: "Connexion",
     ph_email: "Adresse courriel",
     ph_password: "Mot de passe",
-    btn_cancel: "Annuler"
+    btn_cancel: "Annuler",
+    signup_title: "Créer un profil",
+    signup_sub: "Configuration personnalisée",
+    lbl_first_name: "Prénom",
+    lbl_last_name: "Nom de famille",
+    lbl_birth_date: "Date de naissance",
+    lbl_country: "Pays",
+    lbl_city: "Ville",
+    lbl_email: "Courriel",
+    lbl_password: "Mot de passe",
+    ph_password_min: "Au moins 6 caractères",
+    lbl_interests: "Intérêts",
+    tag_interests: "Intérêts",
+    tag_new: "Nouveau",
+    btn_register: "S'inscrire"
   },
 
   // 19. Gaeilge
@@ -243,7 +495,21 @@ export const translations = {
     login_title: "Logáil isteach",
     ph_email: "Seoladh ríomhphoist",
     ph_password: "Pasfhocal",
-    btn_cancel: "Cealaigh"
+    btn_cancel: "Cealaigh",
+    signup_title: "Cruthaigh Próifíl",
+    signup_sub: "Socrú pearsantaithe",
+    lbl_first_name: "Ainm",
+    lbl_last_name: "Sloinne",
+    lbl_birth_date: "Dáta breithe",
+    lbl_country: "Tír",
+    lbl_city: "Cathair",
+    lbl_email: "Ríomhphost",
+    lbl_password: "Pasfhocal",
+    ph_password_min: "Ar a laghad 6 charachtar",
+    lbl_interests: "Suimeanna",
+    tag_interests: "Suimeanna",
+    tag_new: "Nua",
+    btn_register: "Cláraigh"
   },
 
   // 20. Hrvatski
@@ -256,7 +522,21 @@ export const translations = {
     login_title: "Prijava",
     ph_email: "Adresa e-pošte",
     ph_password: "Lozinka",
-    btn_cancel: "Odustani"
+    btn_cancel: "Odustani",
+    signup_title: "Stvori profil",
+    signup_sub: "Personalizirano postavljanje profila",
+    lbl_first_name: "Ime",
+    lbl_last_name: "Prezime",
+    lbl_birth_date: "Datum rođenja",
+    lbl_country: "Država",
+    lbl_city: "Grad",
+    lbl_email: "E-pošta",
+    lbl_password: "Lozinka",
+    ph_password_min: "Najmanje 6 znakova",
+    lbl_interests: "Interesi",
+    tag_interests: "Interesi",
+    tag_new: "Novo",
+    btn_register: "Registracija"
   },
 
   // 21. Íslenska
@@ -269,7 +549,21 @@ export const translations = {
     login_title: "Innskráning",
     ph_email: "Netfang",
     ph_password: "Lykilorð",
-    btn_cancel: "Hætta við"
+    btn_cancel: "Hætta við",
+    signup_title: "Búa til aðgang",
+    signup_sub: "Persónuleg uppsetning",
+    lbl_first_name: "Fornafn",
+    lbl_last_name: "Eftirnafn",
+    lbl_birth_date: "Fæðingardagur",
+    lbl_country: "Land",
+    lbl_city: "Borg",
+    lbl_email: "Netfang",
+    lbl_password: "Lykilorð",
+    ph_password_min: "Að minnsta kosti 6 stafir",
+    lbl_interests: "Áhugamál",
+    tag_interests: "Áhugamál",
+    tag_new: "Nýtt",
+    btn_register: "Nýskrá"
   },
 
   // 22. Italiano
@@ -282,7 +576,21 @@ export const translations = {
     login_title: "Accesso",
     ph_email: "Indirizzo email",
     ph_password: "Password",
-    btn_cancel: "Annulla"
+    btn_cancel: "Annulla",
+    signup_title: "Crea profilo",
+    signup_sub: "Configurazione onboarding personalizzata",
+    lbl_first_name: "Nome",
+    lbl_last_name: "Cognome",
+    lbl_birth_date: "Data di nascita",
+    lbl_country: "Paese",
+    lbl_city: "Città",
+    lbl_email: "Email",
+    lbl_password: "Password",
+    ph_password_min: "Almeno 6 caratteri",
+    lbl_interests: "Interessi",
+    tag_interests: "Interessi",
+    tag_new: "Nuovo",
+    btn_register: "Registrati"
   },
 
   // 23. Kiswahili
@@ -295,7 +603,21 @@ export const translations = {
     login_title: "Kuingia",
     ph_email: "Barua pepe",
     ph_password: "Nenosiri",
-    btn_cancel: "Ghairi"
+    btn_cancel: "Ghairi",
+    signup_title: "Unda Wasifu",
+    signup_sub: "Usanidi wa kibinafsi",
+    lbl_first_name: "Jina la kwanza",
+    lbl_last_name: "Jina la ukoo",
+    lbl_birth_date: "Tarehe ya kuzaliwa",
+    lbl_country: "Nchi",
+    lbl_city: "Jiji",
+    lbl_email: "Barua pepe",
+    lbl_password: "Nenosiri",
+    ph_password_min: "Angalau herufi 6",
+    lbl_interests: "Mambo ya kupendeza",
+    tag_interests: "Mambo ya kupendeza",
+    tag_new: "Mpya",
+    btn_register: "Jisajili"
   },
 
   // 24. Latviešu
@@ -308,7 +630,21 @@ export const translations = {
     login_title: "Pieslēgšanās",
     ph_email: "E-pasta adrese",
     ph_password: "Parole",
-    btn_cancel: "Atcelt"
+    btn_cancel: "Atcelt",
+    signup_title: "Izveidot profilu",
+    signup_sub: "Personalizēta profila iestatīšana",
+    lbl_first_name: "Vārds",
+    lbl_last_name: "Uzvārds",
+    lbl_birth_date: "Dzimšanas datums",
+    lbl_country: "Valsts",
+    lbl_city: "Pilsēta",
+    lbl_email: "E-pasts",
+    lbl_password: "Parole",
+    ph_password_min: "Vismaz 6 rakstzīmes",
+    lbl_interests: "Intereses",
+    tag_interests: "Intereses",
+    tag_new: "Jauns",
+    btn_register: "Reģistrēties"
   },
 
   // 25. Lietuvių
@@ -321,7 +657,21 @@ export const translations = {
     login_title: "Prisijungimas",
     ph_email: "El. pašto adresas",
     ph_password: "Slaptažodis",
-    btn_cancel: "Atšaukti"
+    btn_cancel: "Atšaukti",
+    signup_title: "Sukurti profilį",
+    signup_sub: "Suasmenintas paskyros nustatymas",
+    lbl_first_name: "Vardas",
+    lbl_last_name: "Pavardė",
+    lbl_birth_date: "Gimimo data",
+    lbl_country: "Šalis",
+    lbl_city: "Miestas",
+    lbl_email: "El. paštas",
+    lbl_password: "Slaptažodis",
+    ph_password_min: "Ne mažiau kaip 6 simboliai",
+    lbl_interests: "Pomėgiai",
+    tag_interests: "Pomėgiai",
+    tag_new: "Naujas",
+    btn_register: "Registruotis"
   },
 
   // 26. Magyar
@@ -334,7 +684,21 @@ export const translations = {
     login_title: "Bejelentkezés",
     ph_email: "E-mail cím",
     ph_password: "Jelszó",
-    btn_cancel: "Mégse"
+    btn_cancel: "Mégse",
+    signup_title: "Profil létrehozása",
+    signup_sub: "Személyre szabott beállítás",
+    lbl_first_name: "Keresztnév",
+    lbl_last_name: "Vezetéknév",
+    lbl_birth_date: "Születési dátum",
+    lbl_country: "Ország",
+    lbl_city: "Város",
+    lbl_email: "E-mail",
+    lbl_password: "Jelszó",
+    ph_password_min: "Legalább 6 karakter",
+    lbl_interests: "Érdeklődési körök",
+    tag_interests: "Érdeklődési körök",
+    tag_new: "Új",
+    btn_register: "Regisztráció"
   },
 
   // 27. Nederlands
@@ -347,7 +711,21 @@ export const translations = {
     login_title: "Inloggen",
     ph_email: "E-mailadres",
     ph_password: "Wachtwoord",
-    btn_cancel: "Annuleren"
+    btn_cancel: "Annuleren",
+    signup_title: "Profiel aanmaken",
+    signup_sub: "Gepersonaliseerde configuratie",
+    lbl_first_name: "Voornaam",
+    lbl_last_name: "Achternaam",
+    lbl_birth_date: "Geboortedatum",
+    lbl_country: "Land",
+    lbl_city: "Stad",
+    lbl_email: "E-mail",
+    lbl_password: "Wachtwoord",
+    ph_password_min: "Minimaal 6 tekens",
+    lbl_interests: "Interesses",
+    tag_interests: "Interesses",
+    tag_new: "Nieuw",
+    btn_register: "Aanmelden"
   },
 
   // 28. norsk (bokmål)
@@ -360,7 +738,21 @@ export const translations = {
     login_title: "Innlogging",
     ph_email: "E-postadresse",
     ph_password: "Passord",
-    btn_cancel: "Avbryt"
+    btn_cancel: "Avbryt",
+    signup_title: "Opprett profil",
+    signup_sub: "Personlig onboarding-oppsett",
+    lbl_first_name: "Fornavn",
+    lbl_last_name: "Etternavn",
+    lbl_birth_date: "Fødselsdato",
+    lbl_country: "Land",
+    lbl_city: "By",
+    lbl_email: "E-post",
+    lbl_password: "Passord",
+    ph_password_min: "Minst 6 tegn",
+    lbl_interests: "Interesser",
+    tag_interests: "Interesser",
+    tag_new: "Ny",
+    btn_register: "Registrer"
   },
 
   // 29. O'zbek
@@ -373,7 +765,21 @@ export const translations = {
     login_title: "Kirish",
     ph_email: "Elektron pochta manzili",
     ph_password: "Parol",
-    btn_cancel: "Bekor qilish"
+    btn_cancel: "Bekor qilish",
+    signup_title: "Profil yaratish",
+    signup_sub: "Moslashtirilgan sozlash",
+    lbl_first_name: "Ism",
+    lbl_last_name: "Familiya",
+    lbl_birth_date: "Tug'ilgan sana",
+    lbl_country: "Mamlakat",
+    lbl_city: "Shahar",
+    lbl_email: "E-pochta",
+    lbl_password: "Parol",
+    ph_password_min: "Kamida 6 ta belgi",
+    lbl_interests: "Qiziqishlar",
+    tag_interests: "Qiziqishlar",
+    tag_new: "Yangi",
+    btn_register: "Ro'yxatdan o'tish"
   },
 
   // 30. Polski
@@ -386,7 +792,21 @@ export const translations = {
     login_title: "Logowanie",
     ph_email: "Adres e-mail",
     ph_password: "Hasło",
-    btn_cancel: "Anuluj"
+    btn_cancel: "Anuluj",
+    signup_title: "Utwórz profil",
+    signup_sub: "Spersonalizowana konfiguracja profilu",
+    lbl_first_name: "Imię",
+    lbl_last_name: "Nazwisko",
+    lbl_birth_date: "Data urodzenia",
+    lbl_country: "Kraj",
+    lbl_city: "Miasto",
+    lbl_email: "E-mail",
+    lbl_password: "Hasło",
+    ph_password_min: "Co najmniej 6 znaków",
+    lbl_interests: "Zainteresowania",
+    tag_interests: "Zainteresowania",
+    tag_new: "Nowy",
+    btn_register: "Zarejestruj się"
   },
 
   // 31. Português
@@ -399,7 +819,21 @@ export const translations = {
     login_title: "Iniciar sessão",
     ph_email: "Endereço de e-mail",
     ph_password: "Palavra-passe",
-    btn_cancel: "Cancelar"
+    btn_cancel: "Cancelar",
+    signup_title: "Criar perfil",
+    signup_sub: "Configuração de registo personalizada",
+    lbl_first_name: "Nome",
+    lbl_last_name: "Apelido",
+    lbl_birth_date: "Data de nascimento",
+    lbl_country: "País",
+    lbl_city: "Cidade",
+    lbl_email: "E-mail",
+    lbl_password: "Palavra-passe",
+    ph_password_min: "Pelo menos 6 caracteres",
+    lbl_interests: "Interesses",
+    tag_interests: "Interesses",
+    tag_new: "Novo",
+    btn_register: "Registar"
   },
 
   // 32. Português (Brasil)
@@ -412,7 +846,21 @@ export const translations = {
     login_title: "Entrar",
     ph_email: "Endereço de e-mail",
     ph_password: "Senha",
-    btn_cancel: "Cancelar"
+    btn_cancel: "Cancelar",
+    signup_title: "Criar perfil",
+    signup_sub: "Configuração de integração personalizada",
+    lbl_first_name: "Nome",
+    lbl_last_name: "Sobrenome",
+    lbl_birth_date: "Data de nascimento",
+    lbl_country: "País",
+    lbl_city: "Cidade",
+    lbl_email: "E-mail",
+    lbl_password: "Senha",
+    ph_password_min: "Pelo menos 6 caracteres",
+    lbl_interests: "Interesses",
+    tag_interests: "Interesses",
+    tag_new: "Novo",
+    btn_register: "Cadastrar"
   },
 
   // 33. Română
@@ -425,7 +873,21 @@ export const translations = {
     login_title: "Autentificare",
     ph_email: "Adresă de e-mail",
     ph_password: "Parolă",
-    btn_cancel: "Anulează"
+    btn_cancel: "Anulează",
+    signup_title: "Creează profil",
+    signup_sub: "Configurare inițială personalizată",
+    lbl_first_name: "Prenume",
+    lbl_last_name: "Nume",
+    lbl_birth_date: "Data nașterii",
+    lbl_country: "Țară",
+    lbl_city: "Oraș",
+    lbl_email: "E-mail",
+    lbl_password: "Parolă",
+    ph_password_min: "Cel puțin 6 caractere",
+    lbl_interests: "Interese",
+    tag_interests: "Interese",
+    tag_new: "Nou",
+    btn_register: "Înregistrare"
   },
 
   // 34. Shqip
@@ -438,7 +900,21 @@ export const translations = {
     login_title: "Hyrje",
     ph_email: "Adresa e emailit",
     ph_password: "Fjalëkalimi",
-    btn_cancel: "Anulo"
+    btn_cancel: "Anulo",
+    signup_title: "Krijo profil",
+    signup_sub: "Konfigurim i personalizuar",
+    lbl_first_name: "Emri",
+    lbl_last_name: "Mbiemri",
+    lbl_birth_date: "Datëlindja",
+    lbl_country: "Shteti",
+    lbl_city: "Qyteti",
+    lbl_email: "Email",
+    lbl_password: "Fjalëkalimi",
+    ph_password_min: "Të paktën 6 karaktere",
+    lbl_interests: "Interesat",
+    tag_interests: "Interesat",
+    tag_new: "E re",
+    btn_register: "Regjistrohu"
   },
 
   // 35. Slovenčina
@@ -451,7 +927,21 @@ export const translations = {
     login_title: "Prihlásenie",
     ph_email: "E-mailová adresa",
     ph_password: "Heslo",
-    btn_cancel: "Zrušiť"
+    btn_cancel: "Zrušiť",
+    signup_title: "Vytvoriť profil",
+    signup_sub: "Prispôsobené nastavenie profilu",
+    lbl_first_name: "Meno",
+    lbl_last_name: "Priezvisko",
+    lbl_birth_date: "Dátum narodenia",
+    lbl_country: "Krajina",
+    lbl_city: "Mesto",
+    lbl_email: "E-mail",
+    lbl_password: "Heslo",
+    ph_password_min: "Minimálne 6 znakov",
+    lbl_interests: "Záujmy",
+    tag_interests: "Záujmy",
+    tag_new: "Nové",
+    btn_register: "Registrovať"
   },
 
   // 36. Slovenščina
@@ -464,7 +954,21 @@ export const translations = {
     login_title: "Prijava",
     ph_email: "E-poštni naslov",
     ph_password: "Geslo",
-    btn_cancel: "Prekliči"
+    btn_cancel: "Prekliči",
+    signup_title: "Ustvari profil",
+    signup_sub: "Prilagojena začetna nastavitev",
+    lbl_first_name: "Ime",
+    lbl_last_name: "Priimek",
+    lbl_birth_date: "Datum rojstva",
+    lbl_country: "Država",
+    lbl_city: "Mesto",
+    lbl_email: "E-pošta",
+    lbl_password: "Geslo",
+    ph_password_min: "Vsaj 6 znakov",
+    lbl_interests: "Zanimanja",
+    tag_interests: "Zanimanja",
+    tag_new: "Novo",
+    btn_register: "Registracija"
   },
 
   // 37. Suomi
@@ -477,7 +981,21 @@ export const translations = {
     login_title: "Kirjautuminen",
     ph_email: "Sähköpostiosoite",
     ph_password: "Salasana",
-    btn_cancel: "Peruuta"
+    btn_cancel: "Peruuta",
+    signup_title: "Luo profiili",
+    signup_sub: "Henkilökohtainen profiilin määritys",
+    lbl_first_name: "Etunimi",
+    lbl_last_name: "Sukunimi",
+    lbl_birth_date: "Syntymäaika",
+    lbl_country: "Maa",
+    lbl_city: "Kaupunki",
+    lbl_email: "Sähköposti",
+    lbl_password: "Salasana",
+    ph_password_min: "Vähintään 6 merkkiä",
+    lbl_interests: "Kiinnostuksen kohteet",
+    tag_interests: "Kiinnostuksen kohteet",
+    tag_new: "Uusi",
+    btn_register: "Rekisteröidy"
   },
 
   // 38. Svenska
@@ -490,7 +1008,21 @@ export const translations = {
     login_title: "Inloggning",
     ph_email: "E-postadress",
     ph_password: "Lösenord",
-    btn_cancel: "Avbryt"
+    btn_cancel: "Avbryt",
+    signup_title: "Skapa profil",
+    signup_sub: "Personlig onboarding-konfiguration",
+    lbl_first_name: "Förnamn",
+    lbl_last_name: "Efternamn",
+    lbl_birth_date: "Födelsedatum",
+    lbl_country: "Land",
+    lbl_city: "Stad",
+    lbl_email: "E-post",
+    lbl_password: "Lösenord",
+    ph_password_min: "Minst 6 tecken",
+    lbl_interests: "Intressen",
+    tag_interests: "Intressen",
+    tag_new: "Nytt",
+    btn_register: "Registrera"
   },
 
   // 39. Tiếng Việt
@@ -503,7 +1035,21 @@ export const translations = {
     login_title: "Đăng nhập",
     ph_email: "Địa chỉ email",
     ph_password: "Mật khẩu",
-    btn_cancel: "Hủy"
+    btn_cancel: "Hủy",
+    signup_title: "Tạo hồ sơ",
+    signup_sub: "Thiết lập hồ sơ cá nhân hóa",
+    lbl_first_name: "Tên",
+    lbl_last_name: "Họ",
+    lbl_birth_date: "Ngày sinh",
+    lbl_country: "Quốc gia",
+    lbl_city: "Thành phố",
+    lbl_email: "Email",
+    lbl_password: "Mật khẩu",
+    ph_password_min: "Ít nhất 6 ký tự",
+    lbl_interests: "Sở thích",
+    tag_interests: "Sở thích",
+    tag_new: "Mới",
+    btn_register: "Đăng ký"
   },
 
   // 40. Türkçe
@@ -516,7 +1062,21 @@ export const translations = {
     login_title: "Giriş",
     ph_email: "E-posta adresi",
     ph_password: "Şifre",
-    btn_cancel: "İptal"
+    btn_cancel: "İptal",
+    signup_title: "Profil Oluştur",
+    signup_sub: "Kişiselleştirilmiş ilk kurulum",
+    lbl_first_name: "Ad",
+    lbl_last_name: "Soyad",
+    lbl_birth_date: "Doğum tarihi",
+    lbl_country: "Ülke",
+    lbl_city: "Şehir",
+    lbl_email: "E-posta",
+    lbl_password: "Şifre",
+    ph_password_min: "En az 6 karakter",
+    lbl_interests: "İlgi Alanları",
+    tag_interests: "İlgi Alanları",
+    tag_new: "Yeni",
+    btn_register: "Kaydol"
   },
 
   // 41. Ελληνικά
@@ -529,7 +1089,21 @@ export const translations = {
     login_title: "Σύνδεση",
     ph_email: "Διεύθυνση email",
     ph_password: "Κωδικός πρόσβασης",
-    btn_cancel: "Ακύρωση"
+    btn_cancel: "Ακύρωση",
+    signup_title: "Δημιουργία προφίλ",
+    signup_sub: "Εξατομικευμένη ρύθμιση προφίλ",
+    lbl_first_name: "Όνομα",
+    lbl_last_name: "Επώνυμο",
+    lbl_birth_date: "Ημερομηνία γέννησης",
+    lbl_country: "Χώρα",
+    lbl_city: "Πόλη",
+    lbl_email: "Email",
+    lbl_password: "Κωδικός πρόσβασης",
+    ph_password_min: "Τουλάχιστον 6 χαρακτήρες",
+    lbl_interests: "Ενδιαφέροντα",
+    tag_interests: "Ενδιαφέροντα",
+    tag_new: "Νέο",
+    btn_register: "Εγγραφή"
   },
 
   // 42. Български
@@ -542,7 +1116,21 @@ export const translations = {
     login_title: "Вход",
     ph_email: "Имейл адрес",
     ph_password: "Парола",
-    btn_cancel: "Отказ"
+    btn_cancel: "Отказ",
+    signup_title: "Създайте профил",
+    signup_sub: "Персонализирана първоначална настройка",
+    lbl_first_name: "Име",
+    lbl_last_name: "Фамилия",
+    lbl_birth_date: "Дата на раждане",
+    lbl_country: "Държава",
+    lbl_city: "Град",
+    lbl_email: "Имейл",
+    lbl_password: "Парола",
+    ph_password_min: "Поне 6 знака",
+    lbl_interests: "Интереси",
+    tag_interests: "Интереси",
+    tag_new: "Ново",
+    btn_register: "Регистрация"
   },
 
   // 43. Қазақша
@@ -555,7 +1143,21 @@ export const translations = {
     login_title: "Кіру",
     ph_email: "Электрондық пошта",
     ph_password: "Құпиясөз",
-    btn_cancel: "Бас тарту"
+    btn_cancel: "Бас тарту",
+    signup_title: "Профиль жасау",
+    signup_sub: "Жекелендірілген бейімделу баптауы",
+    lbl_first_name: "Аты",
+    lbl_last_name: "Тегі",
+    lbl_birth_date: "Туған күні",
+    lbl_country: "Ел",
+    lbl_city: "Қала",
+    lbl_email: "Эл. пошта",
+    lbl_password: "Құпиясөз",
+    ph_password_min: "Кемінде 6 таңба",
+    lbl_interests: "Қызығушылықтар",
+    tag_interests: "Қызығушылықтар",
+    tag_new: "Жаңа",
+    btn_register: "Тіркелу"
   },
 
   // 44. Русский
@@ -568,7 +1170,21 @@ export const translations = {
     login_title: "Авторизация",
     ph_email: "Электронная почта",
     ph_password: "Пароль",
-    btn_cancel: "Отмена"
+    btn_cancel: "Отмена",
+    signup_title: "Создайте профиль",
+    signup_sub: "Персонализированная настройка профиля",
+    lbl_first_name: "Имя",
+    lbl_last_name: "Фамилия",
+    lbl_birth_date: "Дата рождения",
+    lbl_country: "Страна",
+    lbl_city: "Город",
+    lbl_email: "Эл. почта",
+    lbl_password: "Пароль",
+    ph_password_min: "Минимум 6 символов",
+    lbl_interests: "Интересы",
+    tag_interests: "Интересы",
+    tag_new: "Новое",
+    btn_register: "Регистрация"
   },
 
   // 45. Українська
@@ -581,7 +1197,21 @@ export const translations = {
     login_title: "Авторизація",
     ph_email: "Електронна пошта",
     ph_password: "Пароль",
-    btn_cancel: "Скасувати"
+    btn_cancel: "Скасувати",
+    signup_title: "Створіть профіль",
+    signup_sub: "Персоналізоване налаштування профілю",
+    lbl_first_name: "Ім'я",
+    lbl_last_name: "Прізвище",
+    lbl_birth_date: "Дата народження",
+    lbl_country: "Країна",
+    lbl_city: "Місто",
+    lbl_email: "Ел. пошта",
+    lbl_password: "Пароль",
+    ph_password_min: "Щонайменше 6 символів",
+    lbl_interests: "Інтереси",
+    tag_interests: "Інтереси",
+    tag_new: "Нове",
+    btn_register: "Зареєструватися"
   },
 
   // 46. עברית
@@ -594,7 +1224,21 @@ export const translations = {
     login_title: "התחברות",
     ph_email: "כתובת אימייל",
     ph_password: "סיסמה",
-    btn_cancel: "ביטול"
+    btn_cancel: "ביטול",
+    signup_title: "יצירת פרופיל",
+    signup_sub: "הגדרת פרופיל מותאמת אישית",
+    lbl_first_name: "שם פרטי",
+    lbl_last_name: "שם משפחה",
+    lbl_birth_date: "תאריך לידה",
+    lbl_country: "מדינה",
+    lbl_city: "עיר",
+    lbl_email: "אימייל",
+    lbl_password: "סיסמה",
+    ph_password_min: "לפחות 6 תווים",
+    lbl_interests: "תחומי עניין",
+    tag_interests: "תחומי עניין",
+    tag_new: "חדש",
+    btn_register: "הרשמה"
   },
 
   // 47. اردو
@@ -607,7 +1251,21 @@ export const translations = {
     login_title: "لاگ ان",
     ph_email: "ای میل ایڈریس",
     ph_password: "پاس ورڈ",
-    btn_cancel: "منسوخ کریں"
+    btn_cancel: "منسوخ کریں",
+    signup_title: "پروفائل بنائیں",
+    signup_sub: "ذاتی نوعیت کا آن بورڈنگ سیٹ اپ",
+    lbl_first_name: "پہلا نام",
+    lbl_last_name: "آخری نام",
+    lbl_birth_date: "تاریخ پیدائش",
+    lbl_country: "ملک",
+    lbl_city: "شہر",
+    lbl_email: "ای میل",
+    lbl_password: "پاس ورڈ",
+    ph_password_min: "کم از کم 6 حروف",
+    lbl_interests: "دلچسپیاں",
+    tag_interests: "دلچسپیاں",
+    tag_new: "نیا",
+    btn_register: "رجسٹر کریں"
   },
 
   // 48. العربية
@@ -620,7 +1278,21 @@ export const translations = {
     login_title: "تسجيل الدخول",
     ph_email: "البريد الإلكتروني",
     ph_password: "كلمة المرور",
-    btn_cancel: "إلغاء"
+    btn_cancel: "إلغاء",
+    signup_title: "إنشاء ملف شخصي",
+    signup_sub: "إعداد ملف شخصي مخصص",
+    lbl_first_name: "الاسم الأول",
+    lbl_last_name: "اسم العائلة",
+    lbl_birth_date: "تاريخ الميلاد",
+    lbl_country: "البلد",
+    lbl_city: "المدينة",
+    lbl_email: "البريد الإلكتروني",
+    lbl_password: "كلمة المرور",
+    ph_password_min: "6 أحرف على الأقل",
+    lbl_interests: "الاهتمامات",
+    tag_interests: "الاهتمامات",
+    tag_new: "جديد",
+    btn_register: "تسجيل"
   },
 
   // 49. فارسی
@@ -633,7 +1305,21 @@ export const translations = {
     login_title: "ورود",
     ph_email: "آدرس ایمیل",
     ph_password: "رمز عبور",
-    btn_cancel: "لغو"
+    btn_cancel: "لغو",
+    signup_title: "ایجاد نمایه",
+    signup_sub: "راه‌اندازی نمایه شخصی‌سازی‌شده",
+    lbl_first_name: "نام",
+    lbl_last_name: "نام خانوادگی",
+    lbl_birth_date: "تاریخ تولد",
+    lbl_country: "کشور",
+    lbl_city: "شهر",
+    lbl_email: "ایمیل",
+    lbl_password: "رمز عبور",
+    ph_password_min: "حداقل ۶ نویسه",
+    lbl_interests: "علایق",
+    tag_interests: "علایق",
+    tag_new: "جدید",
+    btn_register: "ثبت‌نام"
   },
 
   // 50. हिन्दी
@@ -646,7 +1332,21 @@ export const translations = {
     login_title: "लॉग इन",
     ph_email: "ईमेल पता",
     ph_password: "पासवर्ड",
-    btn_cancel: "रद्द करें"
+    btn_cancel: "रद्द करें",
+    signup_title: "प्रोफ़ाइल बनाएं",
+    signup_sub: "व्यक्तिगत सेटअप",
+    lbl_first_name: "पहला नाम",
+    lbl_last_name: "उपनाम",
+    lbl_birth_date: "जन्म तिथि",
+    lbl_country: "देश",
+    lbl_city: "शहर",
+    lbl_email: "ईमेल",
+    lbl_password: "पासवर्ड",
+    ph_password_min: "कम से कम 6 वर्ण",
+    lbl_interests: "रुचियां",
+    tag_interests: "रुचियां",
+    tag_new: "नया",
+    btn_register: "रजिस्टर करें"
   },
 
   // 51. বাংলা
@@ -659,7 +1359,21 @@ export const translations = {
     login_title: "লগইন",
     ph_email: "ইমেল ঠিকানা",
     ph_password: "পাসওয়ার্ড",
-    btn_cancel: "বাতিল করুন"
+    btn_cancel: "বাতিল করুন",
+    signup_title: "প্রোফাইল তৈরি করুন",
+    signup_sub: "ব্যক্তিগতকৃত সেটআপ",
+    lbl_first_name: "প্রথম নাম",
+    lbl_last_name: "পদবি",
+    lbl_birth_date: "জন্ম তারিখ",
+    lbl_country: "দেশ",
+    lbl_city: "শহর",
+    lbl_email: "ইমেল",
+    lbl_password: "পাসওয়ার্ড",
+    ph_password_min: "কমপক্ষে ৬টি অক্ষর",
+    lbl_interests: "আগ্রহ",
+    tag_interests: "আগ্রহ",
+    tag_new: "নতুন",
+    btn_register: "নিবন্ধন করুন"
   },
 
   // 52. ภาษาไทย
@@ -672,7 +1386,21 @@ export const translations = {
     login_title: "เข้าสู่ระบบ",
     ph_email: "ที่อยู่อีเมล",
     ph_password: "รหัสผ่าน",
-    btn_cancel: "ยกเลิก"
+    btn_cancel: "ยกเลิก",
+    signup_title: "สร้างโปรไฟล์",
+    signup_sub: "การตั้งค่าส่วนบุคคล",
+    lbl_first_name: "ชื่อ",
+    lbl_last_name: "นามสกุล",
+    lbl_birth_date: "วันเกิด",
+    lbl_country: "ประเทศ",
+    lbl_city: "เมือง",
+    lbl_email: "อีเมล",
+    lbl_password: "รหัสผ่าน",
+    ph_password_min: "อย่างน้อย 6 ตัวอักษร",
+    lbl_interests: "ความสนใจ",
+    tag_interests: "ความสนใจ",
+    tag_new: "ใหม่",
+    btn_register: "ลงทะเบียน"
   },
 
   // 53. မြန်မာ
@@ -685,7 +1413,21 @@ export const translations = {
     login_title: "အကောင့်ဝင်ရန်",
     ph_email: "အီးမေးလ်လိပ်စာ",
     ph_password: "စကားဝှက်",
-    btn_cancel: "ပယ်ဖျက်မည်"
+    btn_cancel: "ပယ်ဖျက်မည်",
+    signup_title: "ပရိုဖိုင် ဖန်တီးပါ",
+    signup_sub: "သီးသန့် ပြင်ဆင်သတ်မှတ်မှု",
+    lbl_first_name: "နာမည်",
+    lbl_last_name: "မျိုးရိုးအမည်",
+    lbl_birth_date: "မွေးသက္ကရာဇ်",
+    lbl_country: "နိုင်ငံ",
+    lbl_city: "မြို့",
+    lbl_email: "အီးမေးလ်",
+    lbl_password: "စကားဝှက်",
+    ph_password_min: "အနည်းဆုံး ၆ လုံး",
+    lbl_interests: "စိတ်ဝင်စားမှုများ",
+    tag_interests: "စိတ်ဝင်စားမှုများ",
+    tag_new: "အသစ်",
+    btn_register: "အကောင့်ဖွင့်ရန်"
   },
 
   // 54. ខ្មែរ
@@ -698,7 +1440,21 @@ export const translations = {
     login_title: "ចូលប្រើ",
     ph_email: "អាសយដ្ឋានអ៊ីមែល",
     ph_password: "ពាក្យសម្ងាត់",
-    btn_cancel: "បោះបង់"
+    btn_cancel: "បោះបង់",
+    signup_title: "បង្កើតកម្រងព័ត៌មាន",
+    signup_sub: "ការរៀបចំផ្ទាល់ខ្លួន",
+    lbl_first_name: "នាមខ្លួន",
+    lbl_last_name: "នាមត្រកូល",
+    lbl_birth_date: "ថ្ងៃខែឆ្នាំកំណើត",
+    lbl_country: "ប្រទេស",
+    lbl_city: "ទីក្រុង",
+    lbl_email: "អ៊ីមែល",
+    lbl_password: "ពាក្យសម្ងាត់",
+    ph_password_min: "យ៉ាងហោចណាស់ ៦ តួអក្សរ",
+    lbl_interests: "ចំណាប់អារម្មណ៍",
+    tag_interests: "ចំណាប់អារម្មណ៍",
+    tag_new: "ថ្មី",
+    btn_register: "ចុះឈ្មោះ"
   },
 
   // 55. 日本語
@@ -711,7 +1467,21 @@ export const translations = {
     login_title: "ログイン",
     ph_email: "メールアドレス",
     ph_password: "パスワード",
-    btn_cancel: "キャンセル"
+    btn_cancel: "キャンセル",
+    signup_title: "プロフィールを作成",
+    signup_sub: "パーソナライズされた初期設定",
+    lbl_first_name: "名",
+    lbl_last_name: "姓",
+    lbl_birth_date: "生年月日",
+    lbl_country: "国",
+    lbl_city: "都市",
+    lbl_email: "メール",
+    lbl_password: "パスワード",
+    ph_password_min: "6文字以上",
+    lbl_interests: "興味・関心",
+    tag_interests: "興味・関心",
+    tag_new: "新規",
+    btn_register: "登録する"
   },
 
   // 56. 中文 (繁體)
@@ -724,7 +1494,21 @@ export const translations = {
     login_title: "登入",
     ph_email: "電子郵件地址",
     ph_password: "密碼",
-    btn_cancel: "取消"
+    btn_cancel: "取消",
+    signup_title: "建立個人資料",
+    signup_sub: "個人化引導設定",
+    lbl_first_name: "名字",
+    lbl_last_name: "姓氏",
+    lbl_birth_date: "出生日期",
+    lbl_country: "國家",
+    lbl_city: "城市",
+    lbl_email: "電子郵件",
+    lbl_password: "密碼",
+    ph_password_min: "至少 6 個字元",
+    lbl_interests: "興趣",
+    tag_interests: "興趣",
+    tag_new: "最新",
+    btn_register: "立即註冊"
   },
 
   // 57. 中文 (简体)
@@ -737,7 +1521,21 @@ export const translations = {
     login_title: "登录",
     ph_email: "电子邮箱地址",
     ph_password: "密码",
-    btn_cancel: "取消"
+    btn_cancel: "取消",
+    signup_title: "创建个人资料",
+    signup_sub: "个性化设置",
+    lbl_first_name: "名字",
+    lbl_last_name: "姓氏",
+    lbl_birth_date: "出生日期",
+    lbl_country: "国家",
+    lbl_city: "城市",
+    lbl_email: "电子邮箱",
+    lbl_password: "密码",
+    ph_password_min: "至少 6 个字符",
+    lbl_interests: "兴趣",
+    tag_interests: "兴趣",
+    tag_new: "最新",
+    btn_register: "立即注册"
   }
 };
 
