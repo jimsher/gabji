@@ -327,7 +327,18 @@ export const translations = {
     lbl_interests: "Interesser",
     tag_interests: "Interesser",
     tag_new: "Nyt",
-    btn_register: "Opret profil"
+    btn_register: "Opret profil",
+
+    //ფიდი
+    ph_search: "Søg",
+  lbl_filter: "Filter:",
+  btn_like: "Synes godt om",
+  btn_pass: "Spring over",
+  nav_feed: "Feed",
+  nav_people: "Personer",
+  nav_reels: "Reels",
+  nav_inbox: "Indbakke",
+  nav_profile: "Profil"
   },
 
   // 10. Deutsch
@@ -354,7 +365,18 @@ export const translations = {
     lbl_interests: "Interessen",
     tag_interests: "Interessen",
     tag_new: "Neu",
-    btn_register: "Registrieren"
+    btn_register: "Registrieren",
+
+    // ფიდი
+    ph_search: "Suchen",
+  lbl_filter: "Filter:",
+  btn_like: "Gefällt mir",
+  btn_pass: "Überspringen",
+  nav_feed: "Feed",
+  nav_people: "Freunde",
+  nav_reels: "Reels",
+  nav_inbox: "Posteingang",
+  nav_profile: "Profil"
   },
 
   // 11. Eesti
@@ -381,7 +403,18 @@ export const translations = {
     lbl_interests: "Huvid",
     tag_interests: "Huvid",
     tag_new: "Uus",
-    btn_register: "Registreeru"
+    btn_register: "Registreeru",
+
+    // ფიდი
+    ph_search: "Otsi",
+  lbl_filter: "Filter:",
+  btn_like: "Meeldib",
+  btn_pass: "Jäta vahele",
+  nav_feed: "Voog",
+  nav_people: "Inimesed",
+  nav_reels: "Reels",
+  nav_inbox: "Postkast",
+  nav_profile: "Profiil"
   },
 
   // 12. English (UK)
