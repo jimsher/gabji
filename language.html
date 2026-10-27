@@ -421,11 +421,10 @@
     const rowAppLang = document.getElementById("rowAppLang");
     const options = document.querySelectorAll(".lang-option");
 
-    // ლოკალური მეხსიერებიდან წამოღება
-    const savedLang = localStorage.getItem("gabji_language") || "ka";
-    const langLabels = { ka: "ქართული", en: "English", ru: "Русский" };
-    valAppLang.textContent = langLabels[savedLang] || "ქართული";
-    valTranslateTarget.textContent = langLabels[savedLang] || "ქართული";
+        // ლოკალური მეხსიერებიდან წამოღება
+    const savedLangName = localStorage.getItem("gabji_language_name") || "ქართული";
+    valAppLang.textContent = savedLangName;
+    valTranslateTarget.textContent = savedLangName;
 
     // მონიშვნა სიაში
     options.forEach(opt => {
