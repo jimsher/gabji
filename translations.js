@@ -23,7 +23,18 @@ export const translations = {
     lbl_interests: "ინტერესები",
     tag_interests: "ინტერესები",
     tag_new: "ახალი",
-    btn_register: "რეგისტრაცია"
+    btn_register: "რეგისტრაცია",
+
+    // ფიდი
+    ph_search: "ძიება",
+  lbl_filter: "ფილტრი:",
+  btn_like: "მოწონება",
+  btn_pass: "გამოტოვება",
+  nav_feed: "ფიდი",
+  nav_people: "ხალხი",
+  nav_reels: "რელსები",
+  nav_inbox: "შემოსულები",
+  nav_profile: "პროფილი"
   },
 
   // 2. Azərbaycan
@@ -50,7 +61,18 @@ export const translations = {
     lbl_interests: "Maraqlar",
     tag_interests: "Maraqlar",
     tag_new: "Yeni",
-    btn_register: "Qeydiyyatdan keç"
+    btn_register: "Qeydiyyatdan keç",
+
+    // ფიდი
+    ph_search: "Axtarış",
+  lbl_filter: "Filtr:",
+  btn_like: "Bəyən",
+  btn_pass: "Keç",
+  nav_feed: "Lent",
+  nav_people: "İnsanlar",
+  nav_reels: "Reels",
+  nav_inbox: "Gələnlər",
+  nav_profile: "Profil"
   },
 
   // 3. Bahasa Indonesia
@@ -77,7 +99,18 @@ export const translations = {
     lbl_interests: "Minat",
     tag_interests: "Minat",
     tag_new: "Baru",
-    btn_register: "Daftar"
+    btn_register: "Daftar",
+
+    // ფიდი
+    ph_search: "Cari",
+  lbl_filter: "Filter:",
+  btn_like: "Suka",
+  btn_pass: "Lewati",
+  nav_feed: "Feed",
+  nav_people: "Teman",
+  nav_reels: "Reels",
+  nav_inbox: "Kotak Masuk",
+  nav_profile: "Profil"
   },
 
   // 4. Bahasa Melayu
@@ -104,7 +137,18 @@ export const translations = {
     lbl_interests: "Minat",
     tag_interests: "Minat",
     tag_new: "Baharu",
-    btn_register: "Daftar"
+    btn_register: "Daftar",
+
+    // ფიდი
+    ph_search: "Cari",
+  lbl_filter: "Penapis:",
+  btn_like: "Suka",
+  btn_pass: "Langkau",
+  nav_feed: "Suapan",
+  nav_people: "Rakan",
+  nav_reels: "Reels",
+  nav_inbox: "Peti Masuk",
+  nav_profile: "Profil"
   },
 
   // 5. Basa Jawa
@@ -131,7 +175,18 @@ export const translations = {
     lbl_interests: "Minat",
     tag_interests: "Minat",
     tag_new: "Anyar",
-    btn_register: "Ndhaptar"
+    btn_register: "Ndhaptar",
+
+    // ფიდი
+    ph_search: "Goleki",
+  lbl_filter: "Saringan:",
+  btn_like: "Seneng",
+  btn_pass: "Liwati",
+  nav_feed: "Umpan",
+  nav_people: "Kanca",
+  nav_reels: "Reels",
+  nav_inbox: "Kothak Mlebu",
+  nav_profile: "Profil"
   },
 
   // 6. Català
@@ -158,7 +213,18 @@ export const translations = {
     lbl_interests: "Interessos",
     tag_interests: "Interessos",
     tag_new: "Nou",
-    btn_register: "Registra't"
+    btn_register: "Registra't",
+
+    // ფიდი
+    ph_search: "Cerca",
+  lbl_filter: "Filtre:",
+  btn_like: "M'agrada",
+  btn_pass: "Passa",
+  nav_feed: "Feed",
+  nav_people: "Persones",
+  nav_reels: "Reels",
+  nav_inbox: "Safata d'entrada",
+  nav_profile: "Perfil"
   },
 
   // 7. Cebuano
