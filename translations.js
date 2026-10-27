@@ -441,7 +441,18 @@ export const translations = {
     lbl_interests: "Interests",
     tag_interests: "Interests",
     tag_new: "New",
-    btn_register: "Register"
+    btn_register: "Register",
+
+    // ფიდი
+    ph_search: "Search",
+  lbl_filter: "Filter:",
+  btn_like: "Like",
+  btn_pass: "Pass",
+  nav_feed: "Feed",
+  nav_people: "People",
+  nav_reels: "Reels",
+  nav_inbox: "Inbox",
+  nav_profile: "Profile"
   },
 
   // 13. English (US)
@@ -468,7 +479,18 @@ export const translations = {
     lbl_interests: "Interests",
     tag_interests: "Interests",
     tag_new: "New",
-    btn_register: "Sign up"
+    btn_register: "Sign up",
+
+    // ფიდი
+    ph_search: "Search",
+  lbl_filter: "Filter:",
+  btn_like: "Like",
+  btn_pass: "Pass",
+  nav_feed: "Feed",
+  nav_people: "People",
+  nav_reels: "Reels",
+  nav_inbox: "Inbox",
+  nav_profile: "Profile"
   },
 
   // 14. Español
@@ -495,7 +517,18 @@ export const translations = {
     lbl_interests: "Intereses",
     tag_interests: "Intereses",
     tag_new: "Nuevo",
-    btn_register: "Registrarse"
+    btn_register: "Registrarse",
+
+    // ფიდი
+    ph_search: "Buscar",
+  lbl_filter: "Filtro:",
+  btn_like: "Me gusta",
+  btn_pass: "Pasar",
+  nav_feed: "Feed",
+  nav_people: "Gente",
+  nav_reels: "Reels",
+  nav_inbox: "Bandeja de entrada",
+  nav_profile: "Perfil"
   },
 
   // 15. Español (Latinoamérica)
@@ -522,7 +555,18 @@ export const translations = {
     lbl_interests: "Intereses",
     tag_interests: "Intereses",
     tag_new: "Nuevo",
-    btn_register: "Registrarse"
+    btn_register: "Registrarse",
+
+    // ფიდი
+    ph_search: "Buscar",
+  lbl_filter: "Filtro:",
+  btn_like: "Me gusta",
+  btn_pass: "Pasar",
+  nav_feed: "Para ti",
+  nav_people: "Amigos",
+  nav_reels: "Reels",
+  nav_inbox: "Bandeja de entrada",
+  nav_profile: "Perfil"
   },
 
   // 16. Filipino
@@ -549,7 +593,18 @@ export const translations = {
     lbl_interests: "Mga Interes",
     tag_interests: "Mga Interes",
     tag_new: "Bago",
-    btn_register: "Mag-rehistro"
+    btn_register: "Mag-rehistro",
+
+    // ფიდი
+    ph_search: "Maghanap",
+  lbl_filter: "Filter:",
+  btn_like: "Gusto",
+  btn_pass: "Laktawan",
+  nav_feed: "Feed",
+  nav_people: "Mga Tao",
+  nav_reels: "Reels",
+  nav_inbox: "Inbox",
+  nav_profile: "Profile"
   },
 
   // 17. Français
@@ -576,7 +631,18 @@ export const translations = {
     lbl_interests: "Centres d'intérêt",
     tag_interests: "Centres d'intérêt",
     tag_new: "Nouveau",
-    btn_register: "S'inscrire"
+    btn_register: "S'inscrire",
+
+    // ფიდი
+    ph_search: "Rechercher",
+  lbl_filter: "Filtre :",
+  btn_like: "J'aime",
+  btn_pass: "Passer",
+  nav_feed: "Pour toi",
+  nav_people: "Amis",
+  nav_reels: "Reels",
+  nav_inbox: "Boîte de réception",
+  nav_profile: "Profil"
   },
 
   // 18. Français (Canada)
@@ -603,7 +669,18 @@ export const translations = {
     lbl_interests: "Intérêts",
     tag_interests: "Intérêts",
     tag_new: "Nouveau",
-    btn_register: "S'inscrire"
+    btn_register: "S'inscrire",
+
+    // ფიდი
+    ph_search: "Rechercher",
+  lbl_filter: "Filtre :",
+  btn_like: "J'aime",
+  btn_pass: "Passer",
+  nav_feed: "Fil",
+  nav_people: "Amis",
+  nav_reels: "Reels",
+  nav_inbox: "Boîte de réception",
+  nav_profile: "Profil",
   },
 
   // 19. Gaeilge
@@ -630,7 +707,18 @@ export const translations = {
     lbl_interests: "Suimeanna",
     tag_interests: "Suimeanna",
     tag_new: "Nua",
-    btn_register: "Cláraigh"
+    btn_register: "Cláraigh",
+
+    // ფიდი
+    ph_search: "Cuardaigh",
+  lbl_filter: "Scagaire:",
+  btn_like: "Is maith liom",
+  btn_pass: "Scipeáil",
+  nav_feed: "Fotha",
+  nav_people: "Daoine",
+  nav_reels: "Reels",
+  nav_inbox: "Bosca isteach",
+  nav_profile: "Próifíl"
   },
 
   // 20. Hrvatski
@@ -657,7 +745,18 @@ export const translations = {
     lbl_interests: "Interesi",
     tag_interests: "Interesi",
     tag_new: "Novo",
-    btn_register: "Registracija"
+    btn_register: "Registracija",
+
+    // ფიდი
+    ph_search: "Pretraži",
+  lbl_filter: "Filtar:",
+  btn_like: "Sviđa mi se",
+  btn_pass: "Preskoči",
+  nav_feed: "Naslovnica",
+  nav_people: "Ljudi",
+  nav_reels: "Reels",
+  nav_inbox: "Pristigla pošta",
+  nav_profile: "Profil"
   },
 
   // 21. Íslenska
@@ -684,7 +783,18 @@ export const translations = {
     lbl_interests: "Áhugamál",
     tag_interests: "Áhugamál",
     tag_new: "Nýtt",
-    btn_register: "Nýskrá"
+    btn_register: "Nýskrá",
+
+    // ფიდი
+    ph_search: "Leita",
+  lbl_filter: "Sía:",
+  btn_like: "Líka við",
+  btn_pass: "Sleppa",
+  nav_feed: "Straumur",
+  nav_people: "Fólk",
+  nav_reels: "Reels",
+  nav_inbox: "Innhólf",
+  nav_profile: "Prófíll"
   },
 
   // 22. Italiano
@@ -711,7 +821,18 @@ export const translations = {
     lbl_interests: "Interessi",
     tag_interests: "Interessi",
     tag_new: "Nuovo",
-    btn_register: "Registrati"
+    btn_register: "Registrati",
+
+    // ფიდი
+    ph_search: "Cerca",
+  lbl_filter: "Filtro:",
+  btn_like: "Mi piace",
+  btn_pass: "Passa",
+  nav_feed: "Per te",
+  nav_people: "Amici",
+  nav_reels: "Reels",
+  nav_inbox: "Messaggi",
+  nav_profile: "Profilo"
   },
 
   // 23. Kiswahili
@@ -738,7 +859,18 @@ export const translations = {
     lbl_interests: "Mambo ya kupendeza",
     tag_interests: "Mambo ya kupendeza",
     tag_new: "Mpya",
-    btn_register: "Jisajili"
+    btn_register: "Jisajili",
+
+    // ფიდი
+    ph_search: "Tafuta",
+  lbl_filter: "Chujio:",
+  btn_like: "Penda",
+  btn_pass: "Ruka",
+  nav_feed: "Mlisho",
+  nav_people: "Watu",
+  nav_reels: "Reels",
+  nav_inbox: "Kikasha",
+  nav_profile: "Wasifu"
   },
 
   // 24. Latviešu
@@ -765,7 +897,18 @@ export const translations = {
     lbl_interests: "Intereses",
     tag_interests: "Intereses",
     tag_new: "Jauns",
-    btn_register: "Reģistrēties"
+    btn_register: "Reģistrēties",
+
+    // ფიდი
+    ph_search: "Meklēt",
+  lbl_filter: "Filtrs:",
+  btn_like: "Patīk",
+  btn_pass: "Izlaist",
+  nav_feed: "Plūsma",
+  nav_people: "Cilvēki",
+  nav_reels: "Reels",
+  nav_inbox: "Iesūtne",
+  nav_profile: "Profils"
   },
 
   // 25. Lietuvių
@@ -792,7 +935,18 @@ export const translations = {
     lbl_interests: "Pomėgiai",
     tag_interests: "Pomėgiai",
     tag_new: "Naujas",
-    btn_register: "Registruotis"
+    btn_register: "Registruotis",
+
+    // ფიდი
+    ph_search: "Ieškoti",
+  lbl_filter: "Filtras:",
+  btn_like: "Patinka",
+  btn_pass: "Praleisti",
+  nav_feed: "Srautas",
+  nav_people: "Žmonės",
+  nav_reels: "Reels",
+  nav_inbox: "Gautieji",
+  nav_profile: "Profilis"
   },
 
   // 26. Magyar
@@ -819,7 +973,18 @@ export const translations = {
     lbl_interests: "Érdeklődési körök",
     tag_interests: "Érdeklődési körök",
     tag_new: "Új",
-    btn_register: "Regisztráció"
+    btn_register: "Regisztráció",
+
+    // ფიდი
+    ph_search: "Keresés",
+  lbl_filter: "Szűrő:",
+  btn_like: "Tetszik",
+  btn_pass: "Kihagyás",
+  nav_feed: "Hírfolyam",
+  nav_people: "Ismerősök",
+  nav_reels: "Reels",
+  nav_inbox: "Bejövő",
+  nav_profile: "Profil"
   },
 
   // 27. Nederlands
@@ -846,7 +1011,18 @@ export const translations = {
     lbl_interests: "Interesses",
     tag_interests: "Interesses",
     tag_new: "Nieuw",
-    btn_register: "Aanmelden"
+    btn_register: "Aanmelden",
+
+    // ფიდი
+    ph_search: "Zoeken",
+  lbl_filter: "Filter:",
+  btn_like: "Vind ik leuk",
+  btn_pass: "Overslaan",
+  nav_feed: "Voor jou",
+  nav_people: "Vrienden",
+  nav_reels: "Reels",
+  nav_inbox: "Inbox",
+  nav_profile: "Profiel"
   },
 
   // 28. norsk (bokmål)
@@ -873,7 +1049,18 @@ export const translations = {
     lbl_interests: "Interesser",
     tag_interests: "Interesser",
     tag_new: "Ny",
-    btn_register: "Registrer"
+    btn_register: "Registrer",
+
+    // ფიდი
+    ph_search: "Søk",
+  lbl_filter: "Filter:",
+  btn_like: "Liker",
+  btn_pass: "Hopp over",
+  nav_feed: "Feed",
+  nav_people: "Venner",
+  nav_reels: "Reels",
+  nav_inbox: "Innboks",
+  nav_profile: "Profil"
   },
 
   // 29. O'zbek
@@ -900,7 +1087,18 @@ export const translations = {
     lbl_interests: "Qiziqishlar",
     tag_interests: "Qiziqishlar",
     tag_new: "Yangi",
-    btn_register: "Ro'yxatdan o'tish"
+    btn_register: "Ro'yxatdan o'tish",
+
+    // ფიდი
+    ph_search: "Qidirish",
+  lbl_filter: "Filtr:",
+  btn_like: "Yoqdi",
+  btn_pass: "O'tkazib yuborish",
+  nav_feed: "Tasma",
+  nav_people: "Odamlar",
+  nav_reels: "Reels",
+  nav_inbox: "Kiruvchi",
+  nav_profile: "Profil"
   },
 
   // 30. Polski
@@ -927,7 +1125,18 @@ export const translations = {
     lbl_interests: "Zainteresowania",
     tag_interests: "Zainteresowania",
     tag_new: "Nowy",
-    btn_register: "Zarejestruj się"
+    btn_register: "Zarejestruj się",
+
+    // ფიდი
+    ph_search: "Szukaj",
+  lbl_filter: "Filtr:",
+  btn_like: "Lubię to",
+  btn_pass: "Pomiń",
+  nav_feed: "Dla Ciebie",
+  nav_people: "Znajomi",
+  nav_reels: "Reels",
+  nav_inbox: "Skrzynka",
+  nav_profile: "Profil"
   },
 
   // 31. Português
@@ -954,7 +1163,18 @@ export const translations = {
     lbl_interests: "Interesses",
     tag_interests: "Interesses",
     tag_new: "Novo",
-    btn_register: "Registar"
+    btn_register: "Registar",
+
+    // ფიდი
+    ph_search: "Pesquisar",
+  lbl_filter: "Filtro:",
+  btn_like: "Gosto",
+  btn_pass: "Passar",
+  nav_feed: "Para ti",
+  nav_people: "Amigos",
+  nav_reels: "Reels",
+  nav_inbox: "Caixa de entrada",
+  nav_profile: "Perfil"
   },
 
   // 32. Português (Brasil)
@@ -981,7 +1201,18 @@ export const translations = {
     lbl_interests: "Interesses",
     tag_interests: "Interesses",
     tag_new: "Novo",
-    btn_register: "Cadastrar"
+    btn_register: "Cadastrar",
+
+    // ფიდი
+    ph_search: "Pesquisar",
+  lbl_filter: "Filtro:",
+  btn_like: "Curtir",
+  btn_pass: "Passar",
+  nav_feed: "Para você",
+  nav_people: "Amigos",
+  nav_reels: "Reels",
+  nav_inbox: "Caixa de entrada",
+  nav_profile: "Perfil"
   },
 
   // 33. Română
@@ -1008,7 +1239,18 @@ export const translations = {
     lbl_interests: "Interese",
     tag_interests: "Interese",
     tag_new: "Nou",
-    btn_register: "Înregistrare"
+    btn_register: "Înregistrare",
+
+    // ფიდი
+    ph_search: "Căutare",
+  lbl_filter: "Filtru:",
+  btn_like: "Îmi place",
+  btn_pass: "Omite",
+  nav_feed: "Pentru tine",
+  nav_people: "Prieteni",
+  nav_reels: "Reels",
+  nav_inbox: "Mesaje",
+  nav_profile: "Profil"
   },
 
   // 34. Shqip
@@ -1035,7 +1277,18 @@ export const translations = {
     lbl_interests: "Interesat",
     tag_interests: "Interesat",
     tag_new: "E re",
-    btn_register: "Regjistrohu"
+    btn_register: "Regjistrohu",
+
+    // ფიდი
+    ph_search: "Kërko",
+  lbl_filter: "Filtri:",
+  btn_like: "Pëlqej",
+  btn_pass: "Kalo",
+  nav_feed: "Kryefaqja",
+  nav_people: "Njerëz",
+  nav_reels: "Reels",
+  nav_inbox: "Kutia e hyrjes",
+  nav_profile: "Profili"
   },
 
   // 35. Slovenčina
@@ -1062,7 +1315,18 @@ export const translations = {
     lbl_interests: "Záujmy",
     tag_interests: "Záujmy",
     tag_new: "Nové",
-    btn_register: "Registrovať"
+    btn_register: "Registrovať",
+
+    // ფიდი
+    ph_search: "Hľadať",
+  lbl_filter: "Filter:",
+  btn_like: "Páči sa mi to",
+  btn_pass: "Preskočiť",
+  nav_feed: "Pre vás",
+  nav_people: "Priatelia",
+  nav_reels: "Reels",
+  nav_inbox: "Doručené",
+  nav_profile: "Profil"
   },
 
   // 36. Slovenščina
@@ -1089,7 +1353,18 @@ export const translations = {
     lbl_interests: "Zanimanja",
     tag_interests: "Zanimanja",
     tag_new: "Novo",
-    btn_register: "Registracija"
+    btn_register: "Registracija",
+
+    // ფიდი
+    ph_search: "Išči",
+  lbl_filter: "Filter:",
+  btn_like: "Všeč mi je",
+  btn_pass: "Preskoči",
+  nav_feed: "Zate",
+  nav_people: "Prijatelji",
+  nav_reels: "Reels",
+  nav_inbox: "Prejeto",
+  nav_profile: "Profil"
   },
 
   // 37. Suomi
@@ -1116,7 +1391,18 @@ export const translations = {
     lbl_interests: "Kiinnostuksen kohteet",
     tag_interests: "Kiinnostuksen kohteet",
     tag_new: "Uusi",
-    btn_register: "Rekisteröidy"
+    btn_register: "Rekisteröidy",
+
+    // ფიდი
+    ph_search: "Hae",
+  lbl_filter: "Suodatin:",
+  btn_like: "Tykkää",
+  btn_pass: "Ohita",
+  nav_feed: "Sinulle",
+  nav_people: "Kaverit",
+  nav_reels: "Reels",
+  nav_inbox: "Saapuneet",
+  nav_profile: "Profiili"
   },
 
   // 38. Svenska
@@ -1143,7 +1429,18 @@ export const translations = {
     lbl_interests: "Intressen",
     tag_interests: "Intressen",
     tag_new: "Nytt",
-    btn_register: "Registrera"
+    btn_register: "Registrera",
+
+    // ფიდი
+    ph_search: "Sök",
+  lbl_filter: "Filter:",
+  btn_like: "Gilla",
+  btn_pass: "Hoppa över",
+  nav_feed: "För dig",
+  nav_people: "Vänner",
+  nav_reels: "Reels",
+  nav_inbox: "Inkorg",
+  nav_profile: "Profil"
   },
 
   // 39. Tiếng Việt
@@ -1170,7 +1467,18 @@ export const translations = {
     lbl_interests: "Sở thích",
     tag_interests: "Sở thích",
     tag_new: "Mới",
-    btn_register: "Đăng ký"
+    btn_register: "Đăng ký",
+
+    // ფიდი
+    ph_search: "Tìm kiếm",
+  lbl_filter: "Bộ lọc:",
+  btn_like: "Thích",
+  btn_pass: "Bỏ qua",
+  nav_feed: "Dành cho bạn",
+  nav_people: "Bạn bè",
+  nav_reels: "Reels",
+  nav_inbox: "Hộp thư",
+  nav_profile: "Hồ sơ"
   },
 
   // 40. Türkçe
@@ -1197,7 +1505,18 @@ export const translations = {
     lbl_interests: "İlgi Alanları",
     tag_interests: "İlgi Alanları",
     tag_new: "Yeni",
-    btn_register: "Kaydol"
+    btn_register: "Kaydol",
+
+    // ფიდი
+    ph_search: "Ara",
+  lbl_filter: "Filtre:",
+  btn_like: "Beğen",
+  btn_pass: "Geç",
+  nav_feed: "Sizin İçin",
+  nav_people: "Arkadaşlar",
+  nav_reels: "Reels",
+  nav_inbox: "Gelen Kutusu",
+  nav_profile: "Profil"
   },
 
   // 41. Ελληνικά
