@@ -2257,7 +2257,26 @@ export const translations = {
   nav_people: "Arkadaşlar",
   nav_reels: "Reels",
   nav_inbox: "Gelen Kutusu",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+
+    // პროფილი
+    stat_following: "Takip",
+  stat_followers: "Takipçi",
+  stat_likes: "Beğeni",
+  status_active: "Aktif",
+  btn_follow: "Takip Et",
+  btn_message: "Mesaj",
+  chip_popular: "Popüler",
+  menu_group_resources: "Kaynaklar",
+  menu_balance: "Bakiye",
+  menu_group_personal: "Kişisel araçlar",
+  menu_activity_center: "Etkinlik merkezi",
+  menu_offline_videos: "Çevrimdışı videolar",
+  menu_your_qr: "QR kodunuz",
+  menu_group_creator: "İçerik üretici ve işletme",
+  menu_business_tools: "İşletme araçları",
+  menu_promotion: "Tanıtım yap",
+  menu_settings_privacy: "Ayarlar ve gizlilik"
   },
 
   // 41. Ελληνικά
@@ -2295,7 +2314,26 @@ export const translations = {
   nav_people: "Φίλοι",
   nav_reels: "Reels",
   nav_inbox: "Εισερχόμενα",
-  nav_profile: "Προφίλ"
+  nav_profile: "Προφίλ",
+
+    // პროფილი
+    stat_following: "Ακολουθεί",
+  stat_followers: "Ακόλουθοι",
+  stat_likes: "Μου αρέσει",
+  status_active: "Ενεργός",
+  btn_follow: "Ακολουθήστε",
+  btn_message: "Μήνυμα",
+  chip_popular: "Δημοφιλές",
+  menu_group_resources: "Πόροι",
+  menu_balance: "Υπόλοιπο",
+  menu_group_personal: "Προσωπικά εργαλεία",
+  menu_activity_center: "Κέντρο δραστηριότητας",
+  menu_offline_videos: "Βίντεο εκτός σύνδεσης",
+  menu_your_qr: "Ο κωδικός σας QR",
+  menu_group_creator: "Δημιουργοί και επιχειρήσεις",
+  menu_business_tools: "Επιχειρηματικά εργαλεία",
+  menu_promotion: "Προώθηση",
+  menu_settings_privacy: "Ρυθμίσεις και απόρρητο"
   },
 
   // 42. Български
@@ -2334,6 +2372,25 @@ export const translations = {
   nav_reels: "Reels",
   nav_inbox: "Входящи",
   nav_profile: "Профил",
+
+    // პროფილი
+    stat_following: "Следвани",
+  stat_followers: "Последователи",
+  stat_likes: "Харесвания",
+  status_active: "Активен",
+  btn_follow: "Последвай",
+  btn_message: "Съобщение",
+  chip_popular: "Популярни",
+  menu_group_resources: "Ресурси",
+  menu_balance: "Баланс",
+  menu_group_personal: "Лични инструменти",
+  menu_activity_center: "Център за дейности",
+  menu_offline_videos: "Офлайн видеоклипове",
+  menu_your_qr: "Вашият QR код",
+  menu_group_creator: "Творци и бизнес",
+  menu_business_tools: "Бизнес инструменти",
+  menu_promotion: "Популяризиране",
+  menu_settings_privacy: "Настройки и поверителност"
   },
 
   // 43. Қазақша
@@ -2371,7 +2428,26 @@ export const translations = {
   nav_people: "Достар",
   nav_reels: "Reels",
   nav_inbox: "Кіріс жәшігі",
-  nav_profile: "Профиль"
+  nav_profile: "Профиль",
+
+    // პროფილი
+    stat_following: "Жазылымдар",
+  stat_followers: "Жазылушылар",
+  stat_likes: "Лайктар",
+  status_active: "Белсенді",
+  btn_follow: "Жазылу",
+  btn_message: "Хабарлама",
+  chip_popular: "Танымал",
+  menu_group_resources: "Ресурстар",
+  menu_balance: "Баланс",
+  menu_group_personal: "Жеке құралдар",
+  menu_activity_center: "Әрекеттер орталығы",
+  menu_offline_videos: "Офлайн бейнелер",
+  menu_your_qr: "Сіздің QR кодыңыз",
+  menu_group_creator: "Авторлар мен бизнес",
+  menu_business_tools: "Бизнес құралдары",
+  menu_promotion: "Жылжыту",
+  menu_settings_privacy: "Параметрлер және құпиялылық"
   },
 
   // 44. Русский
@@ -2409,7 +2485,26 @@ export const translations = {
   nav_people: "Друзья",
   nav_reels: "Reels",
   nav_inbox: "Входящие",
-  nav_profile: "Профиль"
+  nav_profile: "Профиль",
+
+    // პროფილი
+    stat_following: "Подписки",
+  stat_followers: "Подписчики",
+  stat_likes: "Лайки",
+  status_active: "В сети",
+  btn_follow: "Подписаться",
+  btn_message: "Сообщение",
+  chip_popular: "Популярное",
+  menu_group_resources: "Ресурсы",
+  menu_balance: "Баланс",
+  menu_group_personal: "Личные инструменты",
+  menu_activity_center: "Центр активности",
+  menu_offline_videos: "Офлайн-видео",
+  menu_your_qr: "Ваш QR-код",
+  menu_group_creator: "Авторам и бизнесу",
+  menu_business_tools: "Инструменты для бизнеса",
+  menu_promotion: "Продвижение",
+  menu_settings_privacy: "Настройки и конфиденциальность"
   },
 
   // 45. Українська
@@ -2447,7 +2542,26 @@ export const translations = {
   nav_people: "Друзі",
   nav_reels: "Reels",
   nav_inbox: "Вхідні",
-  nav_profile: "Профіль"
+  nav_profile: "Профіль",
+
+    // პროფილი
+    stat_following: "Стежить",
+  stat_followers: "Читачі",
+  stat_likes: "Вподобання",
+  status_active: "В мережі",
+  btn_follow: "Стежити",
+  btn_message: "Повідомлення",
+  chip_popular: "Популярне",
+  menu_group_resources: "Ресурси",
+  menu_balance: "Баланс",
+  menu_group_personal: "Особисті інструменти",
+  menu_activity_center: "Центр активності",
+  menu_offline_videos: "Офлайн-відео",
+  menu_your_qr: "Ваш QR-код",
+  menu_group_creator: "Авторам і бізнесу",
+  menu_business_tools: "Інструменти для бізнесу",
+  menu_promotion: "Просування",
+  menu_settings_privacy: "Налаштування та конфіденційність"
   },
 
   // 46. עברית
@@ -2485,7 +2599,26 @@ export const translations = {
   nav_people: "חברים",
   nav_reels: "Reels",
   nav_inbox: "תיבת דואר נכנס",
-  nav_profile: "פרופיל"
+  nav_profile: "פרופיל",
+
+    // პროფილი
+    stat_following: "עוקב/ת",
+  stat_followers: "עוקבים",
+  stat_likes: "לייקים",
+  status_active: "פעיל/ה",
+  btn_follow: "עקוב",
+  btn_message: "הודעה",
+  chip_popular: "פופולרי",
+  menu_group_resources: "משאבים",
+  menu_balance: "יתרה",
+  menu_group_personal: "כלים אישיים",
+  menu_activity_center: "מרכז פעילות",
+  menu_offline_videos: "סרטונים במצב לא מקוון",
+  menu_your_qr: "קוד ה-QR שלך",
+  menu_group_creator: "יוצרים ועסקים",
+  menu_business_tools: "כלים עסקיים",
+  menu_promotion: "קידום",
+  menu_settings_privacy: "הגדרות ופרטיות"
   },
 
   // 47. اردو
@@ -2523,7 +2656,26 @@ export const translations = {
   nav_people: "لوگ",
   nav_reels: "Reels",
   nav_inbox: "ان باکس",
-  nav_profile: "پروفائل"
+  nav_profile: "پروفائل",
+
+    // პროფილი
+    stat_following: "فالو کر رہے ہیں",
+  stat_followers: "فالورز",
+  stat_likes: "پسندیدگیاں",
+  status_active: "فعال",
+  btn_follow: "فالو کریں",
+  btn_message: "پیغام",
+  chip_popular: "مقبول",
+  menu_group_resources: "وسائل",
+  menu_balance: "بیلنس",
+  menu_group_personal: "ذاتی ٹولز",
+  menu_activity_center: "سرگرمی کا مرکز",
+  menu_offline_videos: "آف لائن ویڈیوز",
+  menu_your_qr: "آپ کا QR کوڈ",
+  menu_group_creator: "تخلیق کار اور کاروبار",
+  menu_business_tools: "کاروباری ٹولز",
+  menu_promotion: "فروغ دیں",
+  menu_settings_privacy: "ترتیبات اور رازداری"
   },
 
   // 48. العربية
@@ -2561,7 +2713,26 @@ export const translations = {
   nav_people: "الأصدقاء",
   nav_reels: "Reels",
   nav_inbox: "صندوق الوارد",
-  nav_profile: "الملف الشخصي"
+  nav_profile: "الملف الشخصي",
+
+    // პროფილი
+    stat_following: "أتابعه",
+  stat_followers: "المتابعون",
+  stat_likes: "تسجيلات الإعجاب",
+  status_active: "نشط",
+  btn_follow: "متابعة",
+  btn_message: "رسالة",
+  chip_popular: "شائع",
+  menu_group_resources: "الموارد",
+  menu_balance: "الرصيد",
+  menu_group_personal: "الأدوات الشخصية",
+  menu_activity_center: "مركز الأنشطة",
+  menu_offline_videos: "مقاطع فيديو دون اتصال",
+  menu_your_qr: "رمز QR الخاص بك",
+  menu_group_creator: "المبدعون والأعمال",
+  menu_business_tools: "أدوات الأعمال",
+  menu_promotion: "ترويج",
+  menu_settings_privacy: "الإعدادات والخصوصية"
   },
 
   // 49. فارسی
@@ -2599,7 +2770,26 @@ export const translations = {
   nav_people: "دوستان",
   nav_reels: "Reels",
   nav_inbox: "صندوق ورودی",
-  nav_profile: "نمایه"
+  nav_profile: "نمایه",
+
+    // პროფილი
+    stat_following: "دنبال‌شده",
+  stat_followers: "دنبال‌کننده‌ها",
+  stat_likes: "پسندها",
+  status_active: "آنلاین",
+  btn_follow: "دنبال کردن",
+  btn_message: "پیام",
+  chip_popular: "محبوب",
+  menu_group_resources: "منابع",
+  menu_balance: "موجودی",
+  menu_group_personal: "ابزارهای شخصی",
+  menu_activity_center: "مرکز فعالیت",
+  menu_offline_videos: "ویدیوهای آفلاین",
+  menu_your_qr: "کد QR شما",
+  menu_group_creator: "خالق و کسب‌وکار",
+  menu_business_tools: "ابزارهای تجاری",
+  menu_promotion: "ارتقا",
+  menu_settings_privacy: "تنظیمات و حریم خصوصی"
   },
 
   // 50. हिन्दी
@@ -2637,7 +2827,26 @@ export const translations = {
   nav_people: "लोग",
   nav_reels: "Reels",
   nav_inbox: "इनबॉक्स",
-  nav_profile: "प्रोफ़ाइल"
+  nav_profile: "प्रोफ़ाइल",
+
+    // პროფილი
+    stat_following: "फ़ॉलो कर रहे हैं",
+  stat_followers: "फ़ॉलोअर्स",
+  stat_likes: "लाइक्स",
+  status_active: "सक्रिय",
+  btn_follow: "फ़ॉलो करें",
+  btn_message: "संदेश",
+  chip_popular: "लोकप्रिय",
+  menu_group_resources: "संसाधन",
+  menu_balance: "शेष राशि",
+  menu_group_personal: "व्यक्तिगत उपकरण",
+  menu_activity_center: "गतिविधि केंद्र",
+  menu_offline_videos: "ऑफ़लाइन वीडियो",
+  menu_your_qr: "आपका QR कोड",
+  menu_group_creator: "क्रिएटर और व्यवसाय",
+  menu_business_tools: "व्यावसायिक उपकरण",
+  menu_promotion: "प्रचार करें",
+  menu_settings_privacy: "सेटिंग्स और गोपनीयता"
   },
 
   // 51. বাংলা
@@ -2675,7 +2884,26 @@ export const translations = {
   nav_people: "মানুষ",
   nav_reels: "Reels",
   nav_inbox: "ইনবক্স",
-  nav_profile: "প্রোফাইল"
+  nav_profile: "প্রোফাইল",
+
+    // პროფილი
+    stat_following: "অনুসরণ করছেন",
+  stat_followers: "অনুসারী",
+  stat_likes: "লাইক",
+  status_active: "সক্রিয়",
+  btn_follow: "অনুসরণ করুন",
+  btn_message: "বার্তা",
+  chip_popular: "জনপ্রিয়",
+  menu_group_resources: "সম্পদ",
+  menu_balance: "ব্যালেন্স",
+  menu_group_personal: "ব্যক্তিগত সরঞ্জাম",
+  menu_activity_center: "কার্যকলাপ কেন্দ্র",
+  menu_offline_videos: "অফলাইন ভিডিও",
+  menu_your_qr: "আপনার QR কোড",
+  menu_group_creator: "স্রষ্টা এবং ব্যবসা",
+  menu_business_tools: "ব্যবসায়িক সরঞ্জাম",
+  menu_promotion: "প্রচার করুন",
+  menu_settings_privacy: "সেটিংস এবং গোপনীয়তা"
   },
 
   // 52. ภาษาไทย
@@ -2713,7 +2941,26 @@ export const translations = {
   nav_people: "เพื่อน",
   nav_reels: "Reels",
   nav_inbox: "กล่องขาเข้า",
-  nav_profile: "โปรไฟล์"
+  nav_profile: "โปรไฟล์",
+
+    // პროფილი
+    stat_following: "กำลังติดตาม",
+  stat_followers: "ผู้ติดตาม",
+  stat_likes: "ถูกใจ",
+  status_active: "ใช้งานอยู่",
+  btn_follow: "ติดตาม",
+  btn_message: "ข้อความ",
+  chip_popular: "ยอดนิยม",
+  menu_group_resources: "แหล่งข้อมูล",
+  menu_balance: "ยอดเงินคงเหลือ",
+  menu_group_personal: "เครื่องมือส่วนตัว",
+  menu_activity_center: "ศูนย์กิจกรรม",
+  menu_offline_videos: "วิดีโอออฟไลน์",
+  menu_your_qr: "รหัส QR ของคุณ",
+  menu_group_creator: "ครีเอเตอร์และธุรกิจ",
+  menu_business_tools: "เครื่องมือทางธุรกิจ",
+  menu_promotion: "โปรโมต",
+  menu_settings_privacy: "การตั้งค่าและความเป็นส่วนตัว"
   },
 
   // 53. မြန်မာ
@@ -2751,7 +2998,26 @@ export const translations = {
   nav_people: "သူငယ်ချင်းများ",
   nav_reels: "Reels",
   nav_inbox: "ဝင်စာ",
-  nav_profile: "ပရိုဖိုင်"
+  nav_profile: "ပရိုဖိုင်",
+
+    // პროფილი
+    stat_following: "လုပ်ဆောင်နေသည်",
+  stat_followers: "ဖော်လိုဝါများ",
+  stat_likes: "ကြိုက်နှစ်သက်မှုများ",
+  status_active: "အသုံးပြုနေသည်",
+  btn_follow: "ဖော်လိုလုပ်ရန်",
+  btn_message: "မက်ဆေ့ဂျ်",
+  chip_popular: "လူကြိုက်များသော",
+  menu_group_resources: "အရင်းအမြစ်များ",
+  menu_balance: "လက်ကျန်ငွေ",
+  menu_group_personal: "ကိုယ်ပိုင် ကိရိယာများ",
+  menu_activity_center: "လှုပ်ရှားမှု စင်တာ",
+  menu_offline_videos: "အော့ဖ်လိုင်း ဗီဒီယိုများ",
+  menu_your_qr: "သင့် QR ကုဒ်",
+  menu_group_creator: "ဖန်တီးသူနှင့် စီးပွားရေး",
+  menu_business_tools: "စီးပွားရေး ကိရိယာများ",
+  menu_promotion: "မြှင့်တင်ရန်",
+  menu_settings_privacy: "ဆက်တင်များနှင့် ကိုယ်ရေးကိုယ်တာ"
   },
 
   // 54. ខ្មែរ
@@ -2789,7 +3055,26 @@ export const translations = {
   nav_people: "មិត្តភក្តិ",
   nav_reels: "Reels",
   nav_inbox: "ប្រអប់ទទួល",
-  nav_profile: "កម្រងព័ត៌មាន"
+  nav_profile: "កម្រងព័ត៌មាន",
+
+    // პროფილი
+    stat_following: "កំពុងតាមដាន",
+  stat_followers: "អ្នកតាមដាន",
+  stat_likes: "ការចូលចិត្ត",
+  status_active: "សកម្ម",
+  btn_follow: "តាមដាន",
+  btn_message: "សារ",
+  chip_popular: "ពេញនិយម",
+  menu_group_resources: "ធនធាន",
+  menu_balance: "សមតុល្យ",
+  menu_group_personal: "ឧបករណ៍ផ្ទាល់ខ្លួន",
+  menu_activity_center: "មជ្ឈមណ្ឌលសកម្មភាព",
+  menu_offline_videos: "វីដេអូក្រៅបណ្តាញ",
+  menu_your_qr: "កូដ QR របស់អ្នក",
+  menu_group_creator: "អ្នកបង្កើត និងអាជីវកម្ម",
+  menu_business_tools: "ឧបករណ៍អាជីវកម្ម",
+  menu_promotion: "ផ្សព្វផ្សាយ",
+  menu_settings_privacy: "ការកំណត់ និងភាពឯកជន"
   },
 
   // 55. 日本語
@@ -2827,7 +3112,26 @@ export const translations = {
   nav_people: "友達",
   nav_reels: "Reels",
   nav_inbox: "受信トレイ",
-  nav_profile: "プロフィール"
+  nav_profile: "プロフィール",
+
+    // პროფილი
+    stat_following: "フォロー中",
+  stat_followers: "フォロワー",
+  stat_likes: "いいね",
+  status_active: "オンライン",
+  btn_follow: "フォロー",
+  btn_message: "メッセージ",
+  chip_popular: "人気",
+  menu_group_resources: "リソース",
+  menu_balance: "残高",
+  menu_group_personal: "個人用ツール",
+  menu_activity_center: "アクティビティセンター",
+  menu_offline_videos: "オフライン動画",
+  menu_your_qr: "あなたのQRコード",
+  menu_group_creator: "クリエイターとビジネス",
+  menu_business_tools: "ビジネスツール",
+  menu_promotion: "プロモーション",
+  menu_settings_privacy: "設定とプライバシー"
   },
 
   // 56. 中文 (繁體)
@@ -2865,7 +3169,26 @@ export const translations = {
   nav_people: "朋友",
   nav_reels: "Reels",
   nav_inbox: "收件匣",
-  nav_profile: "個人資料"
+  nav_profile: "個人資料",
+
+    // პროფილი
+    stat_following: "關注中",
+  stat_followers: "粉絲",
+  stat_likes: "讚",
+  status_active: "在線上",
+  btn_follow: "關注",
+  btn_message: "發訊息",
+  chip_popular: "熱門",
+  menu_group_resources: "資源",
+  menu_balance: "餘額",
+  menu_group_personal: "個人工具",
+  menu_activity_center: "活動中心",
+  menu_offline_videos: "離線影片",
+  menu_your_qr: "你的行動條碼",
+  menu_group_creator: "創作者與企業",
+  menu_business_tools: "企業工具",
+  menu_promotion: "推廣",
+  menu_settings_privacy: "設定與隱私"
   },
 
   // 57. 中文 (简体)
@@ -2903,7 +3226,26 @@ export const translations = {
   nav_people: "朋友",
   nav_reels: "Reels",
   nav_inbox: "收件箱",
-  nav_profile: "个人资料"
+  nav_profile: "个人资料",
+
+    // პროფილი
+    stat_following: "关注中",
+  stat_followers: "粉丝",
+  stat_likes: "获赞",
+  status_active: "在线",
+  btn_follow: "关注",
+  btn_message: "发私信",
+  chip_popular: "热门",
+  menu_group_resources: "资源",
+  menu_balance: "余额",
+  menu_group_personal: "个人工具",
+  menu_activity_center: "活动中心",
+  menu_offline_videos: "离线视频",
+  menu_your_qr: "你的二维码",
+  menu_group_creator: "创作者与企业",
+  menu_business_tools: "企业工具",
+  menu_promotion: "上热门",
+  menu_settings_privacy: "设置与隐私"
   }
 };
 
