@@ -34,7 +34,26 @@ export const translations = {
   nav_people: "ხალხი",
   nav_reels: "რელსები",
   nav_inbox: "შემოსულები",
-  nav_profile: "პროფილი"
+  nav_profile: "პროფილი",
+
+    // ფროფილი
+    stat_following: "გამოწერილი",
+  stat_followers: "გამომწერი",
+  stat_likes: "ლაიქები",
+  status_active: "აქტიური",
+  btn_follow: "გამოწერა",
+  btn_message: "შეტყობინება",
+  chip_popular: "პოპულარული",
+  menu_group_resources: "რესურსები",
+  menu_balance: "ბალანსი",
+  menu_group_personal: "პირადი ხელსაწყოები",
+  menu_activity_center: "აქტივობების ცენტრი",
+  menu_offline_videos: "ვიდეოები ოფლაინ",
+  menu_your_qr: "თქვენი QR კოდი",
+  menu_group_creator: "შემოქმედება და ბიზნესი",
+  menu_business_tools: "ინსტრუმენტები ბიზნესისთვის",
+  menu_promotion: "პოპულარიზაცია",
+  menu_settings_privacy: "პარამეტრები და კონფიდენციალურობა"
   },
 
   // 2. Azərbaycan
@@ -72,7 +91,26 @@ export const translations = {
   nav_people: "İnsanlar",
   nav_reels: "Reels",
   nav_inbox: "Gələnlər",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+
+    // პროფილი
+    stat_following: "İzlənir",
+  stat_followers: "İzləyicilər",
+  stat_likes: "Bəyənmələr",
+  status_active: "Aktiv",
+  btn_follow: "İzlə",
+  btn_message: "Mesaj",
+  chip_popular: "Məşhur",
+  menu_group_resources: "Resurslar",
+  menu_balance: "Balans",
+  menu_group_personal: "Şəxsi alətlər",
+  menu_activity_center: "Fəaliyyət mərkəzi",
+  menu_offline_videos: "Oflayn videolar",
+  menu_your_qr: "QR kodunuz",
+  menu_group_creator: "Yaradıcılıq və biznes",
+  menu_business_tools: "Biznes alətləri",
+  menu_promotion: "Tanıtım",
+  menu_settings_privacy: "Tənzimləmələr və məxfilik"
   },
 
   // 3. Bahasa Indonesia
@@ -110,7 +148,26 @@ export const translations = {
   nav_people: "Teman",
   nav_reels: "Reels",
   nav_inbox: "Kotak Masuk",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+
+    // პროფილი
+    stat_following: "Mengikuti",
+  stat_followers: "Pengikut",
+  stat_likes: "Suka",
+  status_active: "Aktif",
+  btn_follow: "Ikuti",
+  btn_message: "Pesan",
+  chip_popular: "Populer",
+  menu_group_resources: "Sumber daya",
+  menu_balance: "Saldo",
+  menu_group_personal: "Alat pribadi",
+  menu_activity_center: "Pusat aktivitas",
+  menu_offline_videos: "Video offline",
+  menu_your_qr: "Kode QR Anda",
+  menu_group_creator: "Kreator dan bisnis",
+  menu_business_tools: "Alat bisnis",
+  menu_promotion: "Promosi",
+  menu_settings_privacy: "Pengaturan dan privasi"
   },
 
   // 4. Bahasa Melayu
@@ -148,7 +205,26 @@ export const translations = {
   nav_people: "Rakan",
   nav_reels: "Reels",
   nav_inbox: "Peti Masuk",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+
+    // პროფილი
+    stat_following: "Mengikut",
+  stat_followers: "Pengikut",
+  stat_likes: "Suka",
+  status_active: "Aktif",
+  btn_follow: "Ikuti",
+  btn_message: "Mesej",
+  chip_popular: "Popular",
+  menu_group_resources: "Sumber",
+  menu_balance: "Baki",
+  menu_group_personal: "Alat peribadi",
+  menu_activity_center: "Pusat aktiviti",
+  menu_offline_videos: "Video luar talian",
+  menu_your_qr: "Kod QR anda",
+  menu_group_creator: "Pencipta dan perniagaan",
+  menu_business_tools: "Alat perniagaan",
+  menu_promotion: "Promosi",
+  menu_settings_privacy: "Tetapan dan privasi"
   },
 
   // 5. Basa Jawa
@@ -186,7 +262,26 @@ export const translations = {
   nav_people: "Kanca",
   nav_reels: "Reels",
   nav_inbox: "Kothak Mlebu",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+
+    // პროფილი
+    stat_following: "Ngetutake",
+  stat_followers: "Pandherek",
+  stat_likes: "Seneng",
+  status_active: "Aktif",
+  btn_follow: "Tututi",
+  btn_message: "Pesen",
+  chip_popular: "Populer",
+  menu_group_resources: "Sumber daya",
+  menu_balance: "Saldo",
+  menu_group_personal: "Piranti pribadi",
+  menu_activity_center: "Pusat kagiyatan",
+  menu_offline_videos: "Video offline",
+  menu_your_qr: "Kode QR sampeyan",
+  menu_group_creator: "Kreator lan bisnis",
+  menu_business_tools: "Piranti bisnis",
+  menu_promotion: "Promosi",
+  menu_settings_privacy: "Setelan lan privasi"
   },
 
   // 6. Català
@@ -224,7 +319,26 @@ export const translations = {
   nav_people: "Persones",
   nav_reels: "Reels",
   nav_inbox: "Safata d'entrada",
-  nav_profile: "Perfil"
+  nav_profile: "Perfil",
+
+    // პროფილი
+    stat_following: "Seguint",
+  stat_followers: "Seguidors",
+  stat_likes: "M'agrada",
+  status_active: "Actiu",
+  btn_follow: "Segueix",
+  btn_message: "Missatge",
+  chip_popular: "Popular",
+  menu_group_resources: "Recursos",
+  menu_balance: "Saldo",
+  menu_group_personal: "Eines personals",
+  menu_activity_center: "Centre d'activitat",
+  menu_offline_videos: "Vídeos fora de línia",
+  menu_your_qr: "El vostre codi QR",
+  menu_group_creator: "Creativitat i empresa",
+  menu_business_tools: "Eines per a empreses",
+  menu_promotion: "Promoció",
+  menu_settings_privacy: "Configuració i privadesa"
   },
 
   // 7. Cebuano
@@ -262,7 +376,26 @@ export const translations = {
   nav_people: "Katawhan",
   nav_reels: "Reels",
   nav_inbox: "Inbox",
-  nav_profile: "Profile"
+  nav_profile: "Profile",
+
+    // პროფილი
+    stat_following: "Gisunod",
+  stat_followers: "Mga Sumusunod",
+  stat_likes: "Mga Like",
+  status_active: "Aktibo",
+  btn_follow: "Sunda",
+  btn_message: "Mensahe",
+  chip_popular: "Sikat",
+  menu_group_resources: "Mga Kapanguhaan",
+  menu_balance: "Balansi",
+  menu_group_personal: "Personal nga mga galamiton",
+  menu_activity_center: "Sentro sa kalihokan",
+  menu_offline_videos: "Mga video nga offline",
+  menu_your_qr: "Imong QR code",
+  menu_group_creator: "Kreador ug negosyo",
+  menu_business_tools: "Mga galamiton sa negosyo",
+  menu_promotion: "Promosyon",
+  menu_settings_privacy: "Mga setting ug pribasiya"
   },
 
   // 8. Čeština
@@ -300,7 +433,26 @@ export const translations = {
   nav_people: "Lidé",
   nav_reels: "Reels",
   nav_inbox: "Doručené",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+    
+// პროფილი
+    stat_following: "Sledování",
+  stat_followers: "Sledující",
+  stat_likes: "Líbí se",
+  status_active: "Aktivní",
+  btn_follow: "Sledovat",
+  btn_message: "Zpráva",
+  chip_popular: "Populární",
+  menu_group_resources: "Zdroje",
+  menu_balance: "Zůstatek",
+  menu_group_personal: "Osobní nástroje",
+  menu_activity_center: "Centrum aktivit",
+  menu_offline_videos: "Offline videa",
+  menu_your_qr: "Váš QR kód",
+  menu_group_creator: "Tvorba a podnikání",
+  menu_business_tools: "Firemní nástroje",
+  menu_promotion: "Propagace",
+  menu_settings_privacy: "Nastavení a soukromí"
   },
 
   // 9. Dansk
@@ -338,7 +490,26 @@ export const translations = {
   nav_people: "Personer",
   nav_reels: "Reels",
   nav_inbox: "Indbakke",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+
+    // პროფილი
+    stat_following: "Følger",
+  stat_followers: "Følgere",
+  stat_likes: "Synes godt om",
+  status_active: "Aktiv",
+  btn_follow: "Følg",
+  btn_message: "Besked",
+  chip_popular: "Populær",
+  menu_group_resources: "Ressourcer",
+  menu_balance: "Saldo",
+  menu_group_personal: "Personlige værktøjer",
+  menu_activity_center: "Aktivitetscenter",
+  menu_offline_videos: "Offline videoer",
+  menu_your_qr: "Din QR-kode",
+  menu_group_creator: "Skabere og virksomhed",
+  menu_business_tools: "Erhvervsværktøjer",
+  menu_promotion: "Promovering",
+  menu_settings_privacy: "Indstillinger og privatliv"
   },
 
   // 10. Deutsch
@@ -376,7 +547,26 @@ export const translations = {
   nav_people: "Freunde",
   nav_reels: "Reels",
   nav_inbox: "Posteingang",
-  nav_profile: "Profil"
+  nav_profile: "Profil",
+
+    // პროფილი
+    stat_following: "Folge ich",
+  stat_followers: "Follower",
+  stat_likes: "Likes",
+  status_active: "Aktiv",
+  btn_follow: "Folgen",
+  btn_message: "Nachricht",
+  chip_popular: "Beliebt",
+  menu_group_resources: "Ressourcen",
+  menu_balance: "Guthaben",
+  menu_group_personal: "Persönliche Tools",
+  menu_activity_center: "Aktivitätszentrum",
+  menu_offline_videos: "Offline-Videos",
+  menu_your_qr: "Dein QR-Code",
+  menu_group_creator: "Creator & Business",
+  menu_business_tools: "Business-Tools",
+  menu_promotion: "Bewerben",
+  menu_settings_privacy: "Einstellungen und Datenschutz"
   },
 
   // 11. Eesti
@@ -414,7 +604,26 @@ export const translations = {
   nav_people: "Inimesed",
   nav_reels: "Reels",
   nav_inbox: "Postkast",
-  nav_profile: "Profiil"
+  nav_profile: "Profiil",
+
+    // პროფილი
+    stat_following: "Jälgitavad",
+  stat_followers: "Jälgijad",
+  stat_likes: "Meeldimised",
+  status_active: "Aktiivne",
+  btn_follow: "Jälgi",
+  btn_message: "Sõnum",
+  chip_popular: "Populaarne",
+  menu_group_resources: "Ressursid",
+  menu_balance: "Saldo",
+  menu_group_personal: "Isiklikud tööriistad",
+  menu_activity_center: "Tegevuskeskus",
+  menu_offline_videos: "Võrguühenduseta videod",
+  menu_your_qr: "Sinu QR-kood",
+  menu_group_creator: "Loojad ja äri",
+  menu_business_tools: "Äritööriistad",
+  menu_promotion: "Edendamine",
+  menu_settings_privacy: "Seaded ja privaatsus"
   },
 
   // 12. English (UK)
@@ -452,7 +661,26 @@ export const translations = {
   nav_people: "People",
   nav_reels: "Reels",
   nav_inbox: "Inbox",
-  nav_profile: "Profile"
+  nav_profile: "Profile",
+
+    // პროფილი
+    stat_following: "Following",
+  stat_followers: "Followers",
+  stat_likes: "Likes",
+  status_active: "Active",
+  btn_follow: "Follow",
+  btn_message: "Message",
+  chip_popular: "Popular",
+  menu_group_resources: "Resources",
+  menu_balance: "Balance",
+  menu_group_personal: "Personal tools",
+  menu_activity_center: "Activity centre",
+  menu_offline_videos: "Offline videos",
+  menu_your_qr: "Your QR code",
+  menu_group_creator: "Creator & Business",
+  menu_business_tools: "Business tools",
+  menu_promotion: "Promote",
+  menu_settings_privacy: "Settings and privacy"
   },
 
   // 13. English (US)
