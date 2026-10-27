@@ -20,17 +20,17 @@
 
       <!-- მთავარი ტექსტი -->
       <div class="hero-text-box">
-        <h2 class="hero-title">აღმოაჩინე ახალი<br>ადამიანები</h2>
-        <p class="hero-sub">გაიცანი საინტერესო ადამიანები მარტივად და უსაფრთხოდ</p>
+        <h2 class="hero-title" data-i18n="hero_title">აღმოაჩინე ახალი<br>ადამიანები</h2>
+        <p class="hero-sub" data-i18n="hero_sub">გაიცანი საინტერესო ადამიანები მარტივად და უსაფრთხოდ</p>
       </div>
 
-      <!-- მოქმედების ღილაკები ფოტოს მიხედვით -->
+      <!-- მოქმედების ღილაკები -->
       <div class="actions-container">
         <!-- რეგისტრაცია გადადის პირდაპირ signup.html-ზე -->
-        <a href="signup.html" class="btn-gradient">რეგისტრაცია</a>
+        <a href="signup.html" class="btn-gradient" data-i18n="btn_signup">რეგისტრაცია</a>
 
         <!-- შესვლის მოდალის გამოძახება -->
-        <button type="button" class="btn-outline" id="openLoginModal">შესვლა</button>
+        <button type="button" class="btn-outline" id="openLoginModal" data-i18n="btn_login">შესვლა</button>
 
         <!-- Email-ით პირდაპირი შესვლა -->
         <button type="button" class="btn-outline btn-email" id="quickEmailBtn">
@@ -48,7 +48,7 @@
             <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
             <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
           </svg>
-          შესვლა Google-ით
+          <span data-i18n="btn_google">შესვლა Google-ით</span>
         </button>
       </div>
     </div>
@@ -57,11 +57,11 @@
   <!-- შესვლის მოდალი (Email & Password) -->
   <div class="modal" id="loginModal">
     <div class="modal-content">
-      <h3>ავტორიზაცია</h3>
-      <input type="email" id="loginEmail" class="input-box" placeholder="ელექტრონული ფოსტა">
-      <input type="password" id="loginPass" class="input-box" placeholder="პაროლი">
-      <button type="button" class="btn-gradient" id="submitLoginBtn">შესვლა</button>
-      <button type="button" class="btn-close" id="closeModalBtn">გაუქმება</button>
+      <h3 data-i18n="login_title">ავტორიზაცია</h3>
+      <input type="email" id="loginEmail" class="input-box" placeholder="ელექტრონული ფოსტა" data-i18n-ph="ph_email">
+      <input type="password" id="loginPass" class="input-box" placeholder="პაროლი" data-i18n-ph="ph_password">
+      <button type="button" class="btn-gradient" id="submitLoginBtn" data-i18n="btn_login">შესვლა</button>
+      <button type="button" class="btn-close" id="closeModalBtn" data-i18n="btn_cancel">გაუქმება</button>
     </div>
   </div>
 
