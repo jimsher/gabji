@@ -1543,7 +1543,18 @@ export const translations = {
     lbl_interests: "Ενδιαφέροντα",
     tag_interests: "Ενδιαφέροντα",
     tag_new: "Νέο",
-    btn_register: "Εγγραφή"
+    btn_register: "Εγγραφή",
+
+    // ფიდი
+    ph_search: "Αναζήτηση",
+  lbl_filter: "Φίλτρο:",
+  btn_like: "Μου αρέσει",
+  btn_pass: "Παράλειψη",
+  nav_feed: "Για εσάς",
+  nav_people: "Φίλοι",
+  nav_reels: "Reels",
+  nav_inbox: "Εισερχόμενα",
+  nav_profile: "Προφίλ"
   },
 
   // 42. Български
@@ -1570,7 +1581,18 @@ export const translations = {
     lbl_interests: "Интереси",
     tag_interests: "Интереси",
     tag_new: "Ново",
-    btn_register: "Регистрация"
+    btn_register: "Регистрация",
+
+    // ფიდი
+    ph_search: "Търсене",
+  lbl_filter: "Филтър:",
+  btn_like: "Харесва ми",
+  btn_pass: "Пропусни",
+  nav_feed: "За вас",
+  nav_people: "Приятели",
+  nav_reels: "Reels",
+  nav_inbox: "Входящи",
+  nav_profile: "Профил",
   },
 
   // 43. Қазақша
@@ -1597,7 +1619,18 @@ export const translations = {
     lbl_interests: "Қызығушылықтар",
     tag_interests: "Қызығушылықтар",
     tag_new: "Жаңа",
-    btn_register: "Тіркелу"
+    btn_register: "Тіркелу",
+
+    // ფიდი
+    ph_search: "Іздеу",
+  lbl_filter: "Сүзгі:",
+  btn_like: "Ұнату",
+  btn_pass: "Өткізу",
+  nav_feed: "Сізге арналған",
+  nav_people: "Достар",
+  nav_reels: "Reels",
+  nav_inbox: "Кіріс жәшігі",
+  nav_profile: "Профиль"
   },
 
   // 44. Русский
@@ -1624,7 +1657,18 @@ export const translations = {
     lbl_interests: "Интересы",
     tag_interests: "Интересы",
     tag_new: "Новое",
-    btn_register: "Регистрация"
+    btn_register: "Регистрация",
+
+    // ფიდი
+    ph_search: "Поиск",
+  lbl_filter: "Фильтр:",
+  btn_like: "Нравится",
+  btn_pass: "Пропустить",
+  nav_feed: "Главная",
+  nav_people: "Друзья",
+  nav_reels: "Reels",
+  nav_inbox: "Входящие",
+  nav_profile: "Профиль"
   },
 
   // 45. Українська
@@ -1651,7 +1695,18 @@ export const translations = {
     lbl_interests: "Інтереси",
     tag_interests: "Інтереси",
     tag_new: "Нове",
-    btn_register: "Зареєструватися"
+    btn_register: "Зареєструватися",
+
+    // ფიდი
+    ph_search: "Пошук",
+  lbl_filter: "Фільтр:",
+  btn_like: "Подобається",
+  btn_pass: "Пропустити",
+  nav_feed: "Для вас",
+  nav_people: "Друзі",
+  nav_reels: "Reels",
+  nav_inbox: "Вхідні",
+  nav_profile: "Профіль"
   },
 
   // 46. עברית
@@ -1678,7 +1733,18 @@ export const translations = {
     lbl_interests: "תחומי עניין",
     tag_interests: "תחומי עניין",
     tag_new: "חדש",
-    btn_register: "הרשמה"
+    btn_register: "הרשמה",
+
+    // ფიდი
+    ph_search: "חיפוש",
+  lbl_filter: "מסנן:",
+  btn_like: "אהבתי",
+  btn_pass: "דלג",
+  nav_feed: "בשבילך",
+  nav_people: "חברים",
+  nav_reels: "Reels",
+  nav_inbox: "תיבת דואר נכנס",
+  nav_profile: "פרופיל"
   },
 
   // 47. اردو
@@ -1705,7 +1771,18 @@ export const translations = {
     lbl_interests: "دلچسپیاں",
     tag_interests: "دلچسپیاں",
     tag_new: "نیا",
-    btn_register: "رجسٹر کریں"
+    btn_register: "رجسٹر کریں",
+
+    // ფიდი
+    ph_search: "تلاش کریں",
+  lbl_filter: "فلٹر:",
+  btn_like: "پسند کریں",
+  btn_pass: "چھوڑیں",
+  nav_feed: "فیڈ",
+  nav_people: "لوگ",
+  nav_reels: "Reels",
+  nav_inbox: "ان باکس",
+  nav_profile: "پروفائل"
   },
 
   // 48. العربية
@@ -1732,7 +1809,18 @@ export const translations = {
     lbl_interests: "الاهتمامات",
     tag_interests: "الاهتمامات",
     tag_new: "جديد",
-    btn_register: "تسجيل"
+    btn_register: "تسجيل",
+
+    // ფიდი
+    ph_search: "بحث",
+  lbl_filter: "تصفية:",
+  btn_like: "إعجاب",
+  btn_pass: "تخطي",
+  nav_feed: "لك",
+  nav_people: "الأصدقاء",
+  nav_reels: "Reels",
+  nav_inbox: "صندوق الوارد",
+  nav_profile: "الملف الشخصي"
   },
 
   // 49. فارسی
@@ -1759,7 +1847,18 @@ export const translations = {
     lbl_interests: "علایق",
     tag_interests: "علایق",
     tag_new: "جدید",
-    btn_register: "ثبت‌نام"
+    btn_register: "ثبت‌نام",
+
+    // ფიდი
+    ph_search: "جستجو",
+  lbl_filter: "فیلتر:",
+  btn_like: "پسندیدن",
+  btn_pass: "رد شدن",
+  nav_feed: "برای شما",
+  nav_people: "دوستان",
+  nav_reels: "Reels",
+  nav_inbox: "صندوق ورودی",
+  nav_profile: "نمایه"
   },
 
   // 50. हिन्दी
@@ -1786,7 +1885,18 @@ export const translations = {
     lbl_interests: "रुचियां",
     tag_interests: "रुचियां",
     tag_new: "नया",
-    btn_register: "रजिस्टर करें"
+    btn_register: "रजिस्टर करें",
+
+    // ფიდი
+    ph_search: "खोजें",
+  lbl_filter: "फ़िल्टर:",
+  btn_like: "पसंद करें",
+  btn_pass: "छोड़ें",
+  nav_feed: "फ़ीड",
+  nav_people: "लोग",
+  nav_reels: "Reels",
+  nav_inbox: "इनबॉक्स",
+  nav_profile: "प्रोफ़ाइल"
   },
 
   // 51. বাংলা
@@ -1813,7 +1923,18 @@ export const translations = {
     lbl_interests: "আগ্রহ",
     tag_interests: "আগ্রহ",
     tag_new: "নতুন",
-    btn_register: "নিবন্ধন করুন"
+    btn_register: "নিবন্ধন করুন",
+
+    // ფიდი
+    ph_search: "অনুসন্ধান",
+  lbl_filter: "ফিল্টার:",
+  btn_like: "পছন্দ",
+  btn_pass: "এড়িয়ে যান",
+  nav_feed: "ফিড",
+  nav_people: "মানুষ",
+  nav_reels: "Reels",
+  nav_inbox: "ইনবক্স",
+  nav_profile: "প্রোফাইল"
   },
 
   // 52. ภาษาไทย
@@ -1840,7 +1961,18 @@ export const translations = {
     lbl_interests: "ความสนใจ",
     tag_interests: "ความสนใจ",
     tag_new: "ใหม่",
-    btn_register: "ลงทะเบียน"
+    btn_register: "ลงทะเบียน",
+
+    // ფიდი
+    ph_search: "ค้นหา",
+  lbl_filter: "ตัวกรอง:",
+  btn_like: "ถูกใจ",
+  btn_pass: "ข้าม",
+  nav_feed: "สำหรับคุณ",
+  nav_people: "เพื่อน",
+  nav_reels: "Reels",
+  nav_inbox: "กล่องขาเข้า",
+  nav_profile: "โปรไฟล์"
   },
 
   // 53. မြန်မာ
@@ -1867,7 +1999,18 @@ export const translations = {
     lbl_interests: "စိတ်ဝင်စားမှုများ",
     tag_interests: "စိတ်ဝင်စားမှုများ",
     tag_new: "အသစ်",
-    btn_register: "အကောင့်ဖွင့်ရန်"
+    btn_register: "အကောင့်ဖွင့်ရန်",
+
+    // ფიდი
+    ph_search: "ရှာဖွေရန်",
+  lbl_filter: "စစ်ထုတ်မှု:",
+  btn_like: "ကြိုက်တယ်",
+  btn_pass: "ကျော်မည်",
+  nav_feed: "ဖိဒ်",
+  nav_people: "သူငယ်ချင်းများ",
+  nav_reels: "Reels",
+  nav_inbox: "ဝင်စာ",
+  nav_profile: "ပရိုဖိုင်"
   },
 
   // 54. ខ្មែរ
@@ -1894,7 +2037,18 @@ export const translations = {
     lbl_interests: "ចំណាប់អារម្មណ៍",
     tag_interests: "ចំណាប់អារម្មណ៍",
     tag_new: "ថ្មី",
-    btn_register: "ចុះឈ្មោះ"
+    btn_register: "ចុះឈ្មោះ",
+
+    // ფიდი
+    ph_search: "ស្វែងរក",
+  lbl_filter: "តម្រង:",
+  btn_like: "ចូលចិត្ត",
+  btn_pass: "រំលង",
+  nav_feed: "សម្រាប់អ្នក",
+  nav_people: "មិត្តភក្តិ",
+  nav_reels: "Reels",
+  nav_inbox: "ប្រអប់ទទួល",
+  nav_profile: "កម្រងព័ត៌មាន"
   },
 
   // 55. 日本語
@@ -1921,7 +2075,18 @@ export const translations = {
     lbl_interests: "興味・関心",
     tag_interests: "興味・関心",
     tag_new: "新規",
-    btn_register: "登録する"
+    btn_register: "登録する",
+
+    // ფიდი
+    ph_search: "検索",
+  lbl_filter: "フィルター:",
+  btn_like: "いいね",
+  btn_pass: "スキップ",
+  nav_feed: "おすすめ",
+  nav_people: "友達",
+  nav_reels: "Reels",
+  nav_inbox: "受信トレイ",
+  nav_profile: "プロフィール"
   },
 
   // 56. 中文 (繁體)
@@ -1948,7 +2113,18 @@ export const translations = {
     lbl_interests: "興趣",
     tag_interests: "興趣",
     tag_new: "最新",
-    btn_register: "立即註冊"
+    btn_register: "立即註冊",
+
+    // ფიდი
+    ph_search: "搜尋",
+  lbl_filter: "篩選：",
+  btn_like: "喜歡",
+  btn_pass: "略過",
+  nav_feed: "推薦",
+  nav_people: "朋友",
+  nav_reels: "Reels",
+  nav_inbox: "收件匣",
+  nav_profile: "個人資料"
   },
 
   // 57. 中文 (简体)
@@ -1975,7 +2151,18 @@ export const translations = {
     lbl_interests: "兴趣",
     tag_interests: "兴趣",
     tag_new: "最新",
-    btn_register: "立即注册"
+    btn_register: "立即注册",
+
+    // ფიდი
+    ph_search: "搜索",
+  lbl_filter: "筛选：",
+  btn_like: "喜欢",
+  btn_pass: "跳过",
+  nav_feed: "推荐",
+  nav_people: "朋友",
+  nav_reels: "Reels",
+  nav_inbox: "收件箱",
+  nav_profile: "个人资料"
   }
 };
 
