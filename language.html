@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ენა - GABJI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: #0b0813;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .lang-screen {
+      width: 100%;
+      max-width: 412px;
+      min-height: 100vh;
+      background-color: #0b0813;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ჰედერი */
+    .lang-header {
+      position: sticky;
+      top: 0;
+      height: 52px;
+      background-color: #0b0813;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .header-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* შიგთავსი */
+    .lang-content {
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .group-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .group-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #7d7793;
+      padding-left: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .lang-card {
+      background-color: #171324;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lang-row-box {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .lang-row-box:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .lang-row-box:active {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .lang-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .row-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .row-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .row-val {
+      font-size: 14.5px;
+      color: #928ca8;
+    }
+
+    .row-arrow {
+      color: #625b77;
+      font-size: 18px;
+    }
+
+    .row-desc {
+      font-size: 12.5px;
+      line-height: 1.4;
+      color: #7d7793;
+      padding-right: 20px;
+    }
+
+    /* TikTok სტილის ტოგლი */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #3b364c;
+      transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 28px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #ffffff;
+      transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    input:checked + .slider {
+      background-color: #20d5ec; /* TikTok ცისფერი გადამრთველი როგორც ფოტოზეა */
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* ქვედა ამომხტარი ფანჯარა (Language Selector Modal) */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .lang-sheet {
+      width: 100%;
+      max-width: 412px;
+      background-color: #171324;
+      border-radius: 18px 18px 0 0;
+      padding: 20px 16px 36px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.6);
+      animation: slideUp 0.25s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sheet-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .sheet-close {
+      background: none;
+      border: none;
+      color: #8a84a0;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .lang-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 10px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .lang-option:active {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .lang-name {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .lang-check {
+      color: #fe2c55;
+      font-size: 18px;
+      display: none;
+    }
+
+    .lang-option.selected .lang-check {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="lang-screen">
+
+    <!-- ჰედერი -->
+    <header class="lang-header">
+      <button class="btn-back" onclick="window.location.href='settings.html'" aria-label="უკან">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+      <h1 class="header-title">ენა</h1>
+    </header>
+
+    <main class="lang-content">
+
+      <!-- 1. აპლიკაციის ენა -->
+      <div class="lang-card">
+        <div class="lang-row-box" id="rowAppLang">
+          <div class="lang-row-top">
+            <span class="row-title">აპლიკაციის ენა</span>
+            <div class="row-right">
+              <span class="row-val" id="valAppLang">ქართული</span>
+              <span class="row-arrow">›</span>
+            </div>
+          </div>
+          <p class="row-desc">აირჩიეთ აპლიკაციის ძირითადი ენა</p>
+        </div>
+      </div>
+
+      <!-- 2. თარგმანები -->
+      <div class="group-section">
+        <span class="group-label">თარგმანები</span>
+        <div class="lang-card">
+
+          <!-- გადამრთველი: ყოველთვის ითარგმნოს -->
+          <div class="lang-row-box" style="cursor: default;">
+            <div class="lang-row-top">
+              <span class="row-title">ყოველთვის ითარგმნოს პუბლიკაციები</span>
+              <label class="switch">
+                <input type="checkbox" id="toggleAutoTranslate" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <p class="row-desc">ითარგმნება აღწერები და სუბტიტრები ყველა ენიდან, გარდა გამონაკლისებისა.</p>
+          </div>
+
+          <!-- გადაითარგმნოს ენაზე -->
+          <div class="lang-row-box" id="rowTranslateTarget">
+            <div class="lang-row-top">
+              <span class="row-title">თარგმნა ენაზე</span>
+              <div class="row-right">
+                <span class="row-val" id="valTranslateTarget">ქართული</span>
+                <span class="row-arrow">›</span>
+              </div>
+            </div>
+            <p class="row-desc">ფუნქციებში, რომლებიც მხარს უჭერენ თარგმნას, ტექსტი გადაითარგმნება ამ ენაზე.</p>
+          </div>
+
+          <!-- არ გადაითარგმნოს -->
+          <div class="lang-row-box" id="rowDoNotTranslate">
+            <div class="lang-row-top">
+              <span class="row-title">არ ითარგმნოს</span>
+              <div class="row-right">
+                <span class="row-val" id="valDoNotTranslate">ქართული, English</span>
+                <span class="row-arrow">›</span>
+              </div>
+            </div>
+            <p class="row-desc">მიუთითეთ, რომელი ენებიდან არ გსურთ ტექსტის ავტომატური თარგმნა.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ენის არჩევის ამომხტარი ფანჯარა -->
+  <div class="modal-backdrop" id="langModal">
+    <div class="lang-sheet">
+      <div class="sheet-header">
+        <span class="sheet-title">აირჩიეთ ენა</span>
+        <button class="sheet-close" id="btnCloseModal">✕</button>
+      </div>
+
+      <div class="lang-option selected" data-lang="ka" data-label="ქართული">
+        <span class="lang-name">ქართული</span>
+        <span class="lang-check">✓</span>
+      </div>
+
+      <div class="lang-option" data-lang="en" data-label="English">
+        <span class="lang-name">English</span>
+        <span class="lang-check">✓</span>
+      </div>
+
+      <div class="lang-option" data-lang="ru" data-label="Русский">
+        <span class="lang-name">Русский</span>
+        <span class="lang-check">✓</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase & LocalStorage ინტეგრაცია -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
+      authDomain: "gabji-b583c.firebaseapp.com",
+      projectId: "gabji-b583c",
+      storageBucket: "gabji-b583c.firebasestorage.app",
+      messagingSenderId: "359136388859",
+      appId: "1:359136388859:web:5c3448fecd29052755f25e",
+      measurementId: "G-CM03PR8K8S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const valAppLang = document.getElementById("valAppLang");
+    const valTranslateTarget = document.getElementById("valTranslateTarget");
+    const toggleAutoTranslate = document.getElementById("toggleAutoTranslate");
+    const langModal = document.getElementById("langModal");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const rowAppLang = document.getElementById("rowAppLang");
+    const options = document.querySelectorAll(".lang-option");
+
+    // ლოკალური მეხსიერებიდან წამოღება
+    const savedLang = localStorage.getItem("gabji_language") || "ka";
+    const langLabels = { ka: "ქართული", en: "English", ru: "Русский" };
+    valAppLang.textContent = langLabels[savedLang] || "ქართული";
+    valTranslateTarget.textContent = langLabels[savedLang] || "ქართული";
+
+    // მონიშვნა სიაში
+    options.forEach(opt => {
+      opt.classList.toggle("selected", opt.dataset.lang === savedLang);
+    });
+
+    // მოდალის გახსნა / დახურვა
+    rowAppLang.onclick = () => langModal.classList.add("show");
+    btnCloseModal.onclick = () => langModal.classList.remove("show");
+    langModal.onclick = (e) => {
+      if (e.target === langModal) langModal.classList.remove("show");
+    };
+
+    let currentUser = null;
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+      currentUser = user;
+
+      // მონაცემების წაკითხვა Firestore-დან
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        if (snap.exists()) {
+          const data = snap.data();
+          if (data.appLanguage) {
+            valAppLang.textContent = langLabels[data.appLanguage] || data.appLanguage;
+            valTranslateTarget.textContent = langLabels[data.appLanguage] || data.appLanguage;
+            options.forEach(opt => opt.classList.toggle("selected", opt.dataset.lang === data.appLanguage));
+          }
+          if (typeof data.autoTranslate !== "undefined") {
+            toggleAutoTranslate.checked = data.autoTranslate;
+          }
+        }
+      } catch (err) {
+        console.error("ენის პარამეტრების წაკითხვის შეცდომა:", err);
+      }
+    });
+
+    // ენის არჩევა და შენახვა
+    options.forEach(opt => {
+      opt.onclick = async () => {
+        const selected = opt.dataset.lang;
+        const label = opt.dataset.label;
+
+        options.forEach(o => o.classList.remove("selected"));
+        opt.classList.add("selected");
+
+        valAppLang.textContent = label;
+        valTranslateTarget.textContent = label;
+        localStorage.setItem("gabji_language", selected);
+
+        langModal.classList.remove("show");
+
+        if (currentUser) {
+          try {
+            await updateDoc(doc(db, "users", currentUser.uid), { appLanguage: selected });
+          } catch (e) {
+            console.error("ენის ბაზაში შენახვის შეცდომა:", e);
+          }
+        }
+      };
+    });
+
+    // ტოგლის შენახვა Firestore-ში
+    toggleAutoTranslate.onchange = async () => {
+      const isChecked = toggleAutoTranslate.checked;
+      localStorage.setItem("gabji_auto_translate", isChecked);
+
+      if (currentUser) {
+        try {
+          await updateDoc(doc(db, "users", currentUser.uid), { autoTranslate: isChecked });
+        } catch (e) {
+          console.error("თარგმანის სტატუსის შენახვის შეცდომა:", e);
+        }
+      }
+    };
+  </script>
+</body>
+</html>
