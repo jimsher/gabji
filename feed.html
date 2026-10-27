@@ -18,11 +18,11 @@
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" class="feed-search-input" placeholder="Search">
+          <input type="text" class="feed-search-input" placeholder="Search" data-i18n-ph="ph_search">
         </div>
 
         <div class="filter-toggle-wrap">
-          <span class="filter-label">Filter:</span>
+          <span class="filter-label" data-i18n="lbl_filter">Filter:</span>
           <label class="toggle-switch">
             <input type="checkbox" id="filterToggle">
             <span class="toggle-slider"></span>
@@ -74,7 +74,7 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="#ff7597">
             <path d="M12 21.35C7 16.5 3 13 3 8.5 3 5.4 5.4 3 8.5 3c1.74 0 3.41.81 3.5 2 .09-1.19 1.76-2 3.5-2 3.1 0 5.5 2.4 5.5 5.5 0 4.5-4 8-9 12.85z"/>
           </svg>
-          <span class="btn-caption">Like</span>
+          <span class="btn-caption" data-i18n="btn_like">Like</span>
         </button>
 
         <button type="button" class="action-circle-btn btn-pass" id="passBtn">
@@ -82,7 +82,7 @@
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-          <span class="btn-caption">Pass</span>
+          <span class="btn-caption" data-i18n="btn_pass">Pass</span>
         </button>
       </div>
 
@@ -95,20 +95,20 @@
   <!-- 1. მთავარი / ფიდი -->
   <a href="feed.html" class="nav-item">
     <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
-    <span>ფიდი</span>
+    <span data-i18n="nav_feed">ფიდი</span>
   </a>
 
   <!-- 2. მეგობრები / რელსები -->
   <a href="users.html" class="nav-item">
   <img src="icons/users-group-rounded-bold.svg" alt="Users" class="nav-svg-icon" style="pointer-events: none;">
-  <span style="pointer-events: none;">ხალხი</span>
+  <span style="pointer-events: none;" data-i18n="nav_people">ხალხი</span>
 </a>
 
 
   <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
   <a href="reels.html" class="nav-item">
   <img src="icons/clapperboard-play-broken.svg" alt="Reels" class="nav-svg-icon" style="pointer-events: none;">
-  <span style="pointer-events: none;">რელსები</span>
+  <span style="pointer-events: none;" data-i18n="nav_reels">რელსები</span>
 </a>
 
 
@@ -119,13 +119,13 @@
       <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
       <span class="nav-unread-badge">26</span>
     </div>
-    <span>შემოსულები</span>
+    <span data-i18n="nav_inbox">შემოსულები</span>
   </a>
 
   <!-- 5. პროფილი -->
   <a href="profile.html" class="nav-item active">
     <img src="icons/user-broken.svg" alt="Profile" class="nav-svg-icon">
-    <span>პროფილი</span>
+    <span data-i18n="nav_profile">პროფილი</span>
   </a>
 </nav>
 
