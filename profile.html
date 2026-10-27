@@ -42,15 +42,15 @@
           <div class="tt-stats-row">
             <div class="tt-stat-col">
               <span class="tt-stat-num" id="statFollowing">0</span>
-              <span class="tt-stat-lbl">გამოწერილი</span>
+              <span class="tt-stat-lbl" data-i18n="stat_following">გამოწერილი</span>
             </div>
             <div class="tt-stat-col">
               <span class="tt-stat-num" id="statFollowers">0</span>
-              <span class="tt-stat-lbl">გამომწერი</span>
+              <span class="tt-stat-lbl" data-i18n="stat_followers">გამომწერი</span>
             </div>
             <div class="tt-stat-col">
               <span class="tt-stat-num" id="statLikes">0</span>
-              <span class="tt-stat-lbl">ლაიქები</span>
+              <span class="tt-stat-lbl" data-i18n="stat_likes">ლაიქები</span>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
               <img src="icons/user-round-plus.svg" alt="Add" class="tt-plus-icon">
             </div>
           </div>
-          <span class="tt-status-text" id="uploadProgressText">აქტიური</span>
+          <span class="tt-status-text" id="uploadProgressText" data-i18n="status_active">აქტიური</span>
         </div>
 
       </div>
@@ -78,8 +78,8 @@
 
       <!-- TikTok-ის გამოწერის/შეტყობინების ღილაკები სხვებისთვის -->
       <div class="tt-follow-action-row" id="otherUserActions" style="display: none;">
-        <button type="button" class="tt-btn-subscribe" id="btnFollowAction">გამოწერა</button>
-        <button type="button" class="tt-btn-message" id="btnMessageAction">შეტყობინება</button>
+        <button type="button" class="tt-btn-subscribe" id="btnFollowAction" data-i18n="btn_follow">გამოწერა</button>
+        <button type="button" class="tt-btn-message" id="btnMessageAction" data-i18n="btn_message">შეტყობინება</button>
         <button type="button" class="tt-btn-suggest" aria-label="Suggest User">
           <img src="icons/user-plus-broken.svg" alt="User Plus" class="tt-suggest-icon">
         </button>
@@ -93,11 +93,11 @@
         </button>
         <button type="button" class="tt-chip-btn" id="btnShare">
           <img src="icons/wallet.svg" alt="Wallet" class="tt-chip-icon">
-          <span>balanse</span>
+          <span data-i18n="menu_balance">balanse</span>
         </button>
         <button type="button" class="tt-chip-btn" id="btnBoost">
           <img src="icons/fire-linear.svg" alt="Fire" class="tt-chip-icon">
-          <span>populare</span>
+          <span data-i18n="chip_popular">populare</span>
         </button>
       </div>
 
@@ -143,47 +143,47 @@
     <div class="menu-drawer-scroll">
       
       <div class="menu-group">
-        <span class="menu-group-title">რესურსები</span>
+        <span class="menu-group-title" data-i18n="menu_group_resources">რესურსები</span>
         <div class="menu-item" id="menuItemBalance">
           <div class="menu-item-left">
             <img src="icons/wallet.svg" alt="Wallet" class="menu-item-icon">
-            <span class="menu-item-text">ბალანსი</span>
+            <span class="menu-item-text" data-i18n="menu_balance">ბალანსი</span>
           </div>
           <span class="menu-item-arrow">›</span>
         </div>
       </div>
 
       <div class="menu-group">
-        <span class="menu-group-title">პირადი ხელსაწყოები</span>
+        <span class="menu-group-title" data-i18n="menu_group_personal">პირადი ხელსაწყოები</span>
         <div class="menu-item">
           <div class="menu-item-left">
             <img src="icons/pencil-line.svg" alt="Activity" class="menu-item-icon">
-            <span class="menu-item-text">აქტივობების ცენტრი</span>
+            <span class="menu-item-text" data-i18n="menu_activity_center">აქტივობების ცენტრი</span>
           </div>
           <span class="menu-item-arrow">›</span>
         </div>
         <div class="menu-item">
           <div class="menu-item-left">
             <img src="icons/bookmark.svg" alt="Offline" class="menu-item-icon">
-            <span class="menu-item-text">ვიდეოები ოფლაინ</span>
+            <span class="menu-item-text" data-i18n="menu_offline_videos">ვიდეოები ოფლაინ</span>
           </div>
           <span class="menu-item-arrow">›</span>
         </div>
         <div class="menu-item">
           <div class="menu-item-left">
             <img src="icons/gallery-broken.svg" alt="QR" class="menu-item-icon">
-            <span class="menu-item-text">თქვენი QR კოდი</span>
+            <span class="menu-item-text" data-i18n="menu_your_qr">თქვენი QR კოდი</span>
           </div>
           <span class="menu-item-arrow">›</span>
         </div>
       </div>
 
       <div class="menu-group">
-        <span class="menu-group-title">შემოქმედება და ბიზნესი</span>
+        <span class="menu-group-title" data-i18n="menu_group_creator">შემოქმედება და ბიზნესი</span>
         <div class="menu-item">
           <div class="menu-item-left">
             <img src="icons/sparkles.svg" alt="Business" class="menu-item-icon">
-            <span class="menu-item-text">ინსტრუმენტები ბიზნესისთვის</span>
+            <span class="menu-item-text" data-i18n="menu_business_tools">ინსტრუმენტები ბიზნესისთვის</span>
           </div>
           <span class="menu-item-arrow">›</span>
         </div>
@@ -197,7 +197,7 @@
         <div class="menu-item">
           <div class="menu-item-left">
             <img src="icons/flame.svg" alt="Boost" class="menu-item-icon">
-            <span class="menu-item-text">პოპულარიზაცია</span>
+            <span class="menu-item-text" data-i18n="menu_promotion">პოპულარიზაცია</span>
           </div>
           <span class="menu-item-arrow">›</span>
         </div>
@@ -207,7 +207,7 @@
   <div class="menu-item" id="menuItemSettings" onclick="window.location.href='settings.html'">
     <div class="menu-item-left">
       <img src="icons/menu.svg" alt="Settings" class="menu-item-icon">
-      <span class="menu-item-text">პარამეტრები და კონფიდენციალურობა</span>
+      <span class="menu-item-text" data-i18n="menu_settings_privacy">პარამეტრები და კონფიდენციალურობა</span>
     </div>
     <span class="menu-item-arrow">›</span>
   </div>
@@ -222,12 +222,12 @@
   <nav class="bottom-nav-bar">
     <a href="feed.html" class="nav-item">
       <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
-      <span>ფიდი</span>
+      <span data-i18n="nav_feed">ფიდი</span>
     </a>
 
     <a href="users.html" class="nav-item">
       <img src="icons/users-group-rounded-bold.svg" alt="Friends" class="nav-svg-icon">
-      <span>ხალხი</span>
+      <span data-i18n="nav_people">ხალხი</span>
     </a>
 
     <div class="nav-item nav-upload-wrap">
@@ -241,12 +241,12 @@
         <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
         <span class="nav-unread-badge">26</span>
       </div>
-      <span>შემოსულები</span>
+      <span data-i18n="nav_inbox">შემოსულები</span>
     </a>
 
     <a href="profile.html" class="nav-item active">
       <img src="icons/user-broken.svg" alt="Profile" class="nav-svg-icon">
-      <span>პროფილი</span>
+      <span data-i18n="nav_profile">პროფილი</span>
     </a>
   </nav>
 
