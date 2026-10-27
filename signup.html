@@ -22,8 +22,8 @@
 
       <!-- სათაური -->
       <div class="signup-header">
-        <h2 class="signup-title">შექმენი პროფილი</h2>
-        <p class="signup-sub">Personalized onboard setup</p>
+        <h2 class="signup-title" data-i18n="signup_title">შექმენი პროფილი</h2>
+        <p class="signup-sub" data-i18n="signup_sub">Personalized onboard setup</p>
       </div>
 
       <!-- ფორმა -->
@@ -32,60 +32,60 @@
         <!-- სახელი და გვარი -->
         <div class="form-row">
           <div class="form-group flex-1">
-            <label class="input-label">სახელი</label>
-            <input type="text" id="regFirstName" class="input-box" placeholder="სახელი" required>
+            <label class="input-label" data-i18n="lbl_first_name">სახელი</label>
+            <input type="text" id="regFirstName" class="input-box" placeholder="სახელი" data-i18n-ph="lbl_first_name" required>
           </div>
           <div class="form-group flex-1">
-            <label class="input-label">გვარი</label>
-            <input type="text" id="regLastName" class="input-box" placeholder="გვარი" required>
+            <label class="input-label" data-i18n="lbl_last_name">გვარი</label>
+            <input type="text" id="regLastName" class="input-box" placeholder="გვარი" data-i18n-ph="lbl_last_name" required>
           </div>
         </div>
 
         <!-- დაბადების თარიღი -->
         <div class="form-group">
-          <label class="input-label">დაბადების თარიღი</label>
+          <label class="input-label" data-i18n="lbl_birth_date">დაბადების თარიღი</label>
           <input type="date" id="regBirthDate" class="input-box" required>
         </div>
 
         <!-- ქვეყანა და ქალაქი -->
         <div class="form-row">
           <div class="form-group flex-1">
-            <label class="input-label">ქვეყანა</label>
-            <input type="text" id="regCountry" class="input-box" placeholder="ქვეყანა" required>
+            <label class="input-label" data-i18n="lbl_country">ქვეყანა</label>
+            <input type="text" id="regCountry" class="input-box" placeholder="ქვეყანა" data-i18n-ph="lbl_country" required>
           </div>
           <div class="form-group flex-1">
-            <label class="input-label">ქალაქი</label>
-            <input type="text" id="regCity" class="input-box" placeholder="ქალაქი" required>
+            <label class="input-label" data-i18n="lbl_city">ქალაქი</label>
+            <input type="text" id="regCity" class="input-box" placeholder="ქალაქი" data-i18n-ph="lbl_city" required>
           </div>
         </div>
 
         <!-- მეილი -->
         <div class="form-group">
-          <label class="input-label">ელ-ფოსტა</label>
+          <label class="input-label" data-i18n="lbl_email">ელ-ფოსტა</label>
           <input type="email" id="regEmail" class="input-box" placeholder="example@mail.com" required>
         </div>
 
         <!-- პაროლი -->
         <div class="form-group">
-          <label class="input-label">პაროლი</label>
-          <input type="password" id="regPassword" class="input-box" placeholder="მინიმუმ 6 სიმბოლო" minlength="6" required>
+          <label class="input-label" data-i18n="lbl_password">პაროლი</label>
+          <input type="password" id="regPassword" class="input-box" placeholder="მინიმუმ 6 სიმბოლო" data-i18n-ph="ph_password_min" minlength="6" required>
         </div>
 
         <!-- ინტერესები -->
         <div class="form-group">
-          <label class="input-label">ინტერესები</label>
+          <label class="input-label" data-i18n="lbl_interests">ინტერესები</label>
           <div class="interest-tags-container" id="interestsContainer">
-            <button type="button" class="interest-pill">ინტერესები</button>
-            <button type="button" class="interest-pill">ახალი</button>
-            <button type="button" class="interest-pill">ინტერესები</button>
-            <button type="button" class="interest-pill">ახალისხაბი</button>
-            <button type="button" class="interest-pill">ინტერესბი</button>
+            <button type="button" class="interest-pill" data-i18n="tag_interests">ინტერესები</button>
+            <button type="button" class="interest-pill" data-i18n="tag_new">ახალი</button>
+            <button type="button" class="interest-pill" data-i18n="tag_interests">ინტერესები</button>
+            <button type="button" class="interest-pill" data-i18n="tag_new">ახალი</button>
+            <button type="button" class="interest-pill" data-i18n="tag_interests">ინტერესები</button>
           </div>
         </div>
 
         <!-- რეგისტრაციის ღილაკი -->
         <div class="form-group action-bottom">
-          <button type="submit" class="btn-gradient" id="submitBtn">რეგისტრაცია</button>
+          <button type="submit" class="btn-gradient" id="submitBtn" data-i18n="btn_register">რეგისტრაცია</button>
         </div>
 
       </form>
