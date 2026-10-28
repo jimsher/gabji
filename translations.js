@@ -1273,7 +1273,11 @@ export const translations = {
   menu_group_creator: "Höfundar og viðskipti",
   menu_business_tools: "Viðskiptaverkfæri",
   menu_promotion: "Kynna",
-  menu_settings_privacy: "Stillingar og friðhelgi"
+  menu_settings_privacy: "Stillingar og friðhelgi",
+
+    // მომხმარებელი
+  ph_search_users: "Leita...",
+  loading_users: "Hleður notendum..."
   },
 
   // 22. Italiano
@@ -1330,7 +1334,11 @@ export const translations = {
   menu_group_creator: "Creator e aziende",
   menu_business_tools: "Strumenti aziendali",
   menu_promotion: "Promuovi",
-  menu_settings_privacy: "Impostazioni e privacy"
+  menu_settings_privacy: "Impostazioni e privacy",
+
+    // მომხმარებელი
+  ph_search_users: "Cerca...",
+  loading_users: "Caricamento utenti..."
   },
 
   // 23. Kiswahili
@@ -1387,7 +1395,11 @@ export const translations = {
   menu_group_creator: "Mbunifu na biashara",
   menu_business_tools: "Zana za biashara",
   menu_promotion: "Tangaza",
-  menu_settings_privacy: "Mipangilio na faragha"
+  menu_settings_privacy: "Mipangilio na faragha",
+
+    // მომხმარებელი
+  ph_search_users: "Tafuta...",
+  loading_users: "Inapakia watumiaji..."
   },
 
   // 24. Latviešu
@@ -1444,7 +1456,11 @@ export const translations = {
   menu_group_creator: "Radītāji un bizness",
   menu_business_tools: "Biznesa rīki",
   menu_promotion: "Reklamēt",
-  menu_settings_privacy: "Iestatījumi un privātums"
+  menu_settings_privacy: "Iestatījumi un privātums",
+
+    // მომხმარებელი
+  ph_search_users: "Meklēt...",
+  loading_users: "Ielādē lietotājus..."
   },
 
   // 25. Lietuvių
@@ -1501,7 +1517,11 @@ export const translations = {
   menu_group_creator: "Kūrėjai ir verslas",
   menu_business_tools: "Verslo įrankiai",
   menu_promotion: "Reklamuoti",
-  menu_settings_privacy: "Nustatymai ir privatumas"
+  menu_settings_privacy: "Nustatymai ir privatumas",
+
+    // მომხმარებელი
+  ph_search_users: "Ieškoti...",
+  loading_users: "Įkeliami naudotojai..."
   },
 
   // 26. Magyar
@@ -1558,7 +1578,11 @@ export const translations = {
   menu_group_creator: "Alkotók és vállalkozások",
   menu_business_tools: "Üzleti eszközök",
   menu_promotion: "Népszerűsítés",
-  menu_settings_privacy: "Beállítások és adatvédelem"
+  menu_settings_privacy: "Beállítások és adatvédelem",
+
+    // მომხმარებელი
+  ph_search_users: "Keresés...",
+  loading_users: "Felhasználók betöltése..."
   },
 
   // 27. Nederlands
@@ -1615,7 +1639,11 @@ export const translations = {
   menu_group_creator: "Maker & Zakelijk",
   menu_business_tools: "Zakelijke tools",
   menu_promotion: "Promoten",
-  menu_settings_privacy: "Instellingen en privacy"
+  menu_settings_privacy: "Instellingen en privacy",
+
+    // მომხმარებელი
+  ph_search_users: "Zoeken...",
+  loading_users: "Gebruikers laden..."
   },
 
   // 28. norsk (bokmål)
@@ -1672,7 +1700,11 @@ export const translations = {
   menu_group_creator: "Skaper og bedrift",
   menu_business_tools: "Bedriftsverktøy",
   menu_promotion: "Markedsfør",
-  menu_settings_privacy: "Innstillinger og personvern"
+  menu_settings_privacy: "Innstillinger og personvern",
+
+    // მომხმარებელი
+  ph_search_users: "Søk...",
+  loading_users: "Laster inn brukere..."
   },
 
   // 29. O'zbek
@@ -1729,7 +1761,11 @@ export const translations = {
   menu_group_creator: "Ijodkorlar va biznes",
   menu_business_tools: "Biznes vositalari",
   menu_promotion: "Targ'ib qilish",
-  menu_settings_privacy: "Sozlamalar va maxfiylik"
+  menu_settings_privacy: "Sozlamalar va maxfiylik",
+
+    // მომხმარებელი
+  ph_search_users: "Qidirish...",
+  loading_users: "Foydalanuvchilar yuklanmoqda..."
   },
 
   // 30. Polski
@@ -1786,7 +1822,11 @@ export const translations = {
   menu_group_creator: "Twórcy i biznes",
   menu_business_tools: "Narzędzia biznesowe",
   menu_promotion: "Promuj",
-  menu_settings_privacy: "Ustawienia i prywatność"
+  menu_settings_privacy: "Ustawienia i prywatność",
+
+    // მომხმარებელი
+  ph_search_users: "Szukaj...",
+  loading_users: "Wczytywanie użytkowników..."
   },
 
   // 31. Português
@@ -1843,7 +1883,11 @@ export const translations = {
   menu_group_creator: "Criador e empresas",
   menu_business_tools: "Ferramentas de negócios",
   menu_promotion: "Promover",
-  menu_settings_privacy: "Definições e privacidade"
+  menu_settings_privacy: "Definições e privacidade",
+
+    // მომხმარებელი
+  ph_search_users: "Pesquisar...",
+  loading_users: "A carregar utilizadores..."
   },
 
   // 32. Português (Brasil)
@@ -1900,7 +1944,11 @@ export const translations = {
   menu_group_creator: "Criador e negócios",
   menu_business_tools: "Ferramentas comerciais",
   menu_promotion: "Promover",
-  menu_settings_privacy: "Configurações e privacidade"
+  menu_settings_privacy: "Configurações e privacidade",
+
+    // მომხმარებელი
+  ph_search_users: "Pesquisar...",
+  loading_users: "Carregando usuários..."
   },
 
   // 33. Română
@@ -1957,7 +2005,11 @@ export const translations = {
   menu_group_creator: "Creatori și afaceri",
   menu_business_tools: "Instrumente de afaceri",
   menu_promotion: "Promovează",
-  menu_settings_privacy: "Setări și confidențialitate"
+  menu_settings_privacy: "Setări și confidențialitate",
+
+    // მიმხმარებელი
+  ph_search_users: "Căutare...",
+  loading_users: "Se încarcă utilizatorii..."
   },
 
   // 34. Shqip
@@ -2014,7 +2066,11 @@ export const translations = {
   menu_group_creator: "Krijuesit dhe biznesi",
   menu_business_tools: "Mjete biznesi",
   menu_promotion: "Promovo",
-  menu_settings_privacy: "Cilësimet dhe privatësia"
+  menu_settings_privacy: "Cilësimet dhe privatësia",
+
+    // მომხმარებელი
+  ph_search_users: "Kërko...",
+  loading_users: "Po ngarkohen përdoruesit..."
   },
 
   // 35. Slovenčina
@@ -2071,7 +2127,11 @@ export const translations = {
   menu_group_creator: "Tvorcovia a podnikanie",
   menu_business_tools: "Firemné nástroje",
   menu_promotion: "Propagovať",
-  menu_settings_privacy: "Nastavenia a súkromie"
+  menu_settings_privacy: "Nastavenia a súkromie",
+
+    // მომხმარებელი
+  ph_search_users: "Hľadať...",
+  loading_users: "Načítavanie používateľov..."
   },
 
   // 36. Slovenščina
@@ -2128,7 +2188,11 @@ export const translations = {
   menu_group_creator: "Ustvarjalci in podjetja",
   menu_business_tools: "Poslovna orodja",
   menu_promotion: "Promocija",
-  menu_settings_privacy: "Nastavitve in zasebnost"
+  menu_settings_privacy: "Nastavitve in zasebnost",
+
+    // მომხმარებელი
+  ph_search_users: "Išči...",
+  loading_users: "Nalaganje uporabnikov..."
   },
 
   // 37. Suomi
@@ -2185,7 +2249,11 @@ export const translations = {
   menu_group_creator: "Tekijät ja yritykset",
   menu_business_tools: "Yritystyökalut",
   menu_promotion: "Mainosta",
-  menu_settings_privacy: "Asetukset ja yksityisyys"
+  menu_settings_privacy: "Asetukset ja yksityisyys",
+
+    // მომხმარებელი
+  ph_search_users: "Hae...",
+  loading_users: "Ladataan käyttäjiä..."
   },
 
   // 38. Svenska
@@ -2242,7 +2310,11 @@ export const translations = {
   menu_group_creator: "Skapare och företag",
   menu_business_tools: "Företagsverktyg",
   menu_promotion: "Marknadsför",
-  menu_settings_privacy: "Inställningar och integritet"
+  menu_settings_privacy: "Inställningar och integritet",
+
+    // მომხმარებელი
+  ph_search_users: "Sök...",
+  loading_users: "Läser in användare..."
   },
 
   // 39. Tiếng Việt
@@ -2299,7 +2371,11 @@ export const translations = {
   menu_group_creator: "Nhà sáng tạo và doanh nghiệp",
   menu_business_tools: "Công cụ doanh nghiệp",
   menu_promotion: "Quảng bá",
-  menu_settings_privacy: "Cài đặt và quyền riêng tư"
+  menu_settings_privacy: "Cài đặt và quyền riêng tư",
+
+    // მომხმარებელი
+  ph_search_users: "Tìm kiếm...",
+  loading_users: "Đang tải người dùng..."
   },
 
   // 40. Türkçe
@@ -2356,7 +2432,11 @@ export const translations = {
   menu_group_creator: "İçerik üretici ve işletme",
   menu_business_tools: "İşletme araçları",
   menu_promotion: "Tanıtım yap",
-  menu_settings_privacy: "Ayarlar ve gizlilik"
+  menu_settings_privacy: "Ayarlar ve gizlilik",
+
+    // მომხმარებელი
+  ph_search_users: "Ara...",
+  loading_users: "Kullanıcılar yükleniyor..."
   },
 
   // 41. Ελληνικά
@@ -2413,7 +2493,11 @@ export const translations = {
   menu_group_creator: "Δημιουργοί και επιχειρήσεις",
   menu_business_tools: "Επιχειρηματικά εργαλεία",
   menu_promotion: "Προώθηση",
-  menu_settings_privacy: "Ρυθμίσεις και απόρρητο"
+  menu_settings_privacy: "Ρυθμίσεις και απόρρητο",
+
+    // მომხმარებელი
+  ph_search_users: "Αναζήτηση...",
+  loading_users: "Φόρτωση χρηστών..."
   },
 
   // 42. Български
@@ -2470,7 +2554,11 @@ export const translations = {
   menu_group_creator: "Творци и бизнес",
   menu_business_tools: "Бизнес инструменти",
   menu_promotion: "Популяризиране",
-  menu_settings_privacy: "Настройки и поверителност"
+  menu_settings_privacy: "Настройки и поверителност",
+
+    // მომხმარებელი
+  ph_search_users: "Търсене...",
+  loading_users: "Зареждане на потребители..."
   },
 
   // 43. Қазақша
@@ -2527,7 +2615,11 @@ export const translations = {
   menu_group_creator: "Авторлар мен бизнес",
   menu_business_tools: "Бизнес құралдары",
   menu_promotion: "Жылжыту",
-  menu_settings_privacy: "Параметрлер және құпиялылық"
+  menu_settings_privacy: "Параметрлер және құпиялылық",
+
+    // მომხმარებელი
+  ph_search_users: "Іздеу...",
+  loading_users: "Пайдаланушылар жүктелуде..."
   },
 
   // 44. Русский
@@ -2584,7 +2676,11 @@ export const translations = {
   menu_group_creator: "Авторам и бизнесу",
   menu_business_tools: "Инструменты для бизнеса",
   menu_promotion: "Продвижение",
-  menu_settings_privacy: "Настройки и конфиденциальность"
+  menu_settings_privacy: "Настройки и конфиденциальность",
+
+    // მომხმარებელი
+  ph_search_users: "Поиск...",
+  loading_users: "Загрузка пользователей..."
   },
 
   // 45. Українська
@@ -2641,7 +2737,11 @@ export const translations = {
   menu_group_creator: "Авторам і бізнесу",
   menu_business_tools: "Інструменти для бізнесу",
   menu_promotion: "Просування",
-  menu_settings_privacy: "Налаштування та конфіденційність"
+  menu_settings_privacy: "Налаштування та конфіденційність",
+
+    // მომხმარებელი
+  ph_search_users: "Пошук...",
+  loading_users: "Завантаження користувачів..."
   },
 
   // 46. עברית
@@ -2698,7 +2798,11 @@ export const translations = {
   menu_group_creator: "יוצרים ועסקים",
   menu_business_tools: "כלים עסקיים",
   menu_promotion: "קידום",
-  menu_settings_privacy: "הגדרות ופרטיות"
+  menu_settings_privacy: "הגדרות ופרטיות",
+
+    // მომხმარებელი
+  ph_search_users: "חיפוש...",
+  loading_users: "טוען משתמשים..."
   },
 
   // 47. اردو
@@ -2755,7 +2859,11 @@ export const translations = {
   menu_group_creator: "تخلیق کار اور کاروبار",
   menu_business_tools: "کاروباری ٹولز",
   menu_promotion: "فروغ دیں",
-  menu_settings_privacy: "ترتیبات اور رازداری"
+  menu_settings_privacy: "ترتیبات اور رازداری",
+
+    // მომხმარებელი
+  ph_search_users: "تلاش کریں...",
+  loading_users: "صارفین لوڈ ہو رہے ہیں..."
   },
 
   // 48. العربية
@@ -2812,7 +2920,11 @@ export const translations = {
   menu_group_creator: "المبدعون والأعمال",
   menu_business_tools: "أدوات الأعمال",
   menu_promotion: "ترويج",
-  menu_settings_privacy: "الإعدادات والخصوصية"
+  menu_settings_privacy: "الإعدادات والخصوصية",
+
+    // მომხმარებელი
+  ph_search_users: "بحث...",
+  loading_users: "جارٍ تحميل المستخدمين..."
   },
 
   // 49. فارسی
@@ -2869,7 +2981,11 @@ export const translations = {
   menu_group_creator: "خالق و کسب‌وکار",
   menu_business_tools: "ابزارهای تجاری",
   menu_promotion: "ارتقا",
-  menu_settings_privacy: "تنظیمات و حریم خصوصی"
+  menu_settings_privacy: "تنظیمات و حریم خصوصی",
+
+    // მომხმარებელი
+  ph_search_users: "جستجو...",
+  loading_users: "در حال بارگیری کاربران..."
   },
 
   // 50. हिन्दी
@@ -2926,7 +3042,11 @@ export const translations = {
   menu_group_creator: "क्रिएटर और व्यवसाय",
   menu_business_tools: "व्यावसायिक उपकरण",
   menu_promotion: "प्रचार करें",
-  menu_settings_privacy: "सेटिंग्स और गोपनीयता"
+  menu_settings_privacy: "सेटिंग्स और गोपनीयता",
+
+    // მომხმარებელი
+  ph_search_users: "खोजें...",
+  loading_users: "उपयोगकर्ता लोड हो रहे हैं..."
   },
 
   // 51. বাংলা
@@ -2983,7 +3103,11 @@ export const translations = {
   menu_group_creator: "স্রষ্টা এবং ব্যবসা",
   menu_business_tools: "ব্যবসায়িক সরঞ্জাম",
   menu_promotion: "প্রচার করুন",
-  menu_settings_privacy: "সেটিংস এবং গোপনীয়তা"
+  menu_settings_privacy: "সেটিংস এবং গোপনীয়তা",
+
+    // მომხმარებელი
+  ph_search_users: "অনুসন্ধান...",
+  loading_users: "ব্যবহারকারীদের লোড করা হচ্ছে..."
   },
 
   // 52. ภาษาไทย
@@ -3040,7 +3164,11 @@ export const translations = {
   menu_group_creator: "ครีเอเตอร์และธุรกิจ",
   menu_business_tools: "เครื่องมือทางธุรกิจ",
   menu_promotion: "โปรโมต",
-  menu_settings_privacy: "การตั้งค่าและความเป็นส่วนตัว"
+  menu_settings_privacy: "การตั้งค่าและความเป็นส่วนตัว",
+
+    // მომხმარებელი
+  ph_search_users: "ค้นหา...",
+  loading_users: "กำลังโหลดผู้ใช้..."
   },
 
   // 53. မြန်မာ
@@ -3097,7 +3225,11 @@ export const translations = {
   menu_group_creator: "ဖန်တီးသူနှင့် စီးပွားရေး",
   menu_business_tools: "စီးပွားရေး ကိရိယာများ",
   menu_promotion: "မြှင့်တင်ရန်",
-  menu_settings_privacy: "ဆက်တင်များနှင့် ကိုယ်ရေးကိုယ်တာ"
+  menu_settings_privacy: "ဆက်တင်များနှင့် ကိုယ်ရေးကိုယ်တာ",
+
+    // მომხმარებელი
+  ph_search_users: "ရှာဖွေရန်...",
+  loading_users: "အသုံးပြုသူများကို တင်နေသည်..."
   },
 
   // 54. ខ្មែរ
