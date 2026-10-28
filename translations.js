@@ -53,7 +53,11 @@ export const translations = {
   menu_group_creator: "შემოქმედება და ბიზნესი",
   menu_business_tools: "ინსტრუმენტები ბიზნესისთვის",
   menu_promotion: "პოპულარიზაცია",
-  menu_settings_privacy: "პარამეტრები და კონფიდენციალურობა"
+  menu_settings_privacy: "პარამეტრები და კონფიდენციალურობა",
+
+    // მომხმარებელი
+  ph_search_users: "ძებნა...",
+  loading_users: "იტვირთება მომხმარებლები..."
   },
 
   // 2. Azərbaycan
@@ -110,7 +114,11 @@ export const translations = {
   menu_group_creator: "Yaradıcılıq və biznes",
   menu_business_tools: "Biznes alətləri",
   menu_promotion: "Tanıtım",
-  menu_settings_privacy: "Tənzimləmələr və məxfilik"
+  menu_settings_privacy: "Tənzimləmələr və məxfilik",
+
+    // მომხმარებელი
+  ph_search_users: "Axtarış...",
+  loading_users: "İstifadəçilər yüklənir..."
   },
 
   // 3. Bahasa Indonesia
@@ -167,7 +175,11 @@ export const translations = {
   menu_group_creator: "Kreator dan bisnis",
   menu_business_tools: "Alat bisnis",
   menu_promotion: "Promosi",
-  menu_settings_privacy: "Pengaturan dan privasi"
+  menu_settings_privacy: "Pengaturan dan privasi",
+
+    // მომხმარებელი
+  ph_search_users: "Cari...",
+  loading_users: "Memuat pengguna..."
   },
 
   // 4. Bahasa Melayu
@@ -224,7 +236,11 @@ export const translations = {
   menu_group_creator: "Pencipta dan perniagaan",
   menu_business_tools: "Alat perniagaan",
   menu_promotion: "Promosi",
-  menu_settings_privacy: "Tetapan dan privasi"
+  menu_settings_privacy: "Tetapan dan privasi",
+
+    // მომხმარებელი
+  ph_search_users: "Cari...",
+  loading_users: "Memuatkan pengguna..."
   },
 
   // 5. Basa Jawa
@@ -281,7 +297,11 @@ export const translations = {
   menu_group_creator: "Kreator lan bisnis",
   menu_business_tools: "Piranti bisnis",
   menu_promotion: "Promosi",
-  menu_settings_privacy: "Setelan lan privasi"
+  menu_settings_privacy: "Setelan lan privasi",
+
+    // მომხმარებელი
+  ph_search_users: "Goleki...",
+  loading_users: "Ngunggah pangguna..."
   },
 
   // 6. Català
@@ -338,7 +358,11 @@ export const translations = {
   menu_group_creator: "Creativitat i empresa",
   menu_business_tools: "Eines per a empreses",
   menu_promotion: "Promoció",
-  menu_settings_privacy: "Configuració i privadesa"
+  menu_settings_privacy: "Configuració i privadesa",
+
+    // მომხმარებელი
+  ph_search_users: "Cerca...",
+  loading_users: "S'estan carregant els usuaris..."
   },
 
   // 7. Cebuano
@@ -395,7 +419,11 @@ export const translations = {
   menu_group_creator: "Kreador ug negosyo",
   menu_business_tools: "Mga galamiton sa negosyo",
   menu_promotion: "Promosyon",
-  menu_settings_privacy: "Mga setting ug pribasiya"
+  menu_settings_privacy: "Mga setting ug pribasiya",
+
+    // მომხმარებელი
+  ph_search_users: "Pangitaa...",
+  loading_users: "Gikarga ang mga tiggamit..."
   },
 
   // 8. Čeština
@@ -452,7 +480,11 @@ export const translations = {
   menu_group_creator: "Tvorba a podnikání",
   menu_business_tools: "Firemní nástroje",
   menu_promotion: "Propagace",
-  menu_settings_privacy: "Nastavení a soukromí"
+  menu_settings_privacy: "Nastavení a soukromí",
+
+    // მომხმარებელი
+  ph_search_users: "Hledat...",
+  loading_users: "Načítání uživatelů..."
   },
 
   // 9. Dansk
@@ -509,7 +541,11 @@ export const translations = {
   menu_group_creator: "Skabere og virksomhed",
   menu_business_tools: "Erhvervsværktøjer",
   menu_promotion: "Promovering",
-  menu_settings_privacy: "Indstillinger og privatliv"
+  menu_settings_privacy: "Indstillinger og privatliv",
+
+    // მომხმარებელი
+  ph_search_users: "Søg...",
+  loading_users: "Indlæser brugere..."
   },
 
   // 10. Deutsch
@@ -566,7 +602,11 @@ export const translations = {
   menu_group_creator: "Creator & Business",
   menu_business_tools: "Business-Tools",
   menu_promotion: "Bewerben",
-  menu_settings_privacy: "Einstellungen und Datenschutz"
+  menu_settings_privacy: "Einstellungen und Datenschutz",
+
+    // მომხმარებელი
+  ph_search_users: "Suchen...",
+  loading_users: "Benutzer werden geladen..."
   },
 
   // 11. Eesti
@@ -623,7 +663,11 @@ export const translations = {
   menu_group_creator: "Loojad ja äri",
   menu_business_tools: "Äritööriistad",
   menu_promotion: "Edendamine",
-  menu_settings_privacy: "Seaded ja privaatsus"
+  menu_settings_privacy: "Seaded ja privaatsus",
+
+    // მომხმარებელი
+  ph_search_users: "Otsi...",
+  loading_users: "Kasutajate laadimine..."
   },
 
   // 12. English (UK)
@@ -680,7 +724,11 @@ export const translations = {
   menu_group_creator: "Creator & Business",
   menu_business_tools: "Business tools",
   menu_promotion: "Promote",
-  menu_settings_privacy: "Settings and privacy"
+  menu_settings_privacy: "Settings and privacy",
+
+    // მომხმარებელი
+  ph_search_users: "Search...",
+  loading_users: "Loading users..."
   },
 
   // 13. English (US)
@@ -737,7 +785,11 @@ export const translations = {
   menu_group_creator: "Creator & Business",
   menu_business_tools: "Business tools",
   menu_promotion: "Promote",
-  menu_settings_privacy: "Settings and privacy"
+  menu_settings_privacy: "Settings and privacy",
+
+    // მომხმარებელი
+  ph_search_users: "Search...",
+  loading_users: "Loading users..."
   },
 
   // 14. Español
@@ -794,7 +846,11 @@ export const translations = {
   menu_group_creator: "Creador y empresa",
   menu_business_tools: "Herramientas comerciales",
   menu_promotion: "Promocionar",
-  menu_settings_privacy: "Ajustes y privacidad"
+  menu_settings_privacy: "Ajustes y privacidad",
+
+    // მომხმარებელი
+  ph_search_users: "Buscar...",
+  loading_users: "Cargando usuarios..."
   },
 
   // 15. Español (Latinoamérica)
@@ -851,7 +907,11 @@ export const translations = {
   menu_group_creator: "Creador y negocios",
   menu_business_tools: "Herramientas comerciales",
   menu_promotion: "Promocionar",
-  menu_settings_privacy: "Ajustes y privacidad"
+  menu_settings_privacy: "Ajustes y privacidad",
+
+    // მომხმარებელი
+  ph_search_users: "Buscar...",
+  loading_users: "Cargando usuarios..."
   },
 
   // 16. Filipino
@@ -908,7 +968,11 @@ export const translations = {
   menu_group_creator: "Tagalikha at negosyo",
   menu_business_tools: "Mga tool sa negosyo",
   menu_promotion: "I-promote",
-  menu_settings_privacy: "Mga setting at privacy"
+  menu_settings_privacy: "Mga setting at privacy",
+
+    // მომხმარებელი
+  ph_search_users: "Maghanap...",
+  loading_users: "Naglo-load ng mga user..."
   },
 
   // 17. Français
@@ -965,7 +1029,11 @@ export const translations = {
   menu_group_creator: "Créateurs et entreprise",
   menu_business_tools: "Outils pour entreprises",
   menu_promotion: "Promouvoir",
-  menu_settings_privacy: "Paramètres et confidentialité"
+  menu_settings_privacy: "Paramètres et confidentialité",
+
+    // მომხმარებელი
+  ph_search_users: "Rechercher...",
+  loading_users: "Chargement des utilisateurs..."
   },
 
   // 18. Français (Canada)
@@ -1022,7 +1090,11 @@ export const translations = {
   menu_group_creator: "Créateurs et entreprise",
   menu_business_tools: "Outils d'affaires",
   menu_promotion: "Promouvoir",
-  menu_settings_privacy: "Paramètres et confidentialité"
+  menu_settings_privacy: "Paramètres et confidentialité",
+
+    // მომხმარებელი
+  ph_search_users: "Rechercher...",
+  loading_users: "Chargement des utilisateurs..."
   },
 
   // 19. Gaeilge
@@ -1079,7 +1151,11 @@ export const translations = {
   menu_group_creator: "Cruthaitheoir & Gnó",
   menu_business_tools: "Uirlisí gnó",
   menu_promotion: "Cuir chun cinn",
-  menu_settings_privacy: "Socruithe agus príobháideacht"
+  menu_settings_privacy: "Socruithe agus príobháideacht",
+
+    // მომხმარებელი
+  ph_search_users: "Cuardaigh...",
+  loading_users: "Úsáideoirí á lódáil..."
   },
 
   // 20. Hrvatski
@@ -1136,7 +1212,11 @@ export const translations = {
   menu_group_creator: "Kreatori i poslovanje",
   menu_business_tools: "Poslovni alati",
   menu_promotion: "Promocija",
-  menu_settings_privacy: "Postavke i privatnost"
+  menu_settings_privacy: "Postavke i privatnost",
+
+    // მომხმარებელი
+  ph_search_users: "Pretraži...",
+  loading_users: "Učitavanje korisnika..."
   },
 
   // 21. Íslenska
