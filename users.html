@@ -15,13 +15,13 @@
       <div class="users-search-bar">
         <div class="users-search-box">
           <img src="icons/search.svg" alt="Search" class="search-mini-icon">
-          <input type="text" id="userSearchInput" placeholder="ძებნა...">
+          <input type="text" id="userSearchInput" placeholder="ძებნა..." data-i18n-ph="ph_search_users">
         </div>
       </div>
 
       <!-- მომხმარებელთა სია (Firestore-დან იტვირთება) -->
       <div class="users-list-container" id="usersListContainer">
-        <div class="users-loading-state">იტვირთება მომხმარებლები...</div>
+        <div class="users-loading-state" data-i18n="loading_users">იტვირთება მომხმარებლები...</div>
       </div>
 
     </div>
@@ -31,11 +31,11 @@
   <nav class="bottom-nav-bar">
     <a href="feed.html" class="nav-item">
       <img src="icons/home-outline.svg" alt="Feed" class="nav-svg-icon">
-      <span>ფიდი</span>
+      <span data-i18n="nav_feed">ფიდი</span>
     </a>
     <a href="users.html" class="nav-item active">
       <img src="icons/users-group-rounded-bold.svg" alt="Users" class="nav-svg-icon">
-      <span>ხალხი</span>
+      <span data-i18n="nav_people">ხალხი</span>
     </a>
     <div class="nav-item nav-upload-wrap">
       <button type="button" class="tiktok-plus-btn" id="navUploadBtn" aria-label="Upload">
@@ -47,11 +47,11 @@
         <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
         <span class="nav-unread-badge">26</span>
       </div>
-      <span>შემოსულები</span>
+      <span data-i18n="nav_inbox">შემოსულები</span>
     </a>
     <a href="profile.html" class="nav-item">
       <img src="icons/user-bold.svg" alt="Profile" class="nav-svg-icon">
-      <span>პროფილი</span>
+      <span data-i18n="nav_profile">პროფილი</span>
     </a>
   </nav>
 
