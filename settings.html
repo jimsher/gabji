@@ -543,5 +543,12 @@
       }
     };
   </script>
+
+  <!-- თარგმნის ავტომატური გამოძახება პარამეტრების გვერდზე -->
+  <script type="module">
+    import { applyTranslations } from "./translations.js";
+    // როგორც კი გვერდი ჩაიტვირთება, მაშინვე ითარგმნება
+    applyTranslations();
+  </script>
 </body>
 </html>
