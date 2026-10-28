@@ -3286,7 +3286,11 @@ export const translations = {
   menu_group_creator: "អ្នកបង្កើត និងអាជីវកម្ម",
   menu_business_tools: "ឧបករណ៍អាជីវកម្ម",
   menu_promotion: "ផ្សព្វផ្សាយ",
-  menu_settings_privacy: "ការកំណត់ និងភាពឯកជន"
+  menu_settings_privacy: "ការកំណត់ និងភាពឯកជន",
+
+    // მომხმარებელი
+  ph_search_users: "ស្វែងរក...",
+  loading_users: "កំពុងផ្ទុកអ្នកប្រើប្រាស់..."
   },
 
   // 55. 日本語
@@ -3343,7 +3347,11 @@ export const translations = {
   menu_group_creator: "クリエイターとビジネス",
   menu_business_tools: "ビジネスツール",
   menu_promotion: "プロモーション",
-  menu_settings_privacy: "設定とプライバシー"
+  menu_settings_privacy: "設定とプライバシー",
+
+    // მომხმარებელი
+  ph_search_users: "検索...",
+  loading_users: "ユーザーを読み込み中..."
   },
 
   // 56. 中文 (繁體)
@@ -3400,7 +3408,11 @@ export const translations = {
   menu_group_creator: "創作者與企業",
   menu_business_tools: "企業工具",
   menu_promotion: "推廣",
-  menu_settings_privacy: "設定與隱私"
+  menu_settings_privacy: "設定與隱私",
+
+    // მიმხმარებელი
+  ph_search_users: "搜尋...",
+  loading_users: "正在載入使用者..."
   },
 
   // 57. 中文 (简体)
@@ -3457,7 +3469,11 @@ export const translations = {
   menu_group_creator: "创作者与企业",
   menu_business_tools: "企业工具",
   menu_promotion: "上热门",
-  menu_settings_privacy: "设置与隐私"
+  menu_settings_privacy: "设置与隐私",
+
+    // მომხმარებელი
+  ph_search_users: "搜索...",
+  loading_users: "正在加载用户..."
   }
 };
 
