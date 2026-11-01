@@ -277,6 +277,7 @@ const cardTitle = document.querySelector(".card-user-title");
 if (cardTitle) {
   let feedProfiles = [];
   let currentCardIndex = 0;
+  let alreadyLikedUids = new Set();
 
   const calculateAge = (dateStr) => {
     if (!dateStr) return "";
@@ -357,10 +358,30 @@ if (cardTitle) {
 
   const getProfilesFromDb = async () => {
     try {
+      const currentAuthUser = auth.currentUser;
+      alreadyLikedUids.clear();
+
+      // თუ ავტორიზებულია, ვკითხულობთ ვისთვის აქვს უკვე ლაიქი მიცემული
+      if (currentAuthUser) {
+        const likedSnap = await getDocs(collection(db, "users", currentAuthUser.uid, "likedUsers"));
+        likedSnap.forEach((docItem) => {
+          alreadyLikedUids.add(docItem.id);
+        });
+      }
+
       const snapshot = await getDocs(collection(db, "users"));
       feedProfiles = [];
       snapshot.forEach((docSnap) => {
-        feedProfiles.push({ id: docSnap.id, ...docSnap.data() });
+        const targetId = docSnap.id;
+        const uData = docSnap.data();
+
+        // საკუთარი თავი და უკვე მოწონებული მომხმარებლები არ ემატება სიას
+        const isMe = currentAuthUser && (targetId === currentAuthUser.uid || uData.uid === currentAuthUser.uid);
+        const isAlreadyLiked = alreadyLikedUids.has(targetId);
+
+        if (!isMe && !isAlreadyLiked) {
+          feedProfiles.push({ id: targetId, ...uData });
+        }
       });
       displayProfile(currentCardIndex);
     } catch (e) {
@@ -377,7 +398,16 @@ if (cardTitle) {
       if (!feedProfiles.length || currentCardIndex >= feedProfiles.length) return;
 
       const currentProfile = feedProfiles[currentCardIndex];
+      const targetDocId = currentProfile.id || currentProfile.uid;
+      const currentAuthUser = auth.currentUser;
       const favCountEl = document.getElementById("miniFavCount");
+
+      // თუ რატომღაც უკვე მოწონებულია, მეორედ არ გაზარდოს
+      if (alreadyLikedUids.has(targetDocId)) {
+        currentCardIndex++;
+        displayProfile(currentCardIndex);
+        return;
+      }
 
       // 1. მიმდინარე ლაიქების გამოთვლა
       let currentLikes = Number(currentProfile.likesCount || currentProfile.likes || (favCountEl ? favCountEl.textContent : 0)) || 0;
@@ -386,13 +416,19 @@ if (cardTitle) {
       // 2. ეკრანზე მყისიერი განახლება
       if (favCountEl) favCountEl.textContent = currentLikes;
       currentProfile.likesCount = currentLikes;
+      alreadyLikedUids.add(targetDocId);
 
-      // 3. Firestore-ში გარანტირებული შენახვა setDoc + merge-ით (არ მოითხოვს ველის წინასწარ არსებობას)
-      const targetDocId = currentProfile.id || currentProfile.uid;
+      // 3. Firestore-ში შენახვა
       if (targetDocId) {
         try {
           const userRef = doc(db, "users", targetDocId);
           await setDoc(userRef, { likesCount: currentLikes }, { merge: true });
+
+          // მიმდინარე მომხმარებლის ბაზაში დამახსოვრება, რომ ეს პროფილი უკვე მოიწონა
+          if (currentAuthUser) {
+            const likedRef = doc(db, "users", currentAuthUser.uid, "likedUsers", targetDocId);
+            await setDoc(likedRef, { likedAt: serverTimestamp() });
+          }
         } catch (err) {
           console.error("Firestore-ში ლაიქის ჩაწერის შეცდომა:", err);
         }
@@ -415,7 +451,7 @@ if (cardTitle) {
 
   getProfilesFromDb();
 }
-     
+
 
    /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
