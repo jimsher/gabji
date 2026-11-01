@@ -275,6 +275,7 @@ if (signupForm) {
   const cardTitle = document.querySelector(".card-user-title");
 
 if (cardTitle) {
+  let allRawProfiles = [];
   let feedProfiles = [];
   let currentCardIndex = 0;
   let alreadyLikedUids = new Set();
@@ -300,6 +301,13 @@ if (cardTitle) {
       if (bioEl) bioEl.textContent = "";
       if (pillsWrap) pillsWrap.innerHTML = "";
       if (favCountEl) favCountEl.textContent = "0";
+
+      if (photoBox) {
+        const oldImg = photoBox.querySelector(".profile-pic");
+        if (oldImg) oldImg.remove();
+        const placeholderSvg = photoBox.querySelector("svg");
+        if (placeholderSvg) placeholderSvg.style.display = "block";
+      }
       return;
     }
 
@@ -356,6 +364,33 @@ if (cardTitle) {
     }
   };
 
+  const applyLocalFilters = () => {
+    const filterToggle = document.getElementById("filterToggle");
+    const searchInput = document.querySelector(".feed-search-input");
+
+    const onlyWithPhotos = filterToggle ? filterToggle.checked : false;
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+    feedProfiles = allRawProfiles.filter((item) => {
+      if (onlyWithPhotos && !item.photoUrl) {
+        return false;
+      }
+
+      if (searchTerm) {
+        const fullName = `${item.firstName || ""} ${item.lastName || ""}`.toLowerCase();
+        const city = (item.city || "").toLowerCase();
+        if (!fullName.includes(searchTerm) && !city.includes(searchTerm)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    currentCardIndex = 0;
+    displayProfile(currentCardIndex);
+  };
+
   const getProfilesFromDb = async (currentUserUid) => {
     try {
       alreadyLikedUids.clear();
@@ -370,7 +405,7 @@ if (cardTitle) {
 
       // 2. წამოვიღოთ მომხმარებლები
       const snapshot = await getDocs(collection(db, "users"));
-      feedProfiles = [];
+      allRawProfiles = [];
       snapshot.forEach((docSnap) => {
         const targetId = docSnap.id;
         const uData = docSnap.data();
@@ -380,17 +415,30 @@ if (cardTitle) {
         const isAlreadyLiked = alreadyLikedUids.has(targetId);
 
         if (!isMe && !isAlreadyLiked) {
-          feedProfiles.push({ id: targetId, ...uData });
+          allRawProfiles.push({ id: targetId, ...uData });
         }
       });
 
-      currentCardIndex = 0;
-      displayProfile(currentCardIndex);
+      applyLocalFilters();
     } catch (e) {
       console.error("ბაზის შეცდომა:", e);
       if (cardTitle) cardTitle.textContent = "ვერ ჩაიტვირთა";
     }
   };
+
+  const filterToggle = document.getElementById("filterToggle");
+  if (filterToggle) {
+    filterToggle.onchange = () => {
+      applyLocalFilters();
+    };
+  }
+
+  const searchInput = document.querySelector(".feed-search-input");
+  if (searchInput) {
+    searchInput.oninput = () => {
+      applyLocalFilters();
+    };
+  }
 
   const likeBtn = document.getElementById("likeBtn");
   const passBtn = document.getElementById("passBtn");
@@ -444,6 +492,7 @@ if (cardTitle) {
           const targetUserRef = doc(db, "users", targetDocId);
           await setDoc(targetUserRef, { likesCount: currentLikes }, { merge: true });
 
+          allRawProfiles = allRawProfiles.filter(p => (p.id || p.uid) !== targetDocId);
         } catch (err) {
           console.error("ლაიქის შენახვის შეცდომა:", err);
         }
