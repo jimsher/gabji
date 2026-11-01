@@ -1195,6 +1195,9 @@ input:checked + .toggle-slider:before {
 }
 
 
+
+
+
 /* ფოტოების ბადე */
 .profile-media-grid {
   display: grid;
@@ -1205,7 +1208,7 @@ input:checked + .toggle-slider:before {
 
 /* პირველი ჩარჩო: კამერის / დამატების ღილაკი */
 .gallery-add-card {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 9 / 16;
   background-color: #262626;
   display: flex;
   flex-direction: column;
@@ -1239,7 +1242,7 @@ input:checked + .toggle-slider:before {
 
 /* ატვირთული ფოტოს ბარათი */
 .gallery-item-card {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 9 / 16;
   background-color: #1a1a1a;
   overflow: hidden;
   position: relative;
@@ -1251,8 +1254,6 @@ input:checked + .toggle-slider:before {
   object-fit: cover;
   display: block;
 }
-
-
 
 /* ==========================================================================
    TIKTOK SLIDING TABS & REELS GRID ANIMATION
