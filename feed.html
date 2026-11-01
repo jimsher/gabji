@@ -13,12 +13,10 @@
 
       <!-- ზედა საძიებო ზოლი და ფილტრი -->
       <div class="feed-top-bar">
-  <div class="search-input-wrap">
-    <img src="icons/magnifier-outline.svg" alt="Search" class="search-icon" width="18" height="18">
-    <input type="text" class="feed-search-input" placeholder="Search" data-i18n-ph="ph_search">
-  </div>
-
-
+        <div class="search-input-wrap">
+          <img src="icons/magnifier-outline.svg" alt="Search" class="search-icon" width="18" height="18">
+          <input type="text" class="feed-search-input" placeholder="Search" data-i18n-ph="ph_search">
+        </div>
 
         <div class="filter-toggle-wrap">
           <span class="filter-label" data-i18n="lbl_filter">Filter:</span>
@@ -28,6 +26,7 @@
           </label>
         </div>
       </div>
+      
 
       <!-- ბარათების კონტეინერი (Swipe Card Deck) -->
       <div class="cards-deck-container">
@@ -52,14 +51,21 @@
           <div class="card-info-glass">
             <div class="card-name-row">
               <h3 class="card-user-title"></h3>
-              <button type="button" class="mini-fav-btn" aria-label="Favorite">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#e57373">
-                  <path d="M12 21.35C7 16.5 3 13 3 8.5 3 5.4 5.4 3 8.5 3c1.74 0 3.41.81 3.5 2 .09-1.19 1.76-2 3.5-2 3.1 0 5.5 2.4 5.5 5.5 0 4.5-4 8-9 12.85z"/>
-                </svg>
-              </button>
+              <!-- გულის კონტეინერი: ზემოთ აიქონი, ქვემოთ ციფრი -->
+              <div class="mini-fav-wrap">
+                <button type="button" class="mini-fav-btn" aria-label="Favorite">
+                  <img src="icons/hearts-linear.svg" alt="Favorite" class="fav-icon">
+                </button>
+                <span class="mini-fav-count" id="miniFavCount">0</span>
+              </div>
             </div>
 
-            <p class="card-distance-text"></p>
+            <!-- მანძილის/ლოკაციის ხაზი რუკის წერტილის აიქონით -->
+            <p class="card-distance-text">
+              <img src="icons/point-on-map-linear.svg" alt="Location" class="loc-icon">
+              <span class="card-distance-val"></span>
+            </p>
+
             <p class="card-bio-text"></p>
 
             <div class="card-interest-pills"></div>
@@ -88,45 +94,41 @@
     </div>
   </div>
 
-  <!-- სრულიად დამოუკიდებელი ქვედა ნავიგაცია (კონტეინერების გარეთ) -->
   <!-- TikTok სტილის ქვედა ნავიგაცია -->
-<nav class="bottom-nav-bar">
-  <!-- 1. მთავარი / ფიდი -->
-  <a href="feed.html" class="nav-item">
-    <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
-    <span data-i18n="nav_feed">ფიდი</span>
-  </a>
+  <nav class="bottom-nav-bar">
+    <!-- 1. მთავარი / ფიდი -->
+    <a href="feed.html" class="nav-item">
+      <img src="icons/home-outline.svg" alt="Home" class="nav-svg-icon">
+      <span data-i18n="nav_feed">ფიდი</span>
+    </a>
 
-  <!-- 2. მეგობრები / რელსები -->
-  <a href="users.html" class="nav-item">
-  <img src="icons/users-group-rounded-bold.svg" alt="Users" class="nav-svg-icon" style="pointer-events: none;">
-  <span style="pointer-events: none;" data-i18n="nav_people">ხალხი</span>
-</a>
+    <!-- 2. მეგობრები / ხალხი -->
+    <a href="users.html" class="nav-item">
+      <img src="icons/users-group-rounded-bold.svg" alt="Users" class="nav-svg-icon" style="pointer-events: none;">
+      <span style="pointer-events: none;" data-i18n="nav_people">ხალხი</span>
+    </a>
 
+    <!-- 3. რელსები -->
+    <a href="reels.html" class="nav-item">
+      <img src="icons/clapperboard-play-broken.svg" alt="Reels" class="nav-svg-icon" style="pointer-events: none;">
+      <span style="pointer-events: none;" data-i18n="nav_reels">რელსები</span>
+    </a>
 
-  <!-- 3. ცენტრალური ატვირთვის ღილაკი (+) -->
-  <a href="reels.html" class="nav-item">
-  <img src="icons/clapperboard-play-broken.svg" alt="Reels" class="nav-svg-icon" style="pointer-events: none;">
-  <span style="pointer-events: none;" data-i18n="nav_reels">რელსები</span>
-</a>
+    <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
+    <a href="#" class="nav-item nav-inbox-wrap">
+      <div class="nav-icon-badge-box">
+        <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
+        <span class="nav-unread-badge">26</span>
+      </div>
+      <span data-i18n="nav_inbox">შემოსულები</span>
+    </a>
 
-
-
-  <!-- 4. შემოსულები / ჩატი წითელი ბეიჯით -->
-  <a href="#" class="nav-item nav-inbox-wrap">
-    <div class="nav-icon-badge-box">
-      <img src="icons/message-circle.svg" alt="Inbox" class="nav-svg-icon">
-      <span class="nav-unread-badge">26</span>
-    </div>
-    <span data-i18n="nav_inbox">შემოსულები</span>
-  </a>
-
-  <!-- 5. პროფილი -->
-  <a href="profile.html" class="nav-item active">
-    <img src="icons/user-broken.svg" alt="Profile" class="nav-svg-icon">
-    <span data-i18n="nav_profile">პროფილი</span>
-  </a>
-</nav>
+    <!-- 5. პროფილი -->
+    <a href="profile.html" class="nav-item active">
+      <img src="icons/user-broken.svg" alt="Profile" class="nav-svg-icon">
+      <span data-i18n="nav_profile">პროფილი</span>
+    </a>
+  </nav>
 
   <script type="module" src="app.js"></script>
 </body>
