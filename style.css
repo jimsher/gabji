@@ -1195,6 +1195,65 @@ input:checked + .toggle-slider:before {
 }
 
 
+/* ფოტოების ბადე */
+.profile-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  width: 100%;
+}
+
+/* პირველი ჩარჩო: კამერის / დამატების ღილაკი */
+.gallery-add-card {
+  aspect-ratio: 1 / 1;
+  background-color: #262626;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.15s ease;
+}
+
+.gallery-add-card:active {
+  background-color: #333333;
+}
+
+.gallery-add-icon {
+  width: 32px;
+  height: 32px;
+  stroke: #ffffff;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.gallery-add-text {
+  font-size: 11px;
+  color: #a8a8a8;
+  font-weight: 500;
+}
+
+/* ატვირთული ფოტოს ბარათი */
+.gallery-item-card {
+  aspect-ratio: 1 / 1;
+  background-color: #1a1a1a;
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery-item-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+
 /* ==========================================================================
    TIKTOK SLIDING TABS & REELS GRID ANIMATION
    ========================================================================== */
