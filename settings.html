@@ -5,175 +5,178 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>პარამეტრები და კონფიდენციალურობა - GABJI</title>
   <style>
-  * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
 
-    body {
-      background-color: #F0F2F5;
-      color: #ffffff;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-    }
+body {
+  background-color: #F0F2F5;
+  color: #050505;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
 
-    .settings-screen {
-      width: 100%;
-      max-width: 412px;
-      min-height: 100vh;
-      background-color: #F0F2F5;
-      display: flex;
-      flex-direction: column;
-      padding-bottom: 40px;
-    }
+.settings-screen {
+  width: 100%;
+  max-width: 412px;
+  min-height: 100vh;
+  background-color: #F0F2F5;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px;
+}
 
-    /* ზედა ჰედერი ისრით */
-    .settings-header {
-      position: sticky;
-      top: 0;
-      height: 52px;
-      background-color: #F0F2F5;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      gap: 16px;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
+/* ზედა ჰედერი ისრით */
+.settings-header {
+  position: sticky;
+  top: 0;
+  height: 52px;
+  background-color: #F0F2F5;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  z-index: 100;
+  border-bottom: 1px solid #ced0d4;
+}
 
-    .btn-back {
-      background: none;
-      border: none;
-      color: #ffffff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4px;
-    }
+.btn-back {
+  background: none;
+  border: none;
+  color: #050505;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
 
-    .header-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: #ffffff;
-    }
+.header-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #050505;
+}
 
-    /* შიგთავსის კონტეინერი */
-    .settings-content {
-      padding: 16px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+/* შიგთავსის კონტეინერი */
+.settings-content {
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .group-section {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+.group-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-    .group-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #7d7793;
-      padding-left: 6px;
-      letter-spacing: 0.2px;
-    }
+.group-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #65676b;
+  padding-left: 6px;
+  letter-spacing: 0.2px;
+}
 
-    /* მომრგვალებული ბარათი (კონტეინერი) */
-    .settings-card {
-      background-color: #171324;
-      border-radius: 14px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+/* მომრგვალებული ბარათი (კონტეინერი) */
+.settings-card {
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ced0d4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
 
-    .settings-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 14px;
-      cursor: pointer;
-      transition: background-color 0.15s ease;
-      position: relative;
-    }
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  position: relative;
+}
 
-    .settings-row:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 48px;
-      right: 14px;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.04);
-    }
+.settings-row:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 48px;
+  right: 14px;
+  height: 1px;
+  background: #f0f2f5;
+}
 
-    .settings-row:active {
-      background-color: rgba(255, 255, 255, 0.06);
-    }
+.settings-row:active {
+  background-color: #f0f2f5;
+}
 
-    .row-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+.row-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
-    .row-icon-svg {
-      width: 20px;
-      height: 20px;
-      stroke: #d0cce3;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-    }
+.row-icon-svg {
+  width: 20px;
+  height: 20px;
+  stroke: #050505;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
 
-    .row-title {
-      font-size: 14.5px;
-      font-weight: 500;
-      color: #f1f0f7;
-    }
+.row-title {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #050505;
+}
 
-    .row-right {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+.row-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
-    .row-value {
-      font-size: 13px;
-      color: #7d7793;
-    }
+.row-value {
+  font-size: 13px;
+  color: #65676b;
+}
 
-    .red-dot {
-      width: 7px;
-      height: 7px;
-      background-color: #fe2c55;
-      border-radius: 50%;
-      margin-left: 4px;
-      display: inline-block;
-    }
+.red-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #fe2c55;
+  border-radius: 50%;
+  margin-left: 4px;
+  display: inline-block;
+}
 
-    .row-arrow {
-      color: #625b77;
-      font-size: 17px;
-      font-weight: 400;
-    }
+.row-arrow {
+  color: #898f9c;
+  font-size: 17px;
+  font-weight: 400;
+}
 
-    /* ვერსიის წარწერა ბოლოში */
-    .version-text {
-      text-align: center;
-      font-size: 12px;
-      color: #554f68;
-      margin-top: 14px;
-    }            
+/* ვერსიის წარწერა ბოლოში */
+.version-text {
+  text-align: center;
+  font-size: 12px;
+  color: #898f9c;
+  margin-top: 14px;
+}
+
   </style>
 </head>
 <body>
