@@ -359,7 +359,7 @@ if (cardTitle) {
       const snapshot = await getDocs(collection(db, "users"));
       feedProfiles = [];
       snapshot.forEach((docSnap) => {
-        feedProfiles.push(docSnap.data());
+        feedProfiles.push({ id: docSnap.id, ...docSnap.data() });
       });
       displayProfile(currentCardIndex);
     } catch (e) {
@@ -372,9 +372,32 @@ if (cardTitle) {
   const passBtn = document.getElementById("passBtn");
 
   if (likeBtn) {
-    likeBtn.onclick = () => {
-      currentCardIndex++;
-      displayProfile(currentCardIndex);
+    likeBtn.onclick = async () => {
+      if (!feedProfiles.length || currentCardIndex >= feedProfiles.length) return;
+
+      const currentProfile = feedProfiles[currentCardIndex];
+      const favCountEl = document.getElementById("miniFavCount");
+
+      let currentLikes = Number(favCountEl ? favCountEl.textContent : 0) || 0;
+      currentLikes++;
+      if (favCountEl) favCountEl.textContent = currentLikes;
+      currentProfile.likesCount = currentLikes;
+
+      if (currentProfile.id) {
+        try {
+          const userRef = doc(db, "users", currentProfile.id);
+          await updateDoc(userRef, {
+            likesCount: increment(1)
+          });
+        } catch (err) {
+          console.error("Firebase-ში ლაიქის შენახვის შეცდომა:", err);
+        }
+      }
+
+      setTimeout(() => {
+        currentCardIndex++;
+        displayProfile(currentCardIndex);
+      }, 250);
     };
   }
 
@@ -387,7 +410,7 @@ if (cardTitle) {
 
   getProfilesFromDb();
 }
-
+    
 
 
    /* ==========================================================================
