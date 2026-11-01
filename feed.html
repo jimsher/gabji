@@ -26,17 +26,15 @@
           </label>
         </div>
       </div>
-      
 
       <!-- ბარათების კონტეინერი (Swipe Card Deck) -->
       <div class="cards-deck-container">
         <!-- უკანა ფენის ჩრდილოვანი ბარათი ვიზუალური სიღრმისთვის -->
         <div class="deck-card-shadow"></div>
 
-        <!-- მთავარი ბარათი (ფოტოს გარეშე - ნეიტრალური კონტეინერი) -->
+        <!-- მთავარი ბარათი -->
         <div class="main-profile-card">
           <div class="card-image-placeholder">
-            <!-- ნეიტრალური ავატარის აიკონი ფოტოს მაკეტის ნაცვლად -->
             <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
@@ -51,8 +49,8 @@
           <div class="card-info-glass">
             <div class="card-name-row">
               <h3 class="card-user-title"></h3>
-              <!-- გულის კონტეინერი: ზემოთ აიქონი, ქვემოთ ციფრი -->
-              <div class="mini-fav-wrap">
+              <!-- გული ზემოთ, ციფრი მკაცრად მის ქვეშ -->
+              <div class="mini-fav-box">
                 <button type="button" class="mini-fav-btn" aria-label="Favorite">
                   <img src="icons/hearts-linear.svg" alt="Favorite" class="fav-icon">
                 </button>
@@ -60,11 +58,11 @@
               </div>
             </div>
 
-            <!-- მანძილის/ლოკაციის ხაზი რუკის წერტილის აიქონით -->
-            <p class="card-distance-text">
+            <!-- ადგილმდებარეობის ხაზი შენი ლოკაციის აიქონით -->
+            <div class="card-location-row">
               <img src="icons/point-on-map-linear.svg" alt="Location" class="loc-icon">
-              <span class="card-distance-val"></span>
-            </p>
+              <p class="card-distance-text"></p>
+            </div>
 
             <p class="card-bio-text"></p>
 
