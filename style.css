@@ -436,8 +436,6 @@ body {
   justify-content: space-between;
 }
 
-
-
 /* ზედა საძიებო ზოლი */
 .feed-top-bar {
   display: flex;
@@ -458,7 +456,10 @@ body {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #65676b;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  object-fit: contain;
 }
 
 .feed-search-input {
@@ -470,12 +471,15 @@ body {
   color: #050505;
   font-size: 14px;
   outline: none;
+  box-sizing: border-box;
 }
 
 .filter-toggle-wrap {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .filter-label {
@@ -540,7 +544,6 @@ input:checked + .toggle-slider:before {
   margin-top: 4px;
   margin-bottom: 0;
 }
-
 
 /* უკანა ბარათის ფენა */
 .deck-card-shadow {
@@ -632,7 +635,7 @@ input:checked + .toggle-slider:before {
 
 .card-name-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -643,7 +646,16 @@ input:checked + .toggle-slider:before {
   letter-spacing: -0.2px;
 }
 
-/* გულის ღილაკის გასწორება - რომ არ მოიჭრას */
+/* გულის ღილაკის და ციფრის სვეტი */
+.mini-fav-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/* გულის ღილაკი */
 .mini-fav-btn {
   background: none;
   border: none;
@@ -654,19 +666,38 @@ input:checked + .toggle-slider:before {
   width: 24px;
   height: 24px;
   padding: 0;
-  flex-shrink: 0;
 }
 
-.mini-fav-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: #e41e3f;
+.mini-fav-btn .fav-icon {
+  width: 22px;
+  height: 22px;
   display: block;
+  object-fit: contain;
 }
 
+/* მოწონებების მთვლელი ციფრი გულის ქვემოთ */
+.mini-fav-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: #65676b;
+  line-height: 1;
+}
+
+/* ლოკაციის ხაზი და აიქონი */
 .card-distance-text {
   font-size: 13px;
   color: #65676b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+
+.card-distance-text .loc-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .card-bio-text {
@@ -703,7 +734,6 @@ input:checked + .toggle-slider:before {
   margin-top: -34px;
   margin-bottom: 4px;
 }
-
 
 .action-circle-btn {
   width: 68px;
@@ -764,9 +794,6 @@ input:checked + .toggle-slider:before {
   margin: 0;
   padding: 0;
 }
-
-
-
 
   /* ==========================================================================
    8. პროფილის გვერდი (TIKTOK სტილის პროფილი)
