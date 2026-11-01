@@ -7,8 +7,8 @@
 }
 
 body {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #f0f2f5;
+  color: #050505;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +20,7 @@ body {
   width: 100%;
   max-width: 412px;
   min-height: 100vh;
-  background: radial-gradient(circle at top, #2d1a3c 0%, #151026 50%, #0d0a18 100%);
+  background: #f0f2f5;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -38,12 +38,12 @@ body {
   left: 0;
   width: 100%;
   height: 48%;
-  background-image: linear-gradient(to bottom, rgba(21, 16, 38, 0.4), #151026), 
+  background-image: linear-gradient(to bottom, rgba(240, 242, 245, 0.4), #f0f2f5), 
                     url('https://raw.githubusercontent.com/jimsher/gabji/refs/heads/main/6583.jpg');
   background-size: cover;
   background-position: center;
   z-index: 1;
-  opacity: 0.55;
+  opacity: 0.35;
   filter: blur(1px);
 }
 
@@ -65,8 +65,8 @@ body {
   font-size: 40px;
   font-weight: 800;
   letter-spacing: -0.5px;
-  color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  color: #1877f2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .hero-text-box {
@@ -78,13 +78,13 @@ body {
   font-size: 26px;
   font-weight: 800;
   line-height: 1.25;
-  color: #ffffff;
+  color: #050505;
   margin-bottom: 10px;
 }
 
 .hero-sub {
   font-size: 13px;
-  color: #b0a8c4;
+  color: #65676b;
   line-height: 1.4;
   padding: 0 16px;
 }
@@ -105,7 +105,7 @@ body {
   justify-content: center;
   width: 100%;
   padding: 15px;
-  background: linear-gradient(90deg, #c3597b 0%, #7e4b99 50%, #4a428c 100%);
+  background: #1877f2;
   color: #ffffff;
   border: none;
   border-radius: 28px;
@@ -113,7 +113,7 @@ body {
   font-weight: 700;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(184, 84, 133, 0.35);
+  box-shadow: 0 4px 15px rgba(24, 119, 242, 0.25);
 }
 
 /* გამჭვირვალე ღილაკები */
@@ -123,14 +123,15 @@ body {
   justify-content: center;
   width: 100%;
   padding: 13px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #ffffff;
+  border: 1px solid #ced0d4;
   border-radius: 28px;
-  color: #ffffff;
+  color: #050505;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .btn-email {
@@ -139,7 +140,7 @@ body {
 
 .btn-google {
   gap: 10px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #ffffff;
 }
 
 /* მოდალური ფანჯარა იმეილით შესვლისთვის */
@@ -150,7 +151,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 100;
   justify-content: center;
   align-items: flex-end;
@@ -159,40 +160,41 @@ body {
 .modal-content {
   width: 100%;
   max-width: 412px;
-  background: #1c1530;
+  background: #ffffff;
   border-radius: 24px 24px 0 0;
   padding: 24px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid #e4e6eb;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .modal-content h3 {
   font-size: 18px;
-  color: #ffffff;
+  color: #050505;
   margin-bottom: 4px;
 }
 
 .input-box {
   width: 100%;
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #f0f2f5;
+  border: 1px solid #ced0d4;
   border-radius: 14px;
-  color: #ffffff;
+  color: #050505;
   font-size: 15px;
   outline: none;
 }
 
 .input-box:focus {
-  border-color: #c3597b;
+  border-color: #1877f2;
 }
 
 .btn-close {
   background: none;
   border: none;
-  color: #8c85a1;
+  color: #65676b;
   font-size: 14px;
   margin-top: 6px;
   cursor: pointer;
@@ -209,7 +211,7 @@ body {
 }
 
 .back-link {
-  color: #ffffff;
+  color: #050505;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
@@ -223,12 +225,12 @@ body {
 .signup-title {
   font-size: 26px;
   font-weight: 800;
-  color: #ffffff;
+  color: #050505;
 }
 
 .signup-sub {
   font-size: 13px;
-  color: #8c85a1;
+  color: #65676b;
   margin-top: 4px;
 }
 
@@ -247,7 +249,7 @@ body {
 
 .input-label {
   font-size: 13px;
-  color: #cfc9e2;
+  color: #050505;
   font-weight: 500;
   margin-left: 2px;
 }
@@ -270,9 +272,9 @@ body {
 }
 
 .interest-pill {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #cfc9e2;
+  background: #e4e6eb;
+  border: 1px solid #ced0d4;
+  color: #050505;
   border-radius: 18px;
   padding: 7px 14px;
   font-size: 13px;
@@ -281,7 +283,7 @@ body {
 }
 
 .interest-pill.active {
-  background: linear-gradient(90deg, #c3597b 0%, #7e4b99 100%);
+  background: #1877f2;
   border-color: transparent;
   color: #ffffff;
 }
@@ -294,20 +296,20 @@ body {
   justify-content: center;
   gap: 8px;
   padding: 24px;
-  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border: 1px dashed #ced0d4;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.03);
+  background: #ffffff;
   cursor: pointer;
   margin-top: 4px;
 }
 
 .camera-icon {
-  color: #8c85a1;
+  color: #65676b;
 }
 
 .upload-text {
   font-size: 13px;
-  color: #8c85a1;
+  color: #65676b;
 }
 
 .action-bottom {
@@ -330,8 +332,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #000000;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border-top: 1px solid #e4e6eb;
   padding: 0 10px;
   z-index: 9999;
 }
@@ -342,7 +344,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  color: #7a7a7a;
+  color: #65676b;
   text-decoration: none;
   font-size: 10px;
   font-weight: 500;
@@ -351,18 +353,19 @@ body {
 }
 
 .nav-item.active {
-  color: #ffffff;
+  color: #1877f2;
 }
 
 .nav-svg-icon {
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1);
+  filter: none;
   opacity: 0.6;
 }
 
 .nav-item.active .nav-svg-icon {
   opacity: 1;
+  filter: invert(34%) sepia(86%) saturate(2288%) hue-rotate(205deg) brightness(98%) contrast(96%);
 }
 
 /* ცენტრალური TikTok (+) ღილაკი */
@@ -374,14 +377,13 @@ body {
   position: relative;
   width: 44px;
   height: 28px;
-  background: #ffffff;
+  background: #1877f2;
   border-radius: 9px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* ცისფერი მარცხნივ, ვარდისფერი/წითელი მარჯვნივ */
   box-shadow: -3px 0 0 #00f2fe, 3px 0 0 #fe0979;
 }
 
@@ -392,7 +394,7 @@ body {
 .plus-symbol {
   font-size: 20px;
   font-weight: 900;
-  color: #000000;
+  color: #ffffff;
   line-height: 1;
   margin-top: -1px;
 }
@@ -409,7 +411,7 @@ body {
   position: absolute;
   top: -5px;
   right: -10px;
-  background: #fe2c55;
+  background: #e41e3f;
   color: #ffffff;
   font-size: 10px;
   font-weight: 800;
@@ -456,16 +458,16 @@ body {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #7d7595;
+  color: #65676b;
 }
 
 .feed-search-input {
   width: 100%;
   padding: 10px 14px 10px 38px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1px solid #ced0d4;
   border-radius: 20px;
-  color: #ffffff;
+  color: #050505;
   font-size: 14px;
   outline: none;
 }
@@ -478,7 +480,7 @@ body {
 
 .filter-label {
   font-size: 13px;
-  color: #b0a8c4;
+  color: #65676b;
 }
 
 /* გადამრთველი ღილაკი (Toggle Switch) */
@@ -502,7 +504,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #ced0d4;
   border-radius: 24px;
   transition: 0.3s;
 }
@@ -520,7 +522,7 @@ body {
 }
 
 input:checked + .toggle-slider {
-  background: linear-gradient(90deg, #c3597b 0%, #7e4b99 100%);
+  background: #1877f2;
 }
 
 input:checked + .toggle-slider:before {
@@ -545,12 +547,12 @@ input:checked + .toggle-slider:before {
   position: absolute;
   width: 92%;
   height: 98%;
-  background: #3a2e4d;
+  background: #e4e6eb;
   border-radius: 36px;
   transform: rotate(-5deg) translate(-10px, -4px);
   z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid #ced0d4;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 /* მთავარი ბარათი */
@@ -558,14 +560,14 @@ input:checked + .toggle-slider:before {
   position: relative;
   width: 100%;
   height: 100%;
-  background: #1e162d;
+  background: #ffffff;
   border-radius: 36px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+  border: 1px solid #ced0d4;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
   z-index: 2;
 }
 
@@ -579,7 +581,7 @@ input:checked + .toggle-slider:before {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 25%, #352549 0%, #171126 100%);
+  background: #e4e6eb;
   z-index: 1;
 }
 
@@ -594,21 +596,21 @@ input:checked + .toggle-slider:before {
   position: absolute;
   top: 16px;
   right: 18px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   width: 32px;
   height: 18px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 3;
 }
 
 .badge-dot {
   width: 6px;
   height: 6px;
-  background: #241b35;
+  background: #1877f2;
   border-radius: 50%;
 }
 
@@ -616,11 +618,11 @@ input:checked + .toggle-slider:before {
 .card-info-glass {
   position: relative;
   z-index: 2;
-  background: rgba(24, 17, 38, 0.52);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
-  padding: 16px 18px 40px; /* ქვედა პადინგი გაიზარდა ღილაკების ადგილისთვის */
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 16px 18px 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -637,7 +639,7 @@ input:checked + .toggle-slider:before {
 .card-user-title {
   font-size: 21px;
   font-weight: 700;
-  color: #ffffff;
+  color: #050505;
   letter-spacing: -0.2px;
 }
 
@@ -658,18 +660,18 @@ input:checked + .toggle-slider:before {
 .mini-fav-btn svg {
   width: 20px;
   height: 20px;
-  fill: #e57373;
+  fill: #e41e3f;
   display: block;
 }
 
 .card-distance-text {
   font-size: 13px;
-  color: #b0a8c4;
+  color: #65676b;
 }
 
 .card-bio-text {
   font-size: 12px;
-  color: #cfc9e2;
+  color: #050505;
   line-height: 1.35;
   margin: 2px 0 5px;
 }
@@ -682,9 +684,9 @@ input:checked + .toggle-slider:before {
 }
 
 .card-pill {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #e3deee;
+  background: #f0f2f5;
+  border: 1px solid #ced0d4;
+  color: #050505;
   padding: 5px 12px;
   border-radius: 14px;
   font-size: 11px;
@@ -713,7 +715,7 @@ input:checked + .toggle-slider:before {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   transition: transform 0.15s ease;
   backdrop-filter: blur(8px);
 }
@@ -729,18 +731,18 @@ input:checked + .toggle-slider:before {
 }
 
 .btn-like {
-  background: radial-gradient(circle at center, rgba(62, 40, 73, 0.95) 0%, rgba(38, 25, 51, 0.95) 100%);
-  border: 1.5px solid rgba(255, 117, 151, 0.35);
+  background: #ffffff;
+  border: 1.5px solid #ff7597;
 }
 
 .btn-pass {
-  background: radial-gradient(circle at center, rgba(72, 33, 49, 0.95) 0%, rgba(41, 21, 34, 0.95) 100%);
-  border: 1.5px solid rgba(224, 122, 122, 0.35);
+  background: #ffffff;
+  border: 1.5px solid #ced0d4;
 }
 
 .btn-caption {
   font-size: 10px;
-  color: #b0a7c4;
+  color: #65676b;
   margin-top: 2px;
   font-weight: 500;
 }
@@ -756,8 +758,8 @@ input:checked + .toggle-slider:before {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: #141026;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border-top: 1px solid #e4e6eb;
   z-index: 9999;
   margin: 0;
   padding: 0;
@@ -808,7 +810,7 @@ input:checked + .toggle-slider:before {
 .svg-icon {
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 /* მთავარი ჰედერი: მარცხნივ სახელი/სტატისტიკა, მარჯვნივ ავატარი */
@@ -835,7 +837,7 @@ input:checked + .toggle-slider:before {
 .tt-display-name {
   font-size: 24px;
   font-weight: 800;
-  color: #ffffff;
+  color: #050505;
   letter-spacing: -0.3px;
 }
 
@@ -844,12 +846,12 @@ input:checked + .toggle-slider:before {
   height: 12px;
   transform: rotate(-90deg);
   opacity: 0.7;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .tt-username {
   font-size: 13px;
-  color: #8c85a1;
+  color: #65676b;
   margin-bottom: 12px;
 }
 
@@ -869,12 +871,12 @@ input:checked + .toggle-slider:before {
 .tt-stat-num {
   font-size: 17px;
   font-weight: 800;
-  color: #ffffff;
+  color: #050505;
 }
 
 .tt-stat-lbl {
   font-size: 11px;
-  color: #7b7393;
+  color: #65676b;
   margin-top: 1px;
 }
 
@@ -892,8 +894,8 @@ input:checked + .toggle-slider:before {
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  background: #1c152e;
+  border: 2px solid #ced0d4;
+  background: #e4e6eb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -910,8 +912,8 @@ input:checked + .toggle-slider:before {
 .tt-avatar-ph {
   width: 44px;
   height: 44px;
-  opacity: 0.35;
-  filter: brightness(0) invert(1);
+  opacity: 0.45;
+  filter: none;
 }
 
 /* ლურჯი პლუსის ღილაკი ავატარზე */
@@ -921,8 +923,8 @@ input:checked + .toggle-slider:before {
   right: 0px;
   width: 24px;
   height: 24px;
-  background: #00c7e6;
-  border: 2px solid #0f0c1b;
+  background: #1877f2;
+  border: 2px solid #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -937,7 +939,7 @@ input:checked + .toggle-slider:before {
 
 .tt-status-text {
   font-size: 11px;
-  color: #22c55e;
+  color: #31a24c;
 }
 
 /* ბიო და დროშა */
@@ -962,9 +964,9 @@ input:checked + .toggle-slider:before {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: #e4e6eb;
+  border: 1px solid #ced0d4;
+  color: #050505;
   padding: 8px 14px;
   border-radius: 12px;
   font-size: 13px;
@@ -974,13 +976,13 @@ input:checked + .toggle-slider:before {
 }
 
 .tt-chip-btn.active {
-  background: rgba(255, 255, 255, 0.14);
+  background: #d8dadf;
 }
 
 .tt-chip-icon {
   width: 14px;
   height: 14px;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 /* ტაბების მენიუ (ხაზით ქვემოთ) */
@@ -988,7 +990,7 @@ input:checked + .toggle-slider:before {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #e4e6eb;
   margin-top: 4px;
   padding-bottom: 6px;
 }
@@ -999,7 +1001,7 @@ input:checked + .toggle-slider:before {
   cursor: pointer;
   padding: 8px 14px;
   position: relative;
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 .tt-tab-item.active {
@@ -1013,14 +1015,14 @@ input:checked + .toggle-slider:before {
   left: 10%;
   width: 80%;
   height: 2px;
-  background: #ffffff;
+  background: #1877f2;
   border-radius: 2px;
 }
 
 .tt-tab-icon {
   width: 20px;
   height: 20px;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 /* 5. ვერტიკალური 9:16 ბადე (3 სვეტად) */
@@ -1034,7 +1036,7 @@ input:checked + .toggle-slider:before {
 .tt-post-card {
   position: relative;
   aspect-ratio: 9 / 14;
-  background: #171226;
+  background: #e4e6eb;
   overflow: hidden;
   border-radius: 4px;
 }
@@ -1042,7 +1044,7 @@ input:checked + .toggle-slider:before {
 .tt-post-thumb {
   width: 100%;
   height: 100%;
-  background: #251b38;
+  background: #ced0d4;
 }
 
 .tt-post-card img {
@@ -1087,7 +1089,7 @@ input:checked + .toggle-slider:before {
 .tt-btn-subscribe {
   flex: 1.2;
   height: 44px;
-  background: #fe2c55;
+  background: #1877f2;
   color: #ffffff;
   border: none;
   border-radius: 22px;
@@ -1109,9 +1111,9 @@ input:checked + .toggle-slider:before {
 .tt-btn-message {
   flex: 1.2;
   height: 44px;
-  background: #252525;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #e4e6eb;
+  color: #050505;
+  border: 1px solid #ced0d4;
   border-radius: 22px;
   font-size: 15px;
   font-weight: 600;
@@ -1124,7 +1126,7 @@ input:checked + .toggle-slider:before {
 
 .tt-btn-message:active {
   transform: scale(0.97);
-  background: #333333;
+  background: #d8dadf;
 }
 
 /* პატარა მრგვალი ღილაკი აიქონით */
@@ -1132,8 +1134,8 @@ input:checked + .toggle-slider:before {
   width: 44px;
   height: 44px;
   flex-shrink: 0;
-  background: #252525;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #e4e6eb;
+  border: 1px solid #ced0d4;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1144,13 +1146,13 @@ input:checked + .toggle-slider:before {
 
 .tt-btn-suggest:active {
   transform: scale(0.95);
-  background: #333333;
+  background: #d8dadf;
 }
 
 .tt-suggest-icon {
   width: 20px;
   height: 20px;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 
@@ -1163,7 +1165,7 @@ input:checked + .toggle-slider:before {
   position: relative;
   display: flex;
   justify-content: space-around;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e4e6eb;
 }
 
 .tt-tab-indicator {
@@ -1172,7 +1174,7 @@ input:checked + .toggle-slider:before {
   left: 0;
   width: 20%;
   height: 2px;
-  background-color: #ffffff;
+  background-color: #1877f2;
   border-radius: 2px;
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -1211,7 +1213,7 @@ input:checked + .toggle-slider:before {
   position: relative;
   width: 100%;
   aspect-ratio: 9 / 16;
-  background-color: #121019;
+  background-color: #e4e6eb;
   overflow: hidden;
   cursor: pointer;
 }
@@ -1256,7 +1258,7 @@ input:checked + .toggle-slider:before {
   align-items: center;
   justify-content: center;
   padding: 50px 16px;
-  color: #6d6682;
+  color: #65676b;
   font-size: 14px;
   text-align: center;
 }
@@ -1287,8 +1289,8 @@ input:checked + .toggle-slider:before {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1px solid #ced0d4;
   border-radius: 20px;
   padding: 10px 14px;
 }
@@ -1296,7 +1298,7 @@ input:checked + .toggle-slider:before {
 .search-mini-icon {
   width: 18px;
   height: 18px;
-  filter: brightness(0) invert(1);
+  filter: none;
   opacity: 0.6;
 }
 
@@ -1304,13 +1306,13 @@ input:checked + .toggle-slider:before {
   background: none;
   border: none;
   outline: none;
-  color: #ffffff;
+  color: #050505;
   font-size: 14px;
   width: 100%;
 }
 
 .users-search-box input::placeholder {
-  color: #8c85a1;
+  color: #65676b;
 }
 
 /* სიის კონტეინერი */
@@ -1323,7 +1325,7 @@ input:checked + .toggle-slider:before {
 .users-loading-state,
 .users-empty-state {
   text-align: center;
-  color: #8c85a1;
+  color: #65676b;
   font-size: 14px;
   padding: 40px 0;
 }
@@ -1349,7 +1351,7 @@ input:checked + .toggle-slider:before {
   height: 48px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: #e4e6eb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1377,13 +1379,13 @@ input:checked + .toggle-slider:before {
 }
 
 .user-row-name {
-  color: #ffffff;
+  color: #050505;
   font-size: 15px;
   font-weight: 700;
 }
 
 .user-row-handle {
-  color: #8c85a1;
+  color: #65676b;
   font-size: 13px;
 }
 
@@ -1395,7 +1397,7 @@ input:checked + .toggle-slider:before {
 
 /* წითელი გამოწერის ღილაკი */
 .btn-user-follow {
-  background: #fe2c55;
+  background: #1877f2;
   color: #ffffff;
   border: none;
   border-radius: 18px;
@@ -1411,15 +1413,15 @@ input:checked + .toggle-slider:before {
 }
 
 .btn-user-follow.following {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: #e4e6eb;
+  color: #050505;
 }
 
 /* სამი წერტილი */
 .btn-user-dots {
   background: none;
   border: none;
-  color: #8c85a1;
+  color: #65676b;
   font-size: 14px;
   cursor: pointer;
   padding: 4px;
@@ -1439,7 +1441,7 @@ input:checked + .toggle-slider:before {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 99998;
   opacity: 0;
   pointer-events: none;
@@ -1459,17 +1461,17 @@ input:checked + .toggle-slider:before {
   max-width: 320px;
   height: 100vh;
   height: 100dvh;
-  background-color: #161224; /* GABJI-ს მუქი იისფერი ფონი */
+  background-color: #ffffff;
   z-index: 99999;
-  transform: translateX(100%); /* დამალულია მარჯვნივ */
+  transform: translateX(100%);
   transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.6);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
 }
 
 .menu-drawer.active {
-  transform: translateX(0); /* გამოდის მარცხნივ */
+  transform: translateX(0);
 }
 
 .menu-drawer-scroll {
@@ -1490,13 +1492,13 @@ input:checked + .toggle-slider:before {
 .menu-group-last {
   margin-top: 6px;
   padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid #e4e6eb;
 }
 
 .menu-group-title {
   font-size: 13px;
   font-weight: 600;
-  color: #8b85a0;
+  color: #65676b;
   letter-spacing: 0.2px;
 }
 
@@ -1511,7 +1513,7 @@ input:checked + .toggle-slider:before {
 }
 
 .menu-item:active {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: #f0f2f5;
 }
 
 .menu-item-left {
@@ -1523,21 +1525,20 @@ input:checked + .toggle-slider:before {
 .menu-item-icon {
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1);
-  opacity: 0.95;
+  filter: none;
+  opacity: 0.85;
   object-fit: contain;
 }
 
 .menu-item-text {
   font-size: 15px;
   font-weight: 500;
-  color: #ffffff;
+  color: #050505;
 }
 
 .menu-item-arrow {
-  color: #6d6682;
+  color: #65676b;
   font-size: 20px;
   font-weight: 400;
   padding-right: 4px;
 }
-
