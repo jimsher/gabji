@@ -428,6 +428,9 @@ body {
 /* ==========================================================================
    7. ფიდის გვერდი (FEED / CARDS)
    ========================================================================== */
+/* ==========================================================================
+   7. ფიდის გვერდი (FEED / CARDS)
+   ========================================================================== */
 .feed-screen {
   padding: 12px 18px 8px;
 }
@@ -628,14 +631,14 @@ input:checked + .toggle-slider:before {
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   border-bottom-left-radius: 36px;
   border-bottom-right-radius: 36px;
 }
 
 .card-name-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -646,21 +649,22 @@ input:checked + .toggle-slider:before {
   letter-spacing: -0.2px;
 }
 
-/* გულის ღილაკის და ციფრის სვეტი */
-.mini-fav-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+/* გულის და ციფრის ვერტიკალური სვეტი (ციფრი მკაცრად გულის ქვეშ) */
+.mini-fav-box {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  min-width: 24px;
   flex-shrink: 0;
 }
 
-/* გულის ღილაკი */
 .mini-fav-btn {
   background: none;
   border: none;
   cursor: pointer;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 24px;
@@ -668,36 +672,43 @@ input:checked + .toggle-slider:before {
   padding: 0;
 }
 
-.mini-fav-btn .fav-icon {
+.mini-fav-btn .fav-icon,
+.mini-fav-btn img {
   width: 22px;
   height: 22px;
   display: block;
   object-fit: contain;
 }
 
-/* მოწონებების მთვლელი ციფრი გულის ქვემოთ */
+/* ციფრი გულის ქვემოთ */
 .mini-fav-count {
   font-size: 11px;
   font-weight: 600;
   color: #65676b;
   line-height: 1;
+  text-align: center;
 }
 
 /* ლოკაციის ხაზი და აიქონი */
+.card-location-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.card-location-row .loc-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
 .card-distance-text {
   font-size: 13px;
   color: #65676b;
-  display: flex;
-  align-items: center;
-  gap: 4px;
   margin: 0;
-}
-
-.card-distance-text .loc-icon {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  object-fit: contain;
 }
 
 .card-bio-text {
@@ -723,7 +734,7 @@ input:checked + .toggle-slider:before {
   font-size: 11px;
 }
 
-/* Like და Pass ღილაკები - ბარათის ქვედა საზღვარზე გადამჯდარი */
+/* Like და Pass ღილაკები */
 .card-action-buttons {
   position: relative;
   z-index: 10;
@@ -794,6 +805,7 @@ input:checked + .toggle-slider:before {
   margin: 0;
   padding: 0;
 }
+
 
   /* ==========================================================================
    8. პროფილის გვერდი (TIKTOK სტილის პროფილი)
