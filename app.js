@@ -272,7 +272,7 @@ if (signupForm) {
 /* ==========================================================================
    3. ფიდი (feed.html)
    ========================================================================== */
-  const cardTitle = document.querySelector(".card-user-title");
+const cardTitle = document.querySelector(".card-user-title");
 
 if (cardTitle) {
   let allRawProfiles = [];
@@ -524,8 +524,7 @@ if (cardTitle) {
   });
 }
 
-
-   /* ==========================================================================
+/* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
 const profileNameEl = document.getElementById("profileName");
@@ -801,14 +800,10 @@ if (profileNameEl) {
     // გალერეის გაშვება
     loadUserGallery(targetUid === currentUser.uid);
 
-  });
-}
-                    
     /* ==========================================================================
-       🔥 ახალი: რელსების ბადის ჩატვირთვა და მარჯვნიდან მარცხნივ სლაიდი
+       რელსების ბადის ჩატვირთვა და მარჯვნიდან მარცხნივ სლაიდი
        ========================================================================== */
     const reelsGrid = document.getElementById("profileReelsGrid");
-    const galleryGrid = document.getElementById("profileGalleryGrid");
     const gridsSlider = document.getElementById("gridsSlider");
     const tabReelsBtn = document.getElementById("tabReelsBtn");
     const tabGalleryBtn = document.getElementById("tabGalleryBtn");
@@ -819,7 +814,6 @@ if (profileNameEl) {
       if (!reelsGrid) return;
       reelsGrid.innerHTML = '<div class="reels-empty-grid">ვიდეოები იტვირთება...</div>';
 
-      // 1x1 გამჭვირვალე Base64 პოსტერი სისტემური Play ღილაკის დასაბლოკად
       const blackPoster = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
 
       try {
@@ -844,7 +838,6 @@ if (profileNameEl) {
           const card = document.createElement("div");
           card.className = "tt-post-card";
 
-          // რეალური ნახვები ბაზიდან
           const views = reel.viewsCount || reel.views || 0;
 
           card.innerHTML = `
@@ -863,7 +856,6 @@ if (profileNameEl) {
             </div>
           `;
 
-          // ვიდეოზე შეხებისას პირდაპირ გადადის რელსებზე
           card.onclick = () => {
             window.location.href = `reels.html?reelId=${reel.id}`;
           };
@@ -876,20 +868,16 @@ if (profileNameEl) {
       }
     };
 
-
     // ტაბების გადართვისა და მარჯვნიდან სლაიდის ლოგიკა
     if (tabReelsBtn && gridsSlider) {
       tabReelsBtn.onclick = () => {
         document.querySelectorAll(".tt-tab-item").forEach((btn) => btn.classList.remove("active"));
         tabReelsBtn.classList.add("active");
 
-        // ბადე მოცურდება მარჯვნიდან მარცხნივ
         gridsSlider.classList.add("show-reels");
 
-        // მოძრავი თეთრი ხაზი გადადის მე-2 პოზიციაზე
         if (tabIndicator) tabIndicator.style.transform = "translateX(100%)";
 
-        // ვიდეოების ჩატვირთვა ბაზიდან
         loadUserReels();
       };
     }
@@ -899,10 +887,8 @@ if (profileNameEl) {
         document.querySelectorAll(".tt-tab-item").forEach((btn) => btn.classList.remove("active"));
         tabGalleryBtn.classList.add("active");
 
-        // ბადე ბრუნდება პირველ პოზიციაზე
         gridsSlider.classList.remove("show-reels");
 
-        // მოძრავი თეთრი ხაზი ბრუნდება მე-1 პოზიციაზე
         if (tabIndicator) tabIndicator.style.transform = "translateX(0%)";
       };
     }
@@ -910,9 +896,7 @@ if (profileNameEl) {
     // ვიდეოების წინასწარ წამოღება
     loadUserReels();
 
-    
-
-        // ბურგერ მენიუს გახსნა / დახურვა
+    // ბურგერ მენიუს გახსნა / დახურვა
     const btnMenu = document.getElementById("btnSettingsProfile");
     const menuDrawer = document.getElementById("menuDrawer");
     const menuBackdrop = document.getElementById("menuBackdrop");
@@ -959,13 +943,8 @@ if (profileNameEl) {
 
   });
 }
-      
 
-
-
-
-
- /* ==========================================================================
+/* ==========================================================================
    5. ხალხის სია (USERS.HTML & FIRESTORE)
    ========================================================================== */
 const usersListContainer = document.getElementById("usersListContainer");
@@ -973,12 +952,11 @@ const usersListContainer = document.getElementById("usersListContainer");
 if (usersListContainer) {
   const userSearchInput = document.getElementById("userSearchInput");
   let allUsersList = [];
-  let myFollowedSet = new Set(); // ბაზიდან უკვე გამოწერილების ID-ების სია
+  let myFollowedSet = new Set();
 
   const renderUsersList = (users, currentUid) => {
     usersListContainer.innerHTML = "";
 
-    // საკუთარი თავი არ გამოჩნდეს სიაში
     const filtered = users.filter((u) => u.userId !== currentUid && u.uid !== currentUid);
 
     if (filtered.length === 0) {
@@ -991,7 +969,6 @@ if (usersListContainer) {
       const usernameTag = user.username ? `@${user.username}` : (user.email ? `@${user.email.split("@")[0]}` : "@user");
       const targetId = user.userId || user.uid;
 
-      // ვამოწმებთ, უკვე გამოწერილი გვყავს თუ არა ბაზაში
       let isFollowed = myFollowedSet.has(targetId);
 
       const row = document.createElement("div");
@@ -1020,7 +997,6 @@ if (usersListContainer) {
         </div>
       `;
 
-      // სწორედ ეს ხაზი გადაიყვანს კონკრეტული ადამიანის პროფილზე
       const leftPart = row.querySelector(".user-item-left");
       if (leftPart) {
         leftPart.onclick = () => {
@@ -1075,7 +1051,6 @@ if (usersListContainer) {
     }
 
     try {
-      // 1. ვკითხულობთ, ვინ გვყავს უკვე გამოწერილი
       const followSnap = await getDocs(collection(db, "users", currentUser.uid, "following"));
       myFollowedSet.clear();
       followSnap.forEach((docItem) => {
@@ -1085,12 +1060,11 @@ if (usersListContainer) {
         }
       });
 
-      // 2. გამოგვაქვს ხალხის სია
       const snap = await getDocs(collection(db, "users"));
       allUsersList = [];
       snap.forEach((d) => {
         const uData = d.data();
-        uData.userId = d.id; // ზუსტი უნიკალური ID ბაზიდან
+        uData.userId = d.id;
         allUsersList.push(uData);
       });
       renderUsersList(allUsersList, currentUser.uid);
