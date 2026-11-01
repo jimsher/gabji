@@ -290,12 +290,14 @@ if (cardTitle) {
     const bioEl = document.querySelector(".card-bio-text");
     const pillsWrap = document.querySelector(".card-interest-pills");
     const photoBox = document.querySelector(".card-image-placeholder");
+    const favCountEl = document.getElementById("miniFavCount");
 
     if (!feedProfiles.length || index >= feedProfiles.length) {
       if (nameEl) nameEl.textContent = "მომხმარებლები არ არის";
       if (locEl) locEl.textContent = "";
       if (bioEl) bioEl.textContent = "";
       if (pillsWrap) pillsWrap.innerHTML = "";
+      if (favCountEl) favCountEl.textContent = "0";
       return;
     }
 
@@ -308,7 +310,11 @@ if (cardTitle) {
 
     if (locEl) {
       const fullLoc = [item.city, item.country].filter(Boolean).join(", ");
-      locEl.textContent = fullLoc ? `📍 ${fullLoc}` : "";
+      locEl.textContent = fullLoc ? fullLoc : "";
+    }
+
+    if (favCountEl) {
+      favCountEl.textContent = item.likesCount || item.likes || 0;
     }
 
     if (bioEl) {
