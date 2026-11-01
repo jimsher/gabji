@@ -379,26 +379,30 @@ if (cardTitle) {
       const currentProfile = feedProfiles[currentCardIndex];
       const favCountEl = document.getElementById("miniFavCount");
 
-      let currentLikes = Number(favCountEl ? favCountEl.textContent : 0) || 0;
-      currentLikes++;
+      // 1. მიმდინარე ლაიქების გამოთვლა
+      let currentLikes = Number(currentProfile.likesCount || currentProfile.likes || (favCountEl ? favCountEl.textContent : 0)) || 0;
+      currentLikes += 1;
+
+      // 2. ეკრანზე მყისიერი განახლება
       if (favCountEl) favCountEl.textContent = currentLikes;
       currentProfile.likesCount = currentLikes;
 
-      if (currentProfile.id) {
+      // 3. Firestore-ში გარანტირებული შენახვა setDoc + merge-ით (არ მოითხოვს ველის წინასწარ არსებობას)
+      const targetDocId = currentProfile.id || currentProfile.uid;
+      if (targetDocId) {
         try {
-          const userRef = doc(db, "users", currentProfile.id);
-          await updateDoc(userRef, {
-            likesCount: increment(1)
-          });
+          const userRef = doc(db, "users", targetDocId);
+          await setDoc(userRef, { likesCount: currentLikes }, { merge: true });
         } catch (err) {
-          console.error("Firebase-ში ლაიქის შენახვის შეცდომა:", err);
+          console.error("Firestore-ში ლაიქის ჩაწერის შეცდომა:", err);
         }
       }
 
+      // 4. შემდეგ პროფილზე გადასვლა
       setTimeout(() => {
         currentCardIndex++;
         displayProfile(currentCardIndex);
-      }, 250);
+      }, 200);
     };
   }
 
@@ -411,8 +415,7 @@ if (cardTitle) {
 
   getProfilesFromDb();
 }
-    
-
+     
 
    /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
