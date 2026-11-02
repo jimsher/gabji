@@ -21,7 +21,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* ვერტიკალური Snap სლაიდერი TikTok/Reels სტილში */
+    /* ვერტიკალური Snap სლაიდერი */
     .viewer-container {
       width: 100%;
       height: 100%;
@@ -34,7 +34,6 @@
       display: none;
     }
 
-    /* თითოეული სრულეკრანიანი ფოტო */
     .photo-slide {
       position: relative;
       width: 100%;
@@ -86,19 +85,19 @@
       stroke-width: 2.5;
     }
 
-    /* მარჯვენა მოქმედებების პანელი */
-    .right-actions {
+    /* მარჯვენა მოქმედებების პანელი (Reels სტილი) */
+    .reels-sidebar {
       position: absolute;
       right: 12px;
-      bottom: 85px;
+      bottom: 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
       z-index: 20;
     }
 
-    .action-btn {
+    .action-item {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -109,21 +108,30 @@
       cursor: pointer;
     }
 
-    .action-custom-icon {
-      width: 30px;
-      height: 30px;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.6));
+    .action-icon-wrap {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .reel-action-icon {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
       object-fit: contain;
     }
 
     .action-count {
       font-size: 12px;
       font-weight: 600;
+      color: #ffffff;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     }
 
-    /* ჰორიზონტალური სამი წერტილი გაზიარების ქვემოთ */
-    .action-dots-btn {
+    /* ჰორიზონტალური სამი წერტილი გაზიარების ქვემოთ (მხოლოდ მფლობელისთვის) */
+    .btn-photo-more {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -149,9 +157,6 @@
       bottom: 25px;
       color: #ffffff;
       z-index: 20;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
     }
 
@@ -160,7 +165,6 @@
       font-weight: 700;
     }
 
-    /* ჩატვირთვის ინდიკატორი */
     .loading-state {
       position: absolute;
       top: 50%;
@@ -217,7 +221,7 @@
       }
 
       try {
-        // 1. მომხმარებლის სახელის გაგება
+        // მომხმარებლის სახელი
         let userHandle = "@user";
         const userDoc = await getDoc(doc(db, "users", targetUid));
         if (userDoc.exists()) {
@@ -225,7 +229,7 @@
           userHandle = u.username ? `@${u.username}` : (u.firstName ? `@${u.firstName.toUpperCase()} JI` : "@user");
         }
 
-        // 2. მხოლოდ ამ მომხმარებლის ფოტოების წამოღება
+        // მხოლოდ ამ მომხმარებლის ფოტოების წამოღება
         const photosSnap = await getDocs(collection(db, "users", targetUid, "photos"));
         
         if (photosSnap.empty) {
@@ -248,7 +252,7 @@
 
           // სამი წერტილი მხოლოდ მფლობელისთვის
           const ownerDotsHtml = isOwner ? `
-            <button type="button" class="action-btn action-dots-btn" data-photo-id="${docItem.id}">
+            <button type="button" class="action-item btn-photo-more" data-id="${docItem.id}">
               <span class="action-dots-text">•••</span>
             </button>
           ` : '';
@@ -256,31 +260,45 @@
           slide.innerHTML = `
             <img src="${p.photoUrl}" alt="Photo" class="main-photo">
 
-            <!-- მარჯვენა მენიუ საკუთარი აიკონებით -->
-            <div class="right-actions">
+            <!-- მარჯვენა მოქმედების პანელი Reels აიკონებით -->
+            <div class="reels-sidebar">
               <!-- ლაიქი -->
-              <button type="button" class="action-btn">
-                <img src="icons/heart.svg" alt="Like" class="action-custom-icon">
-                <span class="action-count">${p.likesCount || p.likes || 0}</span>
+              <button class="action-item btn-like" data-id="${docItem.id}">
+                <div class="action-icon-wrap">
+                  <img src="icons/heart-bold.svg" class="reel-action-icon" alt="Like">
+                </div>
+                <span class="action-count like-count">${p.likesCount || p.likes || 0}</span>
               </button>
 
               <!-- კომენტარი -->
-              <button type="button" class="action-btn">
-                <img src="icons/messages-2.svg" alt="Comment" class="action-custom-icon">
+              <button class="action-item btn-comment">
+                <div class="action-icon-wrap">
+                  <img src="icons/chat-round-dots-bold.svg" class="reel-action-icon" alt="Comment">
+                </div>
                 <span class="action-count">${p.commentsCount || 0}</span>
               </button>
 
-              <!-- გაზიარება / სანიშნე (წარწერის გარეშე) -->
-              <button type="button" class="action-btn">
-                <img src="icons/bookmark-outline.svg" alt="Bookmark" class="action-custom-icon">
+              <!-- შენახვა / სანიშნე -->
+              <button class="action-item btn-save">
+                <div class="action-icon-wrap">
+                  <img src="icons/bookmark-bold.svg" class="reel-action-icon" alt="Save">
+                </div>
                 <span class="action-count">${p.savesCount || 0}</span>
               </button>
 
-              <!-- სამი წერტილი გაზიარების ქვემოთ (მხოლოდ მფლობელისთვის) -->
+              <!-- გაზიარება -->
+              <button class="action-item btn-share">
+                <div class="action-icon-wrap">
+                  <img src="icons/forward-right-bold.svg" class="reel-action-icon" alt="Share">
+                </div>
+                <span class="action-count">${p.sharesCount || p.shares || 0}</span>
+              </button>
+
+              <!-- სამი წერტილი გაზიარების ქვემოთ (მხოლოდ პროფილის პატრონისთვის) -->
               ${ownerDotsHtml}
             </div>
 
-            <!-- ქვედა ინფორმაცია (აუდიოს გარეშე) -->
+            <!-- ქვედა ინფორმაცია (მხოლოდ მომხმარებლის სახელი) -->
             <div class="bottom-info">
               <div class="user-handle">${userHandle}</div>
             </div>
@@ -304,7 +322,6 @@
       }
     };
 
-    // ვამოწმებთ მიმდინარე მომხმარებელს, რათა სამი წერტილი მხოლოდ მფლობელზე გამოჩნდეს
     onAuthStateChanged(auth, (user) => {
       loadCollection(user ? user.uid : null);
     });
