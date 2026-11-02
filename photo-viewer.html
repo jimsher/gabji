@@ -614,24 +614,31 @@
 
       const photoRef = doc(db, "users", targetUid, "photos", photoId);
       const userLikeRef = doc(db, "users", targetUid, "photos", photoId, "likes", user.uid);
+      const targetUserProfileRef = doc(db, "users", targetUid); // პროფილის მთავარი დოკუმენტი
 
       try {
         if (!isLiked) {
-          // ლაიქი
+          // 1. ლაიქი ფოტოზე
           btnLike.classList.add("liked");
           count += 1;
           countEl.textContent = count;
 
           await setDoc(userLikeRef, { uid: user.uid, createdAt: serverTimestamp() });
           await updateDoc(photoRef, { likesCount: increment(1) });
+
+          // 2. მომხმარებლის პროფილის საერთო ლაიქების გაზრდა
+          await updateDoc(targetUserProfileRef, { likesCount: increment(1) });
         } else {
-          // ლაიქის გაუქმება
+          // 1. ლაიქის გაუქმება ფოტოზე
           btnLike.classList.remove("liked");
           count = Math.max(0, count - 1);
           countEl.textContent = count;
 
           await deleteDoc(userLikeRef);
           await updateDoc(photoRef, { likesCount: increment(-1) });
+
+          // 2. მომხმარებლის პროფილის საერთო ლაიქების შემცირება
+          await updateDoc(targetUserProfileRef, { likesCount: increment(-1) });
         }
       } catch (err) {
         console.error("ლაიქის შეცდომა:", err);
@@ -639,6 +646,7 @@
         btnLike.disabled = false;
       }
     };
+
 
     const loadCollection = async (currentUserUid) => {
       if (!targetUid) {
