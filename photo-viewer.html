@@ -538,17 +538,7 @@
     let currentUserProfileData = null;
 
     // კომენტარების ფანჯრის დახურვა
-    const closeCommentsModal = () => {
-      commentsSheet.classList.remove("active");
-      commentsBackdrop.classList.remove("active");
-      activePhotoIdForComments = null;
-      activeCommentCountEl = null;
-    };
-
-    if (commentsCloseBtn) commentsCloseBtn.onclick = closeCommentsModal;
-    if (commentsBackdrop) commentsBackdrop.onclick = closeCommentsModal;
-
-    // კომენტარების წამოღება და გახსნა
+        // კომენტარების წამოღება და გახსნა
     const openCommentsModal = async (photoId, countEl) => {
       activePhotoIdForComments = photoId;
       activeCommentCountEl = countEl;
@@ -567,7 +557,7 @@
         }
 
         if (snapshot.empty) {
-          commentsList.innerHTML = '<div class="no-comments-text">კომენტარები ჯერ არ არის. იყავი პირველი!</div>';
+          commentsList.innerHTML = '<div class="no-comments-text">კომენტარები ჯერ არ არის</div>';
           return;
         }
 
@@ -576,12 +566,28 @@
           const c = cDoc.data();
           const item = document.createElement("div");
           item.className = "comment-item";
+
           item.innerHTML = `
             <img src="${c.userPhoto || 'icons/user-circle-linear.svg'}" class="comment-avatar" alt="Avatar">
+            
             <div class="comment-body">
               <span class="comment-author">${c.userName || 'მომხმარებელი'}</span>
               <span class="comment-text">${c.text || ''}</span>
-              <span class="comment-meta">ახლახან</span>
+              <div class="comment-meta-bar">
+                <span class="comment-time">ახლახან</span>
+                <button type="button" class="comment-reply-btn" onclick="document.getElementById('commentInput').focus(); document.getElementById('commentInput').placeholder = 'უპასუხე ${c.userName}-ს...';">პასუხი</button>
+              </div>
+            </div>
+
+            <!-- მარჯვენა მხარე: გული და დისლაიქი -->
+            <div class="comment-actions-right">
+              <button type="button" class="comment-action-btn btn-comment-like" onclick="this.classList.toggle('liked')">
+                <img src="icons/heart-bold.svg" class="comment-action-icon" alt="Like">
+                <span class="comment-like-count">${c.likes || ''}</span>
+              </button>
+              <button type="button" class="comment-action-btn btn-comment-dislike">
+                <img src="icons/chat-round-dots-bold.svg" class="comment-action-icon" style="transform: rotate(180deg);" alt="Dislike">
+              </button>
             </div>
           `;
           commentsList.appendChild(item);
@@ -626,16 +632,13 @@
           createdAt: serverTimestamp()
         });
 
-        // ფოტოზე კომენტარების რაოდენობის გაზრდა
         await updateDoc(photoRef, { commentsCount: increment(1) });
 
-        // ციფრის მომენტალური განახლება
         if (activeCommentCountEl) {
           const curr = parseInt(activeCommentCountEl.textContent) || 0;
           activeCommentCountEl.textContent = curr + 1;
         }
 
-        // სიაში მომენტალური ჩამატება
         const emptyNotice = commentsList.querySelector(".no-comments-text");
         if (emptyNotice) emptyNotice.remove();
 
@@ -643,10 +646,24 @@
         newItem.className = "comment-item";
         newItem.innerHTML = `
           <img src="${authorPhoto}" class="comment-avatar" alt="Avatar">
+          
           <div class="comment-body">
             <span class="comment-author">${authorName}</span>
             <span class="comment-text">${text}</span>
-            <span class="comment-meta">ახლახან</span>
+            <div class="comment-meta-bar">
+              <span class="comment-time">ახლახან</span>
+              <button type="button" class="comment-reply-btn" onclick="document.getElementById('commentInput').focus();">პასუხი</button>
+            </div>
+          </div>
+
+          <div class="comment-actions-right">
+            <button type="button" class="comment-action-btn btn-comment-like" onclick="this.classList.toggle('liked')">
+              <img src="icons/heart-bold.svg" class="comment-action-icon" alt="Like">
+              <span class="comment-like-count"></span>
+            </button>
+            <button type="button" class="comment-action-btn btn-comment-dislike">
+              <img src="icons/chat-round-dots-bold.svg" class="comment-action-icon" style="transform: rotate(180deg);" alt="Dislike">
+            </button>
           </div>
         `;
         commentsList.appendChild(newItem);
@@ -656,9 +673,12 @@
         console.error("კომენტარის გაგზავნის შეცდომა:", sendErr);
       } finally {
         commentSendBtn.disabled = false;
+        commentInput.placeholder = "დაამატე კომენტარი...";
       }
     };
 
+
+    
     if (commentSendBtn) commentSendBtn.onclick = sendComment;
     if (commentInput) {
       commentInput.addEventListener("keydown", (e) => {
