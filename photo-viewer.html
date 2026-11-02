@@ -147,7 +147,6 @@
       transform: scale(0.85);
     }
 
-    /* როდესაც დალაიქებულია: წითელი გული */
     .btn-like.liked .reel-action-icon {
       filter: drop-shadow(0 2px 6px rgba(254, 44, 85, 0.6)) invert(27%) sepia(91%) saturate(5412%) hue-rotate(338deg) brightness(98%) contrast(106%);
     }
@@ -159,7 +158,6 @@
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
     }
 
-    /* ჰორიზონტალური სამი წერტილი გაზიარების ქვემოთ (მხოლოდ მფლობელისთვის) */
     .btn-photo-more {
       display: flex;
       align-items: center;
@@ -179,7 +177,6 @@
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
     }
 
-    /* ქვედა ინფორმაცია */
     .bottom-info {
       position: absolute;
       left: 15px;
@@ -205,253 +202,317 @@
     }
 
     /* ==========================================================================
-   Facebook-ის კომენტარი (თეთრი / ღია) სტილის კომენტარების მოდალი (Bottom Sheet)
-   ========================================================================== */
-.comments-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 99;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
-}
+       კომენტარების სუფთა Bottom Sheet მოდალი
+       ========================================================================== */
+    .comments-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
 
-.comments-backdrop.active {
-  opacity: 1;
-  visibility: visible;
-}
+    .comments-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-.comments-sheet {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 72%;
-  background: #ffffff;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.2);
-}
+    .comments-sheet {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 75%;
+      background: #ffffff;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.2);
+    }
 
-.comments-sheet.active {
-  transform: translateY(0);
-}
+    .comments-sheet.active {
+      transform: translateY(0);
+    }
 
-/* ზედა ზოლი */
-.comments-header {
-  position: relative;
-  padding: 14px 16px;
-  text-align: center;
-  border-bottom: 1px solid #f0f2f5;
-}
+    .comments-header {
+      position: relative;
+      padding: 14px 16px;
+      text-align: center;
+      border-bottom: 1px solid #f0f2f5;
+      flex-shrink: 0;
+    }
 
-.comments-title {
-  color: #111111;
-  font-size: 15px;
-  font-weight: 700;
-}
+    .comments-title {
+      color: #111111;
+      font-size: 15px;
+      font-weight: 700;
+    }
 
-.comments-close-btn {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #f0f2f5;
-  border: none;
-  color: #65676b;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .comments-close-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #f0f2f5;
+      border: none;
+      color: #555555;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-/* კომენტარების სია */
-.comments-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  background: #ffffff;
-  -webkit-overflow-scrolling: touch;
-}
+    .comments-close-btn:active {
+      background: #e4e6eb;
+    }
 
-.comments-list::-webkit-scrollbar {
-  display: none;
-}
+    .comments-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: #ffffff;
+      -webkit-overflow-scrolling: touch;
+    }
 
-/* თითოეული კომენტარის მწკრივი */
-.comment-item {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  position: relative;
-}
+    .comments-list::-webkit-scrollbar {
+      display: none;
+    }
 
-.comment-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
+    /* მთავარი კომენტარი */
+    .comment-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-/* შუა ტექსტური ნაწილი - სრულიად სუფთა, ფონის გარეშე */
-.comment-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  background: transparent !important;
-  padding: 0 !important;
-}
+    .comment-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      position: relative;
+    }
 
-.comment-author {
-  font-size: 13px;
-  font-weight: 700;
-  color: #111111;
-}
+    .comment-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
 
-.comment-text {
-  font-size: 14px;
-  color: #111111;
-  line-height: 1.35;
-  word-break: break-word;
-}
+    .comment-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      background: transparent;
+      padding: 0;
+    }
 
-/* მეტა ზოლი: დრო და „პასუხი“ */
-.comment-meta-bar {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 4px;
-}
+    .comment-author {
+      font-size: 13px;
+      font-weight: 700;
+      color: #111111;
+    }
 
-.comment-time {
-  font-size: 12px;
-  color: #8a8d91;
-}
+    .comment-text {
+      font-size: 14px;
+      color: #111111;
+      line-height: 1.35;
+      word-break: break-word;
+    }
 
-.comment-reply-btn {
-  background: none;
-  border: none;
-  font-size: 12px;
-  font-weight: 600;
-  color: #8a8d91;
-  cursor: pointer;
-  padding: 0;
-}
+    .comment-meta-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 4px;
+    }
 
-.comment-reply-btn:hover {
-  color: #111111;
-}
+    .comment-time {
+      font-size: 12px;
+      color: #8a8d91;
+    }
 
-/* მარჯვენა მხარე: გული და დისლაიქი */
-.comment-actions-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 2px;
-  flex-shrink: 0;
-}
+    .comment-reply-btn {
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      color: #8a8d91;
+      cursor: pointer;
+      padding: 0;
+    }
 
-.comment-action-btn {
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  cursor: pointer;
-  padding: 0;
-}
+    .comment-reply-btn:active {
+      color: #111111;
+    }
 
-.comment-action-icon {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-  filter: opacity(0.65);
-}
+    /* მარჯვენა მოქმედებები: გული და დისლაიქი */
+    .comment-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
 
-.comment-like-count {
-  font-size: 11px;
-  color: #8a8d91;
-  font-weight: 600;
-}
+    .comment-action-btn {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      padding: 0;
+    }
 
-/* როდესაც კომენტარი დალაიქებულია */
-.comment-action-btn.liked .comment-action-icon {
-  filter: drop-shadow(0 2px 4px rgba(254, 44, 85, 0.6)) invert(27%) sepia(91%) saturate(5412%) hue-rotate(338deg) brightness(98%) contrast(106%);
-}
+    .comment-icon-svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: #737373;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.15s ease, fill 0.15s ease;
+    }
 
-.no-comments-text {
-  color: #8a8d91;
-  text-align: center;
-  font-size: 14px;
-  margin-top: 40px;
-}
+    .comment-action-btn.liked .comment-icon-svg {
+      fill: #fe2c55;
+      stroke: #fe2c55;
+    }
 
-/* ქვედა ჩასაწერი ველი */
-.comments-input-bar {
-  padding: 10px 14px;
-  background: #ffffff;
-  border-top: 1px solid #f0f2f5;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .comment-action-btn.disliked .comment-icon-svg {
+      fill: #111111;
+      stroke: #111111;
+    }
 
-.comment-input-field {
-  flex: 1;
-  background: #f0f2f5;
-  border: none;
-  outline: none;
-  padding: 10px 16px;
-  border-radius: 20px;
-  color: #111111;
-  font-size: 14px;
-}
+    .comment-like-count {
+      font-size: 11px;
+      color: #8a8d91;
+      font-weight: 600;
+    }
 
-.comment-input-field::placeholder {
-  color: #8a8d91;
-}
+    /* რეალური ქვე-კომენტარების ჩამონათვალი (შეწეული) */
+    .replies-container {
+      margin-left: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-left: 2px solid #f0f2f5;
+      padding-left: 12px;
+    }
 
-.comment-send-btn {
-  background: #1877f2;
-  border: none;
-  color: #ffffff;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-}
+    .reply-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
 
-.comment-send-btn svg {
-  width: 18px;
-  height: 18px;
-  fill: #ffffff;
-  transform: translateX(1px);
-}
+    .reply-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
 
+    /* პასუხის გაცემის საინფორმაციო ზოლი ინპუტის თავზე */
+    .replying-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 16px;
+      background: #f0f2f5;
+      font-size: 12px;
+      color: #65676b;
+      border-top: 1px solid #e4e6eb;
+    }
+
+    .replying-banner.active {
+      display: flex;
+    }
+
+    .cancel-reply-btn {
+      background: none;
+      border: none;
+      color: #fe2c55;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .no-comments-text {
+      color: #8a8d91;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    .comments-input-bar {
+      padding: 10px 14px;
+      background: #ffffff;
+      border-top: 1px solid #f0f2f5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .comment-input-field {
+      flex: 1;
+      background: #f0f2f5;
+      border: none;
+      outline: none;
+      padding: 10px 16px;
+      border-radius: 20px;
+      color: #111111;
+      font-size: 14px;
+    }
+
+    .comment-input-field::placeholder {
+      color: #8a8d91;
+    }
+
+    .comment-send-btn {
+      background: #1877f2;
+      border: none;
+      color: #ffffff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .comment-send-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: #ffffff;
+      transform: translateX(1px);
+    }
   </style>
 </head>
 <body>
@@ -467,16 +528,24 @@
     <div class="loading-state" id="loadingText">ფოტოები იტვირთება...</div>
   </div>
 
-  <!-- კომენტარების მოდალი (TikTok Bottom Sheet სტილში) -->
-  <div class="comments-backdrop" id="commentsBackdrop"></div>
+  <!-- კომენტარების მოდალი -->
+  <div class="comments-backdrop" id="commentsBackdrop" onclick="window.closeCommentsModal()"></div>
   <div class="comments-sheet" id="commentsSheet">
     <div class="comments-header">
       <span class="comments-title" id="commentsSheetTitle">კომენტარები</span>
-      <button type="button" class="comments-close-btn" id="commentsCloseBtn">✕</button>
+      <button type="button" class="comments-close-btn" id="commentsCloseBtn" onclick="window.closeCommentsModal()">✕</button>
     </div>
+
     <div class="comments-list" id="commentsList">
       <div class="no-comments-text">იტვირთება...</div>
     </div>
+
+    <!-- პასუხის ინდიკატორი -->
+    <div class="replying-banner" id="replyingBanner">
+      <span id="replyingText">პასუხობთ: მომხმარებელს</span>
+      <button type="button" class="cancel-reply-btn" id="cancelReplyBtn">გაუქმება</button>
+    </div>
+
     <div class="comments-input-bar">
       <input type="text" class="comment-input-field" id="commentInput" placeholder="დაამატე კომენტარი..." autocomplete="off">
       <button type="button" class="comment-send-btn" id="commentSendBtn" aria-label="გაგზავნა">
@@ -532,16 +601,55 @@
     const commentInput = document.getElementById("commentInput");
     const commentSendBtn = document.getElementById("commentSendBtn");
     const commentsSheetTitle = document.getElementById("commentsSheetTitle");
+    const replyingBanner = document.getElementById("replyingBanner");
+    const replyingText = document.getElementById("replyingText");
+    const cancelReplyBtn = document.getElementById("cancelReplyBtn");
 
     let activePhotoIdForComments = null;
     let activeCommentCountEl = null;
     let currentUserProfileData = null;
 
-    // კომენტარების ფანჯრის დახურვა
-        // კომენტარების წამოღება და გახსნა
+    // ქვე-კომენტარის მდგომარეობა
+    let activeReplyParentId = null;
+    let activeReplyUserName = null;
+
+    // გლობალური დახურვა „X“-ისთვის
+    window.closeCommentsModal = () => {
+      if (commentsSheet) commentsSheet.classList.remove("active");
+      if (commentsBackdrop) commentsBackdrop.classList.remove("active");
+      activePhotoIdForComments = null;
+      activeCommentCountEl = null;
+      cancelReplyMode();
+    };
+
+    const cancelReplyMode = () => {
+      activeReplyParentId = null;
+      activeReplyUserName = null;
+      if (replyingBanner) replyingBanner.classList.remove("active");
+      if (commentInput) {
+        commentInput.placeholder = "დაამატე კომენტარი...";
+      }
+    };
+
+    if (cancelReplyBtn) cancelReplyBtn.onclick = cancelReplyMode;
+
+    // პასუხის რეჟიმის გააქტიურება
+    window.initReply = (parentId, userName) => {
+      activeReplyParentId = parentId;
+      activeReplyUserName = userName;
+      if (replyingText) replyingText.textContent = `პასუხობთ: ${userName}`;
+      if (replyingBanner) replyingBanner.classList.add("active");
+      if (commentInput) {
+        commentInput.placeholder = `უპასუხე ${userName}-ს...`;
+        commentInput.focus();
+      }
+    };
+
+    // კომენტარების ჩატვირთვა და სტრუქტურირება
     const openCommentsModal = async (photoId, countEl) => {
       activePhotoIdForComments = photoId;
       activeCommentCountEl = countEl;
+      cancelReplyMode();
 
       commentsSheet.classList.add("active");
       commentsBackdrop.classList.add("active");
@@ -562,35 +670,83 @@
         }
 
         commentsList.innerHTML = "";
-        snapshot.forEach((cDoc) => {
-          const c = cDoc.data();
-          const item = document.createElement("div");
-          item.className = "comment-item";
 
-          item.innerHTML = `
-            <img src="${c.userPhoto || 'icons/user-circle-linear.svg'}" class="comment-avatar" alt="Avatar">
-            
-            <div class="comment-body">
-              <span class="comment-author">${c.userName || 'მომხმარებელი'}</span>
-              <span class="comment-text">${c.text || ''}</span>
-              <div class="comment-meta-bar">
-                <span class="comment-time">ახლახან</span>
-                <button type="button" class="comment-reply-btn" onclick="document.getElementById('commentInput').focus(); document.getElementById('commentInput').placeholder = 'უპასუხე ${c.userName}-ს...';">პასუხი</button>
+        const mainComments = [];
+        const repliesMap = {};
+
+        snapshot.forEach((cDoc) => {
+          const data = { id: cDoc.id, ...cDoc.data() };
+          if (data.parentId) {
+            if (!repliesMap[data.parentId]) repliesMap[data.parentId] = [];
+            repliesMap[data.parentId].push(data);
+          } else {
+            mainComments.push(data);
+          }
+        });
+
+        mainComments.forEach((main) => {
+          const block = document.createElement("div");
+          block.className = "comment-block";
+          block.id = `comment_block_${main.id}`;
+
+          const replies = repliesMap[main.id] || [];
+
+          let repliesHtml = "";
+          if (replies.length > 0) {
+            repliesHtml = `<div class="replies-container">`;
+            replies.forEach((rep) => {
+              repliesHtml += `
+                <div class="reply-item">
+                  <img src="${rep.userPhoto || 'icons/user-circle-linear.svg'}" class="reply-avatar" alt="Avatar">
+                  <div class="comment-body">
+                    <span class="comment-author">${rep.userName || 'მომხმარებელი'}</span>
+                    <span class="comment-text">${rep.text || ''}</span>
+                    <div class="comment-meta-bar">
+                      <span class="comment-time">ახლახან</span>
+                      <button type="button" class="comment-reply-btn" onclick="window.initReply('${main.id}', '${rep.userName || 'მომხმარებელი'}')">პასუხი</button>
+                    </div>
+                  </div>
+                  <div class="comment-actions-right">
+                    <button type="button" class="comment-action-btn" onclick="this.classList.toggle('liked')">
+                      <svg class="comment-icon-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                  </div>
+                </div>
+              `;
+            });
+            repliesHtml += `</div>`;
+          }
+
+          block.innerHTML = `
+            <div class="comment-item">
+              <img src="${main.userPhoto || 'icons/user-circle-linear.svg'}" class="comment-avatar" alt="Avatar">
+              
+              <div class="comment-body">
+                <span class="comment-author">${main.userName || 'მომხმარებელი'}</span>
+                <span class="comment-text">${main.text || ''}</span>
+                <div class="comment-meta-bar">
+                  <span class="comment-time">ახლახან</span>
+                  <button type="button" class="comment-reply-btn" onclick="window.initReply('${main.id}', '${main.userName || 'მომხმარებელი'}')">პასუხი</button>
+                </div>
+              </div>
+
+              <!-- ნამდვილი გული და დისლაიქი (ცერა თითი ქვემოთ) -->
+              <div class="comment-actions-right">
+                <button type="button" class="comment-action-btn" onclick="this.classList.toggle('liked'); this.nextElementSibling.classList.remove('disliked');">
+                  <svg class="comment-icon-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <span class="comment-like-count"></span>
+                </button>
+                
+                <button type="button" class="comment-action-btn" onclick="this.classList.toggle('disliked'); this.previousElementSibling.classList.remove('liked');">
+                  <svg class="comment-icon-svg" viewBox="0 0 24 24"><path d="M15 3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4.5l-.7 3.6-.03.3a1.5 1.5 0 0 0 .44 1.06L11.27 21 17.64 14.63c.23-.23.36-.55.36-.88V5a2 2 0 0 0-2-2zm-9 2h9v8.73L10.36 18.5 11.5 13H6V5zm14 0h3v10h-3z"/></svg>
+                </button>
               </div>
             </div>
 
-            <!-- მარჯვენა მხარე: გული და დისლაიქი -->
-            <div class="comment-actions-right">
-              <button type="button" class="comment-action-btn btn-comment-like" onclick="this.classList.toggle('liked')">
-                <img src="icons/heart-bold.svg" class="comment-action-icon" alt="Like">
-                <span class="comment-like-count">${c.likes || ''}</span>
-              </button>
-              <button type="button" class="comment-action-btn btn-comment-dislike">
-                <img src="icons/chat-round-dots-bold.svg" class="comment-action-icon" style="transform: rotate(180deg);" alt="Dislike">
-              </button>
-            </div>
+            ${repliesHtml}
           `;
-          commentsList.appendChild(item);
+
+          commentsList.appendChild(block);
         });
 
         commentsList.scrollTop = commentsList.scrollHeight;
@@ -600,7 +756,7 @@
       }
     };
 
-    // ახალი კომენტარის გაგზავნა
+    // ახალი კომენტარის / ქვე-კომენტარის გაგზავნა
     const sendComment = async () => {
       const text = commentInput.value.trim();
       if (!text || !activePhotoIdForComments) return;
@@ -624,14 +780,20 @@
 
         const authorPhoto = currentUserProfileData?.photoUrl || 'icons/user-circle-linear.svg';
 
-        await setDoc(doc(commentsRef), {
+        const commentPayload = {
           userId: user.uid,
           userName: authorName,
           userPhoto: authorPhoto,
           text: text,
           createdAt: serverTimestamp()
-        });
+        };
 
+        if (activeReplyParentId) {
+          commentPayload.parentId = activeReplyParentId;
+          commentPayload.replyToUser = activeReplyUserName;
+        }
+
+        const newDocRef = await setDoc(doc(commentsRef), commentPayload);
         await updateDoc(photoRef, { commentsCount: increment(1) });
 
         if (activeCommentCountEl) {
@@ -642,43 +804,76 @@
         const emptyNotice = commentsList.querySelector(".no-comments-text");
         if (emptyNotice) emptyNotice.remove();
 
-        const newItem = document.createElement("div");
-        newItem.className = "comment-item";
-        newItem.innerHTML = `
-          <img src="${authorPhoto}" class="comment-avatar" alt="Avatar">
-          
-          <div class="comment-body">
-            <span class="comment-author">${authorName}</span>
-            <span class="comment-text">${text}</span>
-            <div class="comment-meta-bar">
-              <span class="comment-time">ახლახან</span>
-              <button type="button" class="comment-reply-btn" onclick="document.getElementById('commentInput').focus();">პასუხი</button>
+        // UI-ს მომენტალური განახლება
+        if (activeReplyParentId) {
+          // ქვე-კომენტარი ემატება შესაბამის ბლოკს
+          const parentBlock = document.getElementById(`comment_block_${activeReplyParentId}`);
+          if (parentBlock) {
+            let repliesWrap = parentBlock.querySelector(".replies-container");
+            if (!repliesWrap) {
+              repliesWrap = document.createElement("div");
+              repliesWrap.className = "replies-container";
+              parentBlock.appendChild(repliesWrap);
+            }
+            const replyItem = document.createElement("div");
+            replyItem.className = "reply-item";
+            replyItem.innerHTML = `
+              <img src="${authorPhoto}" class="reply-avatar" alt="Avatar">
+              <div class="comment-body">
+                <span class="comment-author">${authorName}</span>
+                <span class="comment-text">${text}</span>
+                <div class="comment-meta-bar">
+                  <span class="comment-time">ახლახან</span>
+                  <button type="button" class="comment-reply-btn" onclick="window.initReply('${activeReplyParentId}', '${authorName}')">პასუხი</button>
+                </div>
+              </div>
+              <div class="comment-actions-right">
+                <button type="button" class="comment-action-btn" onclick="this.classList.toggle('liked')">
+                  <svg class="comment-icon-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </button>
+              </div>
+            `;
+            repliesWrap.appendChild(replyItem);
+          }
+        } else {
+          // მთავარი ახალი კომენტარი
+          const block = document.createElement("div");
+          block.className = "comment-block";
+          block.innerHTML = `
+            <div class="comment-item">
+              <img src="${authorPhoto}" class="comment-avatar" alt="Avatar">
+              <div class="comment-body">
+                <span class="comment-author">${authorName}</span>
+                <span class="comment-text">${text}</span>
+                <div class="comment-meta-bar">
+                  <span class="comment-time">ახლახან</span>
+                  <button type="button" class="comment-reply-btn" onclick="window.initReply('${newDocRef?.id || Date.now()}', '${authorName}')">პასუხი</button>
+                </div>
+              </div>
+              <div class="comment-actions-right">
+                <button type="button" class="comment-action-btn" onclick="this.classList.toggle('liked'); this.nextElementSibling.classList.remove('disliked');">
+                  <svg class="comment-icon-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <span class="comment-like-count"></span>
+                </button>
+                <button type="button" class="comment-action-btn" onclick="this.classList.toggle('disliked'); this.previousElementSibling.classList.remove('liked');">
+                  <svg class="comment-icon-svg" viewBox="0 0 24 24"><path d="M15 3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4.5l-.7 3.6-.03.3a1.5 1.5 0 0 0 .44 1.06L11.27 21 17.64 14.63c.23-.23.36-.55.36-.88V5a2 2 0 0 0-2-2zm-9 2h9v8.73L10.36 18.5 11.5 13H6V5zm14 0h3v10h-3z"/></svg>
+                </button>
+              </div>
             </div>
-          </div>
+          `;
+          commentsList.appendChild(block);
+        }
 
-          <div class="comment-actions-right">
-            <button type="button" class="comment-action-btn btn-comment-like" onclick="this.classList.toggle('liked')">
-              <img src="icons/heart-bold.svg" class="comment-action-icon" alt="Like">
-              <span class="comment-like-count"></span>
-            </button>
-            <button type="button" class="comment-action-btn btn-comment-dislike">
-              <img src="icons/chat-round-dots-bold.svg" class="comment-action-icon" style="transform: rotate(180deg);" alt="Dislike">
-            </button>
-          </div>
-        `;
-        commentsList.appendChild(newItem);
         commentsList.scrollTop = commentsList.scrollHeight;
+        cancelReplyMode();
 
       } catch (sendErr) {
         console.error("კომენტარის გაგზავნის შეცდომა:", sendErr);
       } finally {
         commentSendBtn.disabled = false;
-        commentInput.placeholder = "დაამატე კომენტარი...";
       }
     };
 
-
-    
     if (commentSendBtn) commentSendBtn.onclick = sendComment;
     if (commentInput) {
       commentInput.addEventListener("keydown", (e) => {
@@ -700,30 +895,24 @@
 
       const photoRef = doc(db, "users", targetUid, "photos", photoId);
       const userLikeRef = doc(db, "users", targetUid, "photos", photoId, "likes", user.uid);
-      const targetUserProfileRef = doc(db, "users", targetUid); // პროფილის მთავარი დოკუმენტი
+      const targetUserProfileRef = doc(db, "users", targetUid);
 
       try {
         if (!isLiked) {
-          // 1. ლაიქი ფოტოზე
           btnLike.classList.add("liked");
           count += 1;
           countEl.textContent = count;
 
           await setDoc(userLikeRef, { uid: user.uid, createdAt: serverTimestamp() });
           await updateDoc(photoRef, { likesCount: increment(1) });
-
-          // 2. მომხმარებლის პროფილის საერთო ლაიქების გაზრდა
           await updateDoc(targetUserProfileRef, { likesCount: increment(1) });
         } else {
-          // 1. ლაიქის გაუქმება ფოტოზე
           btnLike.classList.remove("liked");
           count = Math.max(0, count - 1);
           countEl.textContent = count;
 
           await deleteDoc(userLikeRef);
           await updateDoc(photoRef, { likesCount: increment(-1) });
-
-          // 2. მომხმარებლის პროფილის საერთო ლაიქების შემცირება
           await updateDoc(targetUserProfileRef, { likesCount: increment(-1) });
         }
       } catch (err) {
@@ -733,7 +922,6 @@
       }
     };
 
-
     const loadCollection = async (currentUserUid) => {
       if (!targetUid) {
         if (loadingText) loadingText.textContent = "პროფილი ვერ მოიძებნა";
@@ -741,7 +929,6 @@
       }
 
       try {
-        // პროფილის მფლობელის სახელი
         let userHandle = "@user";
         const userDoc = await getDoc(doc(db, "users", targetUid));
         if (userDoc.exists()) {
@@ -749,7 +936,6 @@
           userHandle = u.username ? `@${u.username}` : (u.firstName ? `@${u.firstName.toUpperCase()} JI` : "@user");
         }
 
-        // შემოსული მომხმარებლის მონაცემები კომენტარისთვის
         if (currentUserUid) {
           const curUserDoc = await getDoc(doc(db, "users", currentUserUid));
           if (curUserDoc.exists()) {
@@ -757,7 +943,6 @@
           }
         }
 
-        // მხოლოდ ამ მომხმარებლის ფოტოების წამოღება
         const photosSnap = await getDocs(collection(db, "users", targetUid, "photos"));
         
         if (photosSnap.empty) {
@@ -774,7 +959,6 @@
           const p = docItem.data();
           if (!p.photoUrl) continue;
 
-          // ვამოწმებთ უკვე დალაიქებული აქვს თუ არა მიმდინარე მომხმარებელს
           let alreadyLiked = false;
           if (currentUserUid) {
             const myLikeSnap = await getDoc(doc(db, "users", targetUid, "photos", docItem.id, "likes", currentUserUid));
@@ -785,7 +969,6 @@
           slide.className = "photo-slide";
           slide.id = `photo_${docItem.id}`;
 
-          // სამი წერტილი მხოლოდ მფლობელისთვის
           const ownerDotsHtml = isOwner ? `
             <button type="button" class="action-item btn-photo-more" data-id="${docItem.id}">
               <span class="action-dots-text">•••</span>
@@ -795,12 +978,10 @@
           slide.innerHTML = `
             <img src="${p.photoUrl}" alt="Photo" class="main-photo">
 
-            <!-- Double Tap ანიმაციური გული -->
             <svg class="double-tap-heart" viewBox="0 0 24 24" fill="#fe2c55">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
 
-            <!-- მარჯვენა მოქმედების პანელი -->
             <div class="reels-sidebar">
               <!-- ლაიქი -->
               <button class="action-item btn-like ${alreadyLiked ? 'liked' : ''}" data-id="${docItem.id}">
@@ -838,23 +1019,19 @@
               ${ownerDotsHtml}
             </div>
 
-            <!-- ქვედა ინფორმაცია -->
             <div class="bottom-info">
               <div class="user-handle">${userHandle}</div>
             </div>
           `;
 
-          // ლაიქის ღილაკის Click
           const btnLike = slide.querySelector(".btn-like");
           const likeCountEl = slide.querySelector(".like-count");
           btnLike.onclick = () => toggleLike(docItem.id, btnLike, likeCountEl);
 
-          // კომენტარის ღილაკის Click (ხსნის მოდალს)
           const btnComment = slide.querySelector(".btn-comment");
           const commentCountEl = slide.querySelector(".comment-count");
           btnComment.onclick = () => openCommentsModal(docItem.id, commentCountEl);
 
-          // Double Tap (ორმაგი დაჭერა ფოტოზე) ლაიქისთვის
           let lastTap = 0;
           const photoImg = slide.querySelector(".main-photo");
           const heartAnim = slide.querySelector(".double-tap-heart");
@@ -863,11 +1040,9 @@
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTap;
             if (tapLength < 300 && tapLength > 0) {
-              // გულის ანიმაციის ჩვენება
               heartAnim.classList.add("active");
               setTimeout(() => heartAnim.classList.remove("active"), 800);
 
-              // თუ ჯერ არ იყო მოწონებული, ვალაიქებთ
               if (!btnLike.classList.contains("liked")) {
                 toggleLike(docItem.id, btnLike, likeCountEl);
               }
@@ -882,7 +1057,6 @@
           }
         }
 
-        // გადახვევა არჩეულ ფოტოზე
         if (initialSlideElement) {
           initialSlideElement.scrollIntoView();
         }
