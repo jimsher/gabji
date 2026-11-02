@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ფოტოების დათვალიერება</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* ვერტიკალური Snap სლაიდერი TikTok/Reels სტილში */
+    .viewer-container {
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .viewer-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* თითოეული სრულეკრანიანი ფოტო */
+    .photo-slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+    }
+
+    .photo-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ზედა ნავიგაცია (უკან დაბრუნება) */
+    .top-bar {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+    }
+
+    .back-btn {
+      background: rgba(0, 0, 0, 0.4);
+      border: none;
+      color: #ffffff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+    }
+
+    .back-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    /* მარჯვენა მოქმედებების პანელი (ლაიქი, კომენტარი, გაზიარება) */
+    .right-actions {
+      position: absolute;
+      right: 12px;
+      bottom: 85px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      z-index: 20;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .action-btn svg {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+    }
+
+    .action-count {
+      font-size: 12px;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    /* ქვედა ინფორმაცია (მომხმარებლის სახელი და აუდიო) */
+    .bottom-info {
+      position: absolute;
+      left: 15px;
+      bottom: 25px;
+      color: #ffffff;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .user-handle {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .audio-track {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #e0e0e0;
+    }
+
+    .audio-icon {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* ჩატვირთვის ინდიკატორი */
+    .loading-state {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #888888;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ზედა ღილაკი: უკან დაბრუნება -->
+  <div class="top-bar">
+    <button type="button" class="back-btn" onclick="history.back()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+  </div>
+
+  <div class="viewer-container" id="slidesViewport">
+    <div class="loading-state" id="loadingText">ფოტოები იტვირთება...</div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
+      authDomain: "gabji-b583c.firebaseapp.com",
+      projectId: "gabji-b583c",
+      storageBucket: "gabji-b583c.firebasestorage.app",
+      messagingSenderId: "359136388859",
+      appId: "1:359136388859:web:5c3448fecd29052755f25e",
+      measurementId: "G-CM03PR8K8S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const params = new URLSearchParams(window.location.search);
+    const targetUid = params.get("uid");
+    const initialPhotoId = params.get("photoId");
+
+    const viewport = document.getElementById("slidesViewport");
+    const loadingText = document.getElementById("loadingText");
+
+    const loadCollection = async () => {
+      if (!targetUid) {
+        if (loadingText) loadingText.textContent = "პროფილი ვერ მოიძებნა";
+        return;
+      }
+
+      try {
+        // 1. მომხმარებლის სახელის გაგება
+        let userHandle = "@user";
+        const userDoc = await getDoc(doc(db, "users", targetUid));
+        if (userDoc.exists()) {
+          const u = userDoc.data();
+          userHandle = u.username ? `@${u.username}` : (u.firstName ? `@${u.firstName.toUpperCase()} JI` : "@user");
+        }
+
+        // 2. მხოლოდ ამ მომხმარებლის ფოტოების წამოღება
+        const photosSnap = await getDocs(collection(db, "users", targetUid, "photos"));
+        
+        if (photosSnap.empty) {
+          if (loadingText) loadingText.textContent = "ფოტოები არ არის";
+          return;
+        }
+
+        if (loadingText) loadingText.remove();
+
+        let initialSlideElement = null;
+
+        photosSnap.forEach((docItem) => {
+          const p = docItem.data();
+          if (!p.photoUrl) return;
+
+          const slide = document.createElement("div");
+          slide.className = "photo-slide";
+          slide.id = `photo_${docItem.id}`;
+
+          slide.innerHTML = `
+            <img src="${p.photoUrl}" alt="Photo">
+
+            <!-- მარჯვენა მენიუ TikTok სტილში -->
+            <div class="right-actions">
+              <button type="button" class="action-btn">
+                <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span class="action-count">${p.likes || 0}</span>
+              </button>
+              <button type="button" class="action-btn">
+                <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                <span class="action-count">0</span>
+              </button>
+              <button type="button" class="action-btn">
+                <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+                <span class="action-count">0</span>
+              </button>
+            </div>
+
+            <!-- ქვედა ინფორმაცია -->
+            <div class="bottom-info">
+              <div class="user-handle">${userHandle}</div>
+              <div class="audio-track">
+                <svg class="audio-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                <span>ორიგინალი აუდიო</span>
+              </div>
+            </div>
+          `;
+
+          viewport.appendChild(slide);
+
+          if (docItem.id === initialPhotoId) {
+            initialSlideElement = slide;
+          }
+        });
+
+        // ზუსტად იმ ფოტოზე გადახვევა, რომელსაც პროფილზე დააჭირა
+        if (initialSlideElement) {
+          initialSlideElement.scrollIntoView();
+        }
+
+      } catch (err) {
+        console.error("დათვალიერების შეცდომა:", err);
+        if (loadingText) loadingText.textContent = "შეცდომა ჩატვირთვისას";
+      }
+    };
+
+    loadCollection();
+  </script>
+</body>
+</html>
