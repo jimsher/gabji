@@ -754,7 +754,7 @@ if (profileNameEl) {
         galleryGrid.appendChild(addCard);
       }
 
-      // 2. წამოვიღოთ მომხმარებლის ფოტოები Firestore-დან
+            // 2. წამოვიღოთ მომხმარებლის ფოტოები Firestore-დან
       try {
         const photosSnap = await getDocs(collection(db, "users", targetUid, "photos"));
         photosSnap.forEach((docSnap) => {
@@ -763,6 +763,12 @@ if (profileNameEl) {
             const itemCard = document.createElement("div");
             itemCard.className = "gallery-item-card";
             itemCard.innerHTML = `<img src="${pData.photoUrl}" alt="User Photo" loading="lazy">`;
+
+            // ფოტოზე დაჭერისას გადასვლა სრულეკრანიან დათვალიერებაზე
+            itemCard.onclick = () => {
+              window.location.href = `photo-viewer.html?uid=${targetUid}&photoId=${docSnap.id}`;
+            };
+
             galleryGrid.appendChild(itemCard);
           }
         });
@@ -770,6 +776,7 @@ if (profileNameEl) {
         console.error("გალერეის ჩატვირთვის შეცდომა:", err);
       }
     };
+
 
     // გალერეაში ფოტოს არჩევა და ატვირთვა R2-ში
     if (galleryInput) {
