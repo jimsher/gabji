@@ -47,7 +47,7 @@
       background: #000000;
     }
 
-    .photo-slide img {
+    .photo-slide img.main-photo {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -86,7 +86,7 @@
       stroke-width: 2.5;
     }
 
-    /* მარჯვენა მოქმედებების პანელი (ლაიქი, კომენტარი, გაზიარება) */
+    /* მარჯვენა მოქმედებების პანელი */
     .right-actions {
       position: absolute;
       right: 12px;
@@ -109,10 +109,11 @@
       cursor: pointer;
     }
 
-    .action-btn svg {
-      width: 32px;
-      height: 32px;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+    .action-custom-icon {
+      width: 30px;
+      height: 30px;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.6));
+      object-fit: contain;
     }
 
     .action-count {
@@ -121,7 +122,27 @@
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     }
 
-    /* ქვედა ინფორმაცია (მომხმარებლის სახელი და აუდიო) */
+    /* ჰორიზონტალური სამი წერტილი გაზიარების ქვემოთ */
+    .action-dots-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding-top: 4px;
+    }
+
+    .action-dots-text {
+      font-size: 26px;
+      letter-spacing: 2px;
+      line-height: 1;
+      color: #ffffff;
+      font-weight: bold;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    }
+
+    /* ქვედა ინფორმაცია (მხოლოდ მომხმარებლის სახელი) */
     .bottom-info {
       position: absolute;
       left: 15px;
@@ -137,20 +158,6 @@
     .user-handle {
       font-size: 16px;
       font-weight: 700;
-    }
-
-    .audio-track {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: #e0e0e0;
-    }
-
-    .audio-icon {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
     }
 
     /* ჩატვირთვის ინდიკატორი */
@@ -179,6 +186,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -192,6 +200,7 @@
     };
 
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
 
     const params = new URLSearchParams(window.location.search);
@@ -201,7 +210,7 @@
     const viewport = document.getElementById("slidesViewport");
     const loadingText = document.getElementById("loadingText");
 
-    const loadCollection = async () => {
+    const loadCollection = async (currentUserUid) => {
       if (!targetUid) {
         if (loadingText) loadingText.textContent = "პროფილი ვერ მოიძებნა";
         return;
@@ -226,6 +235,7 @@
 
         if (loadingText) loadingText.remove();
 
+        const isOwner = currentUserUid && (currentUserUid === targetUid);
         let initialSlideElement = null;
 
         photosSnap.forEach((docItem) => {
@@ -236,32 +246,43 @@
           slide.className = "photo-slide";
           slide.id = `photo_${docItem.id}`;
 
-          slide.innerHTML = `
-            <img src="${p.photoUrl}" alt="Photo">
+          // სამი წერტილი მხოლოდ მფლობელისთვის
+          const ownerDotsHtml = isOwner ? `
+            <button type="button" class="action-btn action-dots-btn" data-photo-id="${docItem.id}">
+              <span class="action-dots-text">•••</span>
+            </button>
+          ` : '';
 
-            <!-- მარჯვენა მენიუ TikTok სტილში -->
+          slide.innerHTML = `
+            <img src="${p.photoUrl}" alt="Photo" class="main-photo">
+
+            <!-- მარჯვენა მენიუ საკუთარი აიკონებით -->
             <div class="right-actions">
+              <!-- ლაიქი -->
               <button type="button" class="action-btn">
-                <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                <span class="action-count">${p.likes || 0}</span>
+                <img src="icons/heart.svg" alt="Like" class="action-custom-icon">
+                <span class="action-count">${p.likesCount || p.likes || 0}</span>
               </button>
+
+              <!-- კომენტარი -->
               <button type="button" class="action-btn">
-                <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
-                <span class="action-count">0</span>
+                <img src="icons/messages-2.svg" alt="Comment" class="action-custom-icon">
+                <span class="action-count">${p.commentsCount || 0}</span>
               </button>
+
+              <!-- გაზიარება / სანიშნე (წარწერის გარეშე) -->
               <button type="button" class="action-btn">
-                <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
-                <span class="action-count">0</span>
+                <img src="icons/bookmark-outline.svg" alt="Bookmark" class="action-custom-icon">
+                <span class="action-count">${p.savesCount || 0}</span>
               </button>
+
+              <!-- სამი წერტილი გაზიარების ქვემოთ (მხოლოდ მფლობელისთვის) -->
+              ${ownerDotsHtml}
             </div>
 
-            <!-- ქვედა ინფორმაცია -->
+            <!-- ქვედა ინფორმაცია (აუდიოს გარეშე) -->
             <div class="bottom-info">
               <div class="user-handle">${userHandle}</div>
-              <div class="audio-track">
-                <svg class="audio-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                <span>ორიგინალი აუდიო</span>
-              </div>
             </div>
           `;
 
@@ -272,7 +293,7 @@
           }
         });
 
-        // ზუსტად იმ ფოტოზე გადახვევა, რომელსაც პროფილზე დააჭირა
+        // გადახვევა არჩეულ ფოტოზე
         if (initialSlideElement) {
           initialSlideElement.scrollIntoView();
         }
@@ -283,7 +304,10 @@
       }
     };
 
-    loadCollection();
+    // ვამოწმებთ მიმდინარე მომხმარებელს, რათა სამი წერტილი მხოლოდ მფლობელზე გამოჩნდეს
+    onAuthStateChanged(auth, (user) => {
+      loadCollection(user ? user.uid : null);
+    });
   </script>
 </body>
 </html>
