@@ -444,7 +444,7 @@
       const q = query(collection(db, "chats", chatId, "messages"), orderBy("createdAt", "asc"));
 
       onSnapshot(q, (snapshot) => {
-        messagesViewport.innerHTML = '<div class="date-divider">Nov 30, 2026, 9:41 AM</div>';
+        messagesViewport.innerHTML = '<div class="date-divider">Nov 12, 2025, 9:41 AM</div>';
 
         snapshot.forEach((docItem) => {
           const m = docItem.data();
