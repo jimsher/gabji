@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>შეტყობინებები</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .inbox-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ზედა ზოლი */
+    .inbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f2f5;
+      background: #ffffff;
+    }
+
+    .inbox-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .btn-back svg {
+      width: 24px;
+      height: 24px;
+      stroke: #111111;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .inbox-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    /* ჩატების სია */
+    .chat-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .chat-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chat-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .chat-item:active {
+      background-color: #f5f6f8;
+    }
+
+    .chat-avatar-wrap {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+    }
+
+    .chat-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: #f0f2f5;
+    }
+
+    .chat-online-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 13px;
+      height: 13px;
+      background-color: #31a24c;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+    }
+
+    .chat-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .chat-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-user-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111111;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chat-time {
+      font-size: 12px;
+      color: #8a8d91;
+      flex-shrink: 0;
+    }
+
+    .chat-last-message {
+      font-size: 14px;
+      color: #65676b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .empty-state {
+      padding: 40px 20px;
+      text-align: center;
+      color: #8a8d91;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="inbox-container">
+    <div class="inbox-header">
+      <div class="inbox-header-left">
+        <button type="button" class="btn-back" onclick="history.back()">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <span class="inbox-title">შეტყობინებები</span>
+      </div>
+    </div>
+
+    <div class="chat-list" id="chatListContainer">
+      <div class="empty-state">იტვირთება...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { 
+      getFirestore, 
+      collection, 
+      getDocs, 
+      doc, 
+      getDoc, 
+      query, 
+      orderBy 
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAj8VZVZYI_UVZlflTQk3MAljdS5Rxfrv0",
+      authDomain: "gabji-b583c.firebaseapp.com",
+      projectId: "gabji-b583c",
+      storageBucket: "gabji-b583c.firebasestorage.app",
+      messagingSenderId: "359136388859",
+      appId: "1:359136388859:web:5c3448fecd29052755f25e",
+      measurementId: "G-CM03PR8K8S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const chatListContainer = document.getElementById("chatListContainer");
+
+    const loadInbox = async (currentUid) => {
+      try {
+        const inboxSnap = await getDocs(
+          query(collection(db, "users", currentUid, "chats"), orderBy("updatedAt", "desc"))
+        );
+
+        if (inboxSnap.empty) {
+          chatListContainer.innerHTML = '<div class="empty-state">შეტყობინებები არ არის</div>';
+          return;
+        }
+
+        chatListContainer.innerHTML = "";
+
+        for (const chatDoc of inboxSnap.docs) {
+          const chat = chatDoc.data();
+          const targetUid = chatDoc.id;
+
+          // თანამოსაუბრის უახლესი პროფილის წამოღება
+          let targetName = chat.userName || "მომხმარებელი";
+          let targetPhoto = chat.userPhoto || "icons/user-circle-linear.svg";
+
+          const userSnap = await getDoc(doc(db, "users", targetUid));
+          if (userSnap.exists()) {
+            const u = userSnap.data();
+            targetName = `${u.firstName || ''} ${u.lastName || ''}`.trim() || targetName;
+            if (u.photoUrl) targetPhoto = u.photoUrl;
+          }
+
+          const row = document.createElement("div");
+          row.className = "chat-item";
+          row.innerHTML = `
+            <div class="chat-avatar-wrap">
+              <img src="${targetPhoto}" class="chat-avatar-img" alt="Avatar">
+              <span class="chat-online-dot"></span>
+            </div>
+            <div class="chat-info">
+              <div class="chat-name-row">
+                <span class="chat-user-name">${targetName}</span>
+                <span class="chat-time">ახლახან</span>
+              </div>
+              <div class="chat-last-message">${chat.lastMessage || 'შეტყობინება...'}</div>
+            </div>
+          `;
+
+          row.onclick = () => {
+            window.location.href = `chat.html?uid=${targetUid}`;
+          };
+
+          chatListContainer.appendChild(row);
+        }
+
+      } catch (err) {
+        console.error("ინბოქსის შეცდომა:", err);
+        chatListContainer.innerHTML = '<div class="empty-state">ჩატვირთვა ვერ მოხერხდა</div>';
+      }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loadInbox(user.uid);
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+</body>
+</html>
