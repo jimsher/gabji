@@ -672,6 +672,14 @@ if (profileNameEl) {
           };
         }
 
+        // შეტყობინების ღილაკი (გადასვლა პირად ჩატზე)
+        const btnMessage = document.getElementById("btnMessageAction");
+        if (btnMessage && targetUid !== currentUser.uid) {
+          btnMessage.onclick = () => {
+            window.location.href = `chat.html?uid=${targetUid}`;
+          };
+        }
+
       } else {
         profileNameEl.textContent = "პროფილი ვერ მოიძებნა";
       }
