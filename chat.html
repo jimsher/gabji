@@ -340,6 +340,7 @@
       doc, 
       getDoc, 
       setDoc, 
+      increment,
       serverTimestamp,
       query,
       orderBy,
@@ -408,6 +409,7 @@
         const myName = currentUserData ? `${currentUserData.firstName || ''} ${currentUserData.lastName || ''}`.trim() : 'მომხმარებელი';
         const targetName = currentTargetData ? `${currentTargetData.firstName || ''} ${currentTargetData.lastName || ''}`.trim() : 'მომხმარებელი';
 
+        // ჩვენი ინბოქსი (ჩვენთვის წაუკითხავი არ არის)
         await setDoc(doc(db, "users", myUid, "chats", targetUid), {
           lastMessage: text,
           userName: targetName,
@@ -415,10 +417,12 @@
           updatedAt: serverTimestamp()
         }, { merge: true });
 
+        // თანამოსაუბრის ინბოქსი (მას ეზრდება წაუკითხავი შეტყობინებების ბეიჯი)
         await setDoc(doc(db, "users", targetUid, "chats", myUid), {
           lastMessage: text,
           userName: myName,
           userPhoto: currentUserData?.photoUrl || null,
+          unreadCount: increment(1),
           updatedAt: serverTimestamp()
         }, { merge: true });
 
@@ -494,6 +498,11 @@
             chatTargetAvatar.src = currentTargetData.photoUrl;
           }
         }
+
+        // ჩატში შემოსვლისთანავე ამ მომხმარებლისგან მოსული წაუკითხავი შეტყობინებების განულება
+        await setDoc(doc(db, "users", currentUser.uid, "chats", targetUid), {
+          unreadCount: 0
+        }, { merge: true });
 
         listenMessages(currentUser.uid);
 
