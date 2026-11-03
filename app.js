@@ -1104,3 +1104,37 @@ if (usersListContainer) {
     }
   });
 }
+
+
+/* ==========================================================================
+   ინბოქსის ბეიჯის (წაუკითხავი შეტყობინებების) განახლება რეალურ დროში
+   ========================================================================== */
+onAuthStateChanged(auth, (currentUser) => {
+  if (!currentUser) return;
+
+  const badgeEl = document.getElementById("globalInboxBadge");
+  if (!badgeEl) return;
+
+  // ვუსმენთ მომხმარებლის ჩატების კოლექციას
+  const chatsRef = collection(db, "users", currentUser.uid, "chats");
+
+  onSnapshot(chatsRef, (snapshot) => {
+    let unreadTotal = 0;
+
+    snapshot.forEach((chatDoc) => {
+      const data = chatDoc.data();
+      // ვითვლით მხოლოდ იმ ჩატებს, რომლებშიც unreadCount > 0
+      if (data.unreadCount && data.unreadCount > 0) {
+        unreadTotal += data.unreadCount;
+      }
+    });
+
+    if (unreadTotal > 0) {
+      badgeEl.textContent = unreadTotal > 99 ? "99+" : unreadTotal;
+      badgeEl.style.display = "flex";
+    } else {
+      badgeEl.style.display = "none";
+    }
+  });
+});
+
