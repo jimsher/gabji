@@ -538,7 +538,7 @@ if (feedContainer) {
           <div class="fb-footer-bar">
             <!-- Like (შენი აიკონი) -->
             <button type="button" class="fb-action-btn btn-fb-like" data-id="${item.id}" data-author="${item.authorUid}" data-sub="${item.isSubcollection}">
-              <img src="icons/like-linear.svg" class="fb-action-icon" alt="Like">
+              <img src="icons/heart-linear.svg" class="fb-action-icon" alt="Like">
               <span class="fb-action-count fb-like-count">${likesText}</span>
             </button>
 
