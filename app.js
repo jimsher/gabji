@@ -534,30 +534,23 @@ if (feedContainer) {
             <img src="${item.photoUrl}" class="fb-media-item" alt="Photo" loading="lazy">
           </div>
 
-          <!-- ქვედა მოქმედებები: Facebook-ის ცერა თითი, ბუშტი, ისარი (0 არ იწერება) -->
+                    <!-- ქვედა მოქმედებები: შენი აიკონები (0 არ იწერება) -->
           <div class="fb-footer-bar">
-            <!-- Like (Facebook Thumb) -->
+            <!-- Like (შენი აიკონი) -->
             <button type="button" class="fb-action-btn btn-fb-like" data-id="${item.id}" data-author="${item.authorUid}" data-sub="${item.isSubcollection}">
-              <svg viewBox="0 0 24 24">
-                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-              </svg>
+              <img src="icons/like-linear.svg" class="fb-action-icon" alt="Like">
               <span class="fb-action-count fb-like-count">${likesText}</span>
             </button>
 
-            <!-- Comment (Bubble) -->
+            <!-- Comment (შენი აიკონი) -->
             <button type="button" class="fb-action-btn btn-fb-comment" onclick="window.location.href='photo-viewer.html?uid=${item.authorUid}&photoId=${item.id}'">
-              <svg viewBox="0 0 24 24">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-              </svg>
+              <img src="icons/chat-round-dots-bold.svg" class="fb-action-icon" alt="Comment">
               <span class="fb-action-count">${commentsText}</span>
             </button>
 
-            <!-- Share (Facebook Arrow) -->
+            <!-- Share (შენი აიკონი) -->
             <button type="button" class="fb-action-btn btn-fb-share">
-              <svg viewBox="0 0 24 24">
-                <path d="M15 14l5-5-5-5"></path>
-                <path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>
-              </svg>
+              <img src="icons/forward-right-bold.svg" class="fb-action-icon" alt="Share">
               <span class="fb-action-count">${sharesText}</span>
             </button>
           </div>
