@@ -273,7 +273,7 @@ if (signupForm) {
 /* ==========================================================================
    3. ფიდი (feed.html)
    ========================================================================== */
- /* ==========================================================================
+  /* ==========================================================================
    3. ფიდი (feed.html - FACEBOOK STYLE FEED & CREATE POST)
    ========================================================================== */
 const feedContainer = document.getElementById("feedPostsContainer");
@@ -285,6 +285,11 @@ if (feedContainer) {
   const btnPickGalleryPhoto = document.getElementById("btnPickGalleryPhoto");
   const feedPostFileInput = document.getElementById("feedPostFileInput");
   const btnHeaderCreate = document.getElementById("btnHeaderCreate");
+
+  // მხოლოდ ფოტოების მიღება ატვირთვისას
+  if (feedPostFileInput) {
+    feedPostFileInput.accept = "image/jpeg,image/png,image/webp,image/jpg";
+  }
 
   let currentLoggedInUser = null;
   let currentLoggedInUserData = null;
@@ -353,7 +358,6 @@ if (feedContainer) {
                 `${currentLoggedInUserData.firstName || ''} ${currentLoggedInUserData.lastName || ''}`.trim() || 'მომხმარებელი' : 
                 'მომხმარებელი';
               const authorPhoto = currentLoggedInUserData?.photoUrl || 'icons/user-circle-linear.svg';
-              const isVideo = file.type.startsWith("video/");
 
               const postData = {
                 authorUid: currentLoggedInUser.uid,
@@ -361,17 +365,12 @@ if (feedContainer) {
                 authorName: authorName,
                 authorPhoto: authorPhoto,
                 caption: postCaption.trim(),
+                photoUrl: uploadedUrl,
                 likesCount: 0,
                 commentsCount: 0,
                 sharesCount: 0,
                 createdAt: serverTimestamp()
               };
-
-              if (isVideo) {
-                postData.videoUrl = uploadedUrl;
-              } else {
-                postData.photoUrl = uploadedUrl;
-              }
 
               await setDoc(doc(collection(db, "posts")), postData);
               feedPostFileInput.value = "";
@@ -399,16 +398,19 @@ if (feedContainer) {
         } catch (_) {}
       }
 
+      // ვიღებთ მხოლოდ "posts" კოლექციას (reels საერთოდ აღარ იტვირთება აქ)
       let postsSnap = await getDocs(collection(db, "posts"));
       let allPosts = [];
 
-      postsSnap.forEach((d) => allPosts.push({ id: d.id, ...d.data() }));
+      postsSnap.forEach((d) => {
+        const data = d.data();
+        // ვიდეოები იფილტრება, რჩება მხოლოდ ფოტოიანი პოსტები ან ტექსტური პოსტები
+        if (!data.videoUrl) {
+          allPosts.push({ id: d.id, ...data });
+        }
+      });
 
-      if (allPosts.length === 0) {
-        const reelsSnap = await getDocs(collection(db, "reels"));
-        reelsSnap.forEach((d) => allPosts.push({ id: d.id, ...d.data() }));
-      }
-
+      // უახლესის მიხედვით დალაგება
       allPosts.sort((a, b) => {
         const tA = a.createdAt?.seconds || 0;
         const tB = b.createdAt?.seconds || 0;
@@ -452,17 +454,9 @@ if (feedContainer) {
         // რეალური დრო
         const realTimeAgo = formatTimeAgo(post.createdAt);
 
+        // მხოლოდ ფოტოს კონტეინერი (ვიდეო ამოღებულია)
         let mediaBoxHtml = "";
-        if (post.videoUrl) {
-          mediaBoxHtml = `
-            <div class="fb-media-box">
-              <video src="${post.videoUrl}" class="fb-media-item" loop muted playsinline autoplay></video>
-              <button type="button" class="fb-mute-btn" aria-label="Audio">
-                <svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-              </button>
-            </div>
-          `;
-        } else if (post.photoUrl) {
+        if (post.photoUrl) {
           mediaBoxHtml = `
             <div class="fb-media-box">
               <img src="${post.photoUrl}" class="fb-media-item" alt="Photo" loading="lazy">
@@ -470,7 +464,7 @@ if (feedContainer) {
           `;
         }
 
-        // ტექსტის ჩვენება (თუ ტექსტი არ არის, ცარიელი "სხვა" აღარ ჩნდება)
+        // ტექსტის ბლოკი
         let captionHtml = "";
         if (post.caption && post.caption.trim()) {
           const isLong = post.caption.length > 90;
@@ -498,7 +492,7 @@ if (feedContainer) {
                 <div class="fb-meta-sub">
                   <span>${realTimeAgo}</span>
                   <span>·</span>
-                  <svg class="fb-globe-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                  <img src="icons/global-linear.svg" class="fb-globe-icon" alt="Public" onerror="this.src='icons/point-on-map-linear.svg'">
                 </div>
               </div>
             </div>
@@ -518,32 +512,31 @@ if (feedContainer) {
           ${mediaBoxHtml}
 
           <div class="fb-footer-bar">
+            <!-- ლაიქი შენი აიკონით -->
             <button type="button" class="fb-action-btn btn-fb-like" data-id="${postId}">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" fill="#65676b"/>
-              </svg>
+              <img src="icons/like-linear.svg" class="fb-action-icon" alt="Like" onerror="this.src='icons/heart.svg'">
               <span class="fb-like-count">${post.likesCount || post.likes || 0}</span>
             </button>
 
+            <!-- კომენტარი შენი აიკონით -->
             <button type="button" class="fb-action-btn btn-fb-comment" data-id="${postId}">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" fill="#65676b"/>
-              </svg>
+              <img src="icons/chat-round-dots-bold.svg" class="fb-action-icon" alt="Comment">
               <span>${post.commentsCount || 0}</span>
             </button>
 
+            <!-- გაზიარება შენი აიკონით -->
             <button type="button" class="fb-action-btn btn-fb-share">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z" fill="#65676b"/>
-              </svg>
+              <img src="icons/forward-right-bold.svg" class="fb-action-icon" alt="Share">
               <span>${post.sharesCount || 0}</span>
             </button>
           </div>
         `;
 
+        // პოსტის დამალვა
         const btnRemove = card.querySelector(".btn-post-remove");
         btnRemove.onclick = () => card.remove();
 
+        // გამოწერა
         const btnFollow = card.querySelector(".fb-follow-link");
         if (btnFollow) {
           btnFollow.onclick = async () => {
@@ -568,6 +561,7 @@ if (feedContainer) {
           };
         }
 
+        // ლაიქი
         const btnLike = card.querySelector(".btn-fb-like");
         const countSpan = card.querySelector(".fb-like-count");
         btnLike.onclick = async () => {
@@ -581,28 +575,13 @@ if (feedContainer) {
           if (!isLiked) {
             btnLike.classList.add("liked");
             countSpan.textContent = currentLikes + 1;
-            await updateDoc(doc(db, "posts", postId), { likesCount: increment(1) }).catch(async () => {
-              await updateDoc(doc(db, "reels", postId), { likesCount: increment(1) }).catch(() => {});
-            });
+            await updateDoc(doc(db, "posts", postId), { likesCount: increment(1) }).catch(() => {});
           } else {
             btnLike.classList.remove("liked");
             countSpan.textContent = Math.max(0, currentLikes - 1);
-            await updateDoc(doc(db, "posts", postId), { likesCount: increment(-1) }).catch(async () => {
-              await updateDoc(doc(db, "reels", postId), { likesCount: increment(-1) }).catch(() => {});
-            });
+            await updateDoc(doc(db, "posts", postId), { likesCount: increment(-1) }).catch(() => {});
           }
         };
-
-        const muteBtn = card.querySelector(".fb-mute-btn");
-        const vid = card.querySelector("video");
-        if (muteBtn && vid) {
-          muteBtn.onclick = () => {
-            vid.muted = !vid.muted;
-            muteBtn.innerHTML = vid.muted
-              ? `<svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>`
-              : `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
-          };
-        }
 
         feedContainer.appendChild(card);
       }
@@ -631,8 +610,7 @@ if (feedContainer) {
     }
   });
 }
-
-
+     
 /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
