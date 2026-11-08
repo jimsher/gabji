@@ -544,7 +544,7 @@ if (feedContainer) {
 
             <!-- Comment (შენი აიკონი) -->
             <button type="button" class="fb-action-btn btn-fb-comment" onclick="window.location.href='photo-viewer.html?uid=${item.authorUid}&photoId=${item.id}'">
-              <img src="icons/chat-round-dots-bold.svg" class="fb-action-icon" alt="Comment">
+              <img src="icons/chat-round-dots-linear.svg" class="fb-action-icon" alt="Comment">
               <span class="fb-action-count">${commentsText}</span>
             </button>
 
