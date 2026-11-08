@@ -293,6 +293,16 @@ if (feedContainer) {
   let currentLoggedInUser = null;
   let currentLoggedInUserData = null;
 
+  // ციფრების ფორმატირება (თუ 0-ია აბრუნებს ცარიელს, თუ 1000+ აბრუნებს "1,2 ათასი")
+  const formatCount = (count) => {
+    const num = Number(count) || 0;
+    if (num <= 0) return "";
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(".", ",") + " ათასი";
+    }
+    return String(num);
+  };
+
   // რეალური დროის გამოთვლა
   const formatTimeAgo = (timestamp) => {
     if (!timestamp) return "ახლახან";
@@ -362,11 +372,12 @@ if (feedContainer) {
         async (uploadedUrl) => {
           if (uploadedUrl) {
             try {
-              // ზუსტად შენს ბაზაში არსებულ users/{uid}/photos-ში ჩაწერა
               await setDoc(doc(collection(db, "users", currentLoggedInUser.uid, "photos")), {
                 photoUrl: uploadedUrl,
                 caption: postCaption.trim(),
                 likesCount: 0,
+                commentsCount: 0,
+                sharesCount: 0,
                 createdAt: serverTimestamp()
               });
 
@@ -383,7 +394,7 @@ if (feedContainer) {
     };
   }
 
-  // 2. ფოტოების წამოღება users/{uid}/photos ქვეკოლექციებიდან და მომხმარებლების პროფილებიდან
+  // 2. ფოტოების წამოღება
   const loadFeedPosts = async (currentUid) => {
     try {
       const followedSet = new Set();
@@ -397,7 +408,6 @@ if (feedContainer) {
       }
 
       let allCards = [];
-
       const usersSnap = await getDocs(collection(db, "users"));
 
       for (const uDoc of usersSnap.docs) {
@@ -406,7 +416,6 @@ if (feedContainer) {
         const authorName = `${uData.firstName || ''} ${uData.lastName || ''}`.trim() || 'მომხმარებელი';
         const authorAvatar = uData.photoUrl || 'icons/user-circle-linear.svg';
 
-        // 1. ვკითხულობთ თითოეული მომხმარებლის photos ქვეკოლექციას
         try {
           const photosSnap = await getDocs(collection(db, "users", uId, "photos"));
           photosSnap.forEach((pDoc) => {
@@ -420,13 +429,14 @@ if (feedContainer) {
                 photoUrl: pData.photoUrl,
                 caption: pData.caption || '',
                 likesCount: pData.likesCount || 0,
+                commentsCount: pData.commentsCount || 0,
+                sharesCount: pData.sharesCount || 0,
                 createdAt: pData.createdAt || null,
                 isSubcollection: true
               });
             }
           });
 
-          // 2. თუ photos ქვეკოლექცია ჯერ ცარიელია, მაგრამ პროფილზე ფოტო უდევს
           if (photosSnap.empty && uData.photoUrl) {
             allCards.push({
               id: `profile_${uId}`,
@@ -436,6 +446,8 @@ if (feedContainer) {
               photoUrl: uData.photoUrl,
               caption: uData.city ? `📍 ${uData.city}` : '',
               likesCount: uData.likesCount || 0,
+              commentsCount: 0,
+              sharesCount: 0,
               createdAt: uData.createdAt || null,
               isSubcollection: false
             });
@@ -445,7 +457,6 @@ if (feedContainer) {
         }
       }
 
-      // დალაგება უახლესის მიხედვით
       allCards.sort((a, b) => {
         const tA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime() / 1000 : 0);
         const tB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime() / 1000 : 0);
@@ -482,6 +493,10 @@ if (feedContainer) {
           `;
         }
 
+        const likesText = formatCount(item.likesCount);
+        const commentsText = formatCount(item.commentsCount);
+        const sharesText = formatCount(item.sharesCount);
+
         const card = document.createElement("article");
         card.className = "fb-card";
         card.id = `fb_card_${item.id}`;
@@ -498,7 +513,7 @@ if (feedContainer) {
                 <div class="fb-meta-sub">
                   <span>${realTimeAgo}</span>
                   <span>·</span>
-                  <img src="icons/global-linear.svg" class="fb-globe-icon" alt="Public" onerror="this.src='icons/point-on-map-linear.svg'">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#65676b" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </div>
               </div>
             </div>
@@ -519,29 +534,38 @@ if (feedContainer) {
             <img src="${item.photoUrl}" class="fb-media-item" alt="Photo" loading="lazy">
           </div>
 
+          <!-- ქვედა მოქმედებები: Facebook-ის ცერა თითი, ბუშტი, ისარი (0 არ იწერება) -->
           <div class="fb-footer-bar">
+            <!-- Like (Facebook Thumb) -->
             <button type="button" class="fb-action-btn btn-fb-like" data-id="${item.id}" data-author="${item.authorUid}" data-sub="${item.isSubcollection}">
-              <img src="icons/like-linear.svg" class="fb-action-icon" alt="Like" onerror="this.src='icons/heart.svg'">
-              <span class="fb-like-count">${item.likesCount || 0}</span>
+              <svg viewBox="0 0 24 24">
+                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+              </svg>
+              <span class="fb-action-count fb-like-count">${likesText}</span>
             </button>
 
+            <!-- Comment (Bubble) -->
             <button type="button" class="fb-action-btn btn-fb-comment" onclick="window.location.href='photo-viewer.html?uid=${item.authorUid}&photoId=${item.id}'">
-              <img src="icons/chat-round-dots-bold.svg" class="fb-action-icon" alt="Comment">
-              <span>0</span>
+              <svg viewBox="0 0 24 24">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              <span class="fb-action-count">${commentsText}</span>
             </button>
 
+            <!-- Share (Facebook Arrow) -->
             <button type="button" class="fb-action-btn btn-fb-share">
-              <img src="icons/forward-right-bold.svg" class="fb-action-icon" alt="Share">
-              <span>0</span>
+              <svg viewBox="0 0 24 24">
+                <path d="M15 14l5-5-5-5"></path>
+                <path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>
+              </svg>
+              <span class="fb-action-count">${sharesText}</span>
             </button>
           </div>
         `;
 
-        // დამალვა
         const btnRemove = card.querySelector(".btn-post-remove");
         btnRemove.onclick = () => card.remove();
 
-        // გამოწერა
         const btnFollow = card.querySelector(".fb-follow-link");
         if (btnFollow) {
           btnFollow.onclick = async () => {
@@ -566,7 +590,6 @@ if (feedContainer) {
           };
         }
 
-        // ლაიქი (წერს შესაბამის ობიექტში)
         const btnLike = card.querySelector(".btn-fb-like");
         const countSpan = card.querySelector(".fb-like-count");
         btnLike.onclick = async () => {
@@ -575,11 +598,14 @@ if (feedContainer) {
             return;
           }
           const isLiked = btnLike.classList.contains("liked");
-          let currentLikes = parseInt(countSpan.textContent) || 0;
+          let currentLikes = Number(item.likesCount) || 0;
 
           if (!isLiked) {
             btnLike.classList.add("liked");
-            countSpan.textContent = currentLikes + 1;
+            currentLikes += 1;
+            item.likesCount = currentLikes;
+            countSpan.textContent = formatCount(currentLikes);
+
             if (item.isSubcollection) {
               await updateDoc(doc(db, "users", item.authorUid, "photos", item.id), { likesCount: increment(1) }).catch(() => {});
             } else {
@@ -587,7 +613,10 @@ if (feedContainer) {
             }
           } else {
             btnLike.classList.remove("liked");
-            countSpan.textContent = Math.max(0, currentLikes - 1);
+            currentLikes = Math.max(0, currentLikes - 1);
+            item.likesCount = currentLikes;
+            countSpan.textContent = formatCount(currentLikes);
+
             if (item.isSubcollection) {
               await updateDoc(doc(db, "users", item.authorUid, "photos", item.id), { likesCount: increment(-1) }).catch(() => {});
             } else {
@@ -623,7 +652,7 @@ if (feedContainer) {
     }
   });
 }
-       
+                 
 /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
