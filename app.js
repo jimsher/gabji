@@ -273,7 +273,7 @@ if (signupForm) {
 /* ==========================================================================
    3. ფიდი (feed.html)
    ========================================================================== */
-/* ==========================================================================
+  /* ==========================================================================
    3. ფიდი (feed.html - FACEBOOK STYLE FEED & CREATE POST)
    ========================================================================== */
 const feedContainer = document.getElementById("feedPostsContainer");
@@ -286,11 +286,9 @@ if (feedContainer) {
   const feedPostFileInput = document.getElementById("feedPostFileInput");
   const btnHeaderCreate = document.getElementById("btnHeaderCreate");
 
-  // მიმდინარე მომხმარებლის პროფილის მონაცემები
   let currentLoggedInUser = null;
   let currentLoggedInUserData = null;
 
-  // 1. ფოტოს/ვიდეოს არჩევის ღილაკების მიბმა
   if (btnPickGalleryPhoto && feedPostFileInput) {
     btnPickGalleryPhoto.onclick = (e) => {
       e.stopPropagation();
@@ -309,7 +307,6 @@ if (feedContainer) {
   if (openPostCreatorBtn) openPostCreatorBtn.onclick = triggerPostCreation;
   if (btnHeaderCreate) btnHeaderCreate.onclick = triggerPostCreation;
 
-  // 2. ფაილის არჩევა, ტექსტის შეყვანა და R2 + Firestore-ში ატვირთვა
   if (feedPostFileInput) {
     feedPostFileInput.onchange = async (e) => {
       const file = e.target.files[0];
@@ -337,7 +334,6 @@ if (feedContainer) {
                 `${currentLoggedInUserData.firstName || ''} ${currentLoggedInUserData.lastName || ''}`.trim() || 'მომხმარებელი' : 
                 'მომხმარებელი';
               const authorPhoto = currentLoggedInUserData?.photoUrl || 'icons/user-circle-linear.svg';
-
               const isVideo = file.type.startsWith("video/");
 
               const postData = {
@@ -366,34 +362,43 @@ if (feedContainer) {
               alert("პოსტის დადება ვერ მოხერხდა");
             }
           }
-
           if (placeholderText) placeholderText.textContent = originalPlaceholder;
         }
       );
     };
   }
 
-  // 3. პოსტების ჩატვირთვის ძირითადი ფუნქცია
   const loadFeedPosts = async (currentUid) => {
     try {
-      // 1. გამოწერილი მომხმარებლების სია
       const followedSet = new Set();
       if (currentUid) {
-        const followSnap = await getDocs(collection(db, "users", currentUid, "following"));
-        followSnap.forEach((fDoc) => {
-          if (fDoc.data().active !== false) {
-            followedSet.add(fDoc.id);
-          }
-        });
+        try {
+          const followSnap = await getDocs(collection(db, "users", currentUid, "following"));
+          followSnap.forEach((fDoc) => {
+            if (fDoc.data().active !== false) followedSet.add(fDoc.id);
+          });
+        } catch (_) {}
       }
 
-      // 2. პოსტების წამოღება (ჯერ "posts" კოლექცია, თუ ცარიელია - "reels")
-      let postsSnap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")));
-      if (postsSnap.empty) {
-        postsSnap = await getDocs(query(collection(db, "reels"), orderBy("createdAt", "desc")));
+      // შეცდომის თავიდან ასაცილებლად: ვიღებთ პოსტებს და კოდში ვალაგებთ დროით
+      let postsSnap = await getDocs(collection(db, "posts"));
+      let allPosts = [];
+
+      postsSnap.forEach((d) => allPosts.push({ id: d.id, ...d.data() }));
+
+      if (allPosts.length === 0) {
+        const reelsSnap = await getDocs(collection(db, "reels"));
+        reelsSnap.forEach((d) => allPosts.push({ id: d.id, ...d.data() }));
       }
 
-      if (postsSnap.empty) {
+      // დალაგება უახლესის მიხედვით
+      allPosts.sort((a, b) => {
+        const tA = a.createdAt?.seconds || 0;
+        const tB = b.createdAt?.seconds || 0;
+        return tB - tA;
+      });
+
+      if (allPosts.length === 0) {
         if (loadingIndicator) loadingIndicator.textContent = "პოსტები არ არის";
         return;
       }
@@ -401,33 +406,32 @@ if (feedContainer) {
       if (loadingIndicator) loadingIndicator.remove();
       feedContainer.innerHTML = "";
 
-      for (const pDoc of postsSnap.docs) {
-        const post = pDoc.data();
-        const postId = pDoc.id;
+      for (const post of allPosts) {
+        const postId = post.id;
         const authorUid = post.authorUid || post.userId;
 
         let authorName = post.authorName || "მომხმარებელი";
         let authorPhoto = post.authorPhoto || "icons/user-circle-linear.svg";
 
         if (authorUid) {
-          const userSnap = await getDoc(doc(db, "users", authorUid));
-          if (userSnap.exists()) {
-            const u = userSnap.data();
-            authorName = `${u.firstName || ''} ${u.lastName || ''}`.trim() || authorName;
-            if (u.photoUrl) authorPhoto = u.photoUrl;
-          }
+          try {
+            const userSnap = await getDoc(doc(db, "users", authorUid));
+            if (userSnap.exists()) {
+              const u = userSnap.data();
+              authorName = `${u.firstName || ''} ${u.lastName || ''}`.trim() || authorName;
+              if (u.photoUrl) authorPhoto = u.photoUrl;
+            }
+          } catch (_) {}
         }
 
         const isMe = currentUid && (currentUid === authorUid);
         const isFollowed = followedSet.has(authorUid);
 
-        // გამოწერის ღილაკი მხოლოდ მაშინ, როცა ავტორი სხვისია და ჯერ არაა გამოწერილი
         const followHtml = (!isMe && !isFollowed && authorUid) ? `
           <span class="fb-bullet">·</span>
-          <button type="button" class="fb-follow-link" data-uid="${authorUid}" data-i18n="btn_follow">გამოწერა</button>
+          <button type="button" class="fb-follow-link" data-uid="${authorUid}">გამოწერა</button>
         ` : '';
 
-        // მედია (ვიდეო ან სურათი)
         let mediaBoxHtml = "";
         if (post.videoUrl) {
           mediaBoxHtml = `
@@ -451,7 +455,6 @@ if (feedContainer) {
         card.id = `fb_post_${postId}`;
 
         card.innerHTML = `
-          <!-- ზედა ინფორმაცია -->
           <div class="fb-header">
             <div class="fb-header-left">
               <img src="${authorPhoto}" class="fb-avatar" alt="${authorName}" onclick="window.location.href='profile.html?uid=${authorUid}'">
@@ -478,18 +481,14 @@ if (feedContainer) {
             </div>
           </div>
 
-          <!-- ტექსტური ნაწილი -->
           <div class="fb-caption">
             <span>${post.caption || post.text || ''}</span>
             <span class="fb-see-more-link">სხვა</span>
           </div>
 
-          <!-- მედია კონტეინერი -->
           ${mediaBoxHtml}
 
-          <!-- ქვედა მოქმედებები: ლაიქი, კომენტარი, გაზიარება -->
           <div class="fb-footer-bar">
-            <!-- ლაიქი (Facebook Thumb) -->
             <button type="button" class="fb-action-btn btn-fb-like" data-id="${postId}">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" fill="#65676b"/>
@@ -497,7 +496,6 @@ if (feedContainer) {
               <span class="fb-like-count">${post.likesCount || post.likes || 0}</span>
             </button>
 
-            <!-- კომენტარი -->
             <button type="button" class="fb-action-btn btn-fb-comment" data-id="${postId}">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" fill="#65676b"/>
@@ -505,7 +503,6 @@ if (feedContainer) {
               <span>${post.commentsCount || 0}</span>
             </button>
 
-            <!-- გაზიარება -->
             <button type="button" class="fb-action-btn btn-fb-share">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z" fill="#65676b"/>
@@ -515,11 +512,9 @@ if (feedContainer) {
           </div>
         `;
 
-        // 1. X ღილაკი: პოსტის დამალვა
         const btnRemove = card.querySelector(".btn-post-remove");
         btnRemove.onclick = () => card.remove();
 
-        // 2. გამოწერა
         const btnFollow = card.querySelector(".fb-follow-link");
         if (btnFollow) {
           btnFollow.onclick = async () => {
@@ -544,7 +539,6 @@ if (feedContainer) {
           };
         }
 
-        // 3. ლაიქი (Thumb)
         const btnLike = card.querySelector(".btn-fb-like");
         const countSpan = card.querySelector(".fb-like-count");
         btnLike.onclick = async () => {
@@ -570,7 +564,6 @@ if (feedContainer) {
           }
         };
 
-        // 4. ხმის ჩართვა/გამორთვა
         const muteBtn = card.querySelector(".fb-mute-btn");
         const vid = card.querySelector("video");
         if (muteBtn && vid) {
@@ -586,12 +579,11 @@ if (feedContainer) {
       }
 
     } catch (e) {
-      console.error("ფიდის ჩატვირთვის შეცდომა:", e);
+      console.error("ფიდის შეცდომა:", e);
       if (loadingIndicator) loadingIndicator.textContent = "ჩატვირთვის შეცდომა";
     }
   };
 
-  // 4. ავტორიზაციის შემოწმება და ავატარის ჩასმა
   onAuthStateChanged(auth, async (user) => {
     currentLoggedInUser = user;
     if (user) {
@@ -603,16 +595,14 @@ if (feedContainer) {
             feedCurrentUserAvatar.src = currentLoggedInUserData.photoUrl;
           }
         }
-      } catch (err) {
-        console.error("პროფილის ავატარის წამოღების შეცდომა:", err);
-      }
+      } catch (_) {}
       loadFeedPosts(user.uid);
     } else {
       loadFeedPosts(null);
     }
   });
 }
-
+          
 
 /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
