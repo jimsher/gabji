@@ -550,7 +550,7 @@ if (feedContainer) {
 
             <!-- Share (შენი აიკონი) -->
             <button type="button" class="fb-action-btn btn-fb-share">
-              <img src="icons/forward-right-bold.svg" class="fb-action-icon" alt="Share">
+              <img src="icons/forward-right-linear.svg" class="fb-action-icon" alt="Share">
               <span class="fb-action-count">${sharesText}</span>
             </button>
           </div>
