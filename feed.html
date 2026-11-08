@@ -8,45 +8,43 @@
 </head>
 <body class="feed-body-root">
 
-  <!-- 1. ფიქსირებული ზედა ჰედერი -->
-  <header class="fb-top-navbar">
-    <a href="feed.html" class="fb-brand-logo">GABJI</a>
-    <div class="fb-top-nav-actions">
-      <button type="button" class="fb-round-btn" id="btnHeaderCreate" aria-label="Create">
-        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      </button>
-      <button type="button" class="fb-round-btn" id="btnHeaderSearch" aria-label="Search">
-        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      </button>
-      <button type="button" class="fb-round-btn" id="btnHeaderMessenger" onclick="window.location.href='messages.html'" aria-label="Messenger">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.42 3.84 7.08V22l3.77-2.07c.76.21 1.56.33 2.39.33 5.52 0 10-4.03 10-9s-4.48-9-10-9zm1.08 12.06l-2.61-2.79-5.1 2.79 5.61-5.96 2.67 2.79 5.04-2.79-5.61 5.96z"/></svg>
-      </button>
+  <!-- ერთიანი ფიქსირებული ჰედერი: ზემოთ ლოგო, ქვემოთ პოსტის ზოლი -->
+  <header class="fb-unified-fixed-header">
+    <div class="fb-top-navbar">
+      <a href="feed.html" class="fb-brand-logo">GABJI</a>
+      <div class="fb-top-nav-actions">
+        <button type="button" class="fb-round-btn" id="btnHeaderCreate" aria-label="Create">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </button>
+        <button type="button" class="fb-round-btn" id="btnHeaderSearch" aria-label="Search">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button type="button" class="fb-round-btn" id="btnHeaderMessenger" onclick="window.location.href='messages.html'" aria-label="Messenger">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.42 3.84 7.08V22l3.77-2.07c.76.21 1.56.33 2.39.33 5.52 0 10-4.03 10-9s-4.48-9-10-9zm1.08 12.06l-2.61-2.79-5.1 2.79 5.61-5.96 2.67 2.79 5.04-2.79-5.61 5.96z"/></svg>
+        </button>
+      </div>
     </div>
-  </header>
 
-  <div class="fb-feed-content-area">
-    <!-- 2. პოსტის დასადები ზოლი (გარე თეთრი ჩარჩოს გარეშე, აიკონი ჩარჩოს გარეთ მარჯვნივ) -->
+    <!-- პოსტის დასადები ზოლი (პირდაპირ ჰედერის ქვეშ, მჭიდროდ მიბმული) -->
     <div class="fb-post-create-bar">
       <img src="icons/user-circle-linear.svg" class="fb-create-avatar" id="feedCurrentUserAvatar" alt="Avatar">
       
-      <!-- ოვალური ჩარჩო მხოლოდ ტექსტისთვის -->
       <div class="fb-create-input-pill" id="openPostCreatorBtn">
         <span class="fb-create-placeholder">საკუთარ აზრებს ხომ არ გაგვიზიარებდით?</span>
       </div>
 
-      <!-- გალერეის ღილაკი ჩარჩოს გარეთ, მარჯვნივ -->
       <button type="button" class="fb-gallery-btn-outside" id="btnPickGalleryPhoto" aria-label="Photo">
         <svg viewBox="0 0 24 24" class="fb-gallery-svg"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
       </button>
 
       <input type="file" id="feedPostFileInput" accept="image/*,video/*" style="display: none;">
     </div>
+  </header>
 
-    <!-- 3. პოსტების ნაკადი -->
-    <main class="feed-posts-stream" id="feedPostsContainer">
-      <div class="feed-loading-state" id="feedLoadingText">პოსტები იტვირთება...</div>
-    </main>
-  </div>
+  <!-- პოსტების ნაკადი (იწყება ზუსტად ჰედერის ქვემოდან) -->
+  <main class="fb-feed-content-area" id="feedPostsContainer">
+    <div class="feed-loading-state" id="feedLoadingText">პოსტები იტვირთება...</div>
+  </main>
 
   <!-- ქვედა ნავიგაცია -->
   <nav class="bottom-nav-bar">
