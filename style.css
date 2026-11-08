@@ -757,25 +757,30 @@ html, body.feed-body-root {
   fill: #ffffff;
 }
 
+/* ==========================================================================
+   Facebook სტილის ქვედა მოქმედებები (სუფთა აიკონები, ნულების გარეშე)
+   ========================================================================== */
 .fb-footer-bar {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 6px 10px;
-  border-top: 1px solid #ced0d4;
+  gap: 18px;
+  padding: 8px 16px 10px;
+  background: #ffffff;
+  border-top: 1px solid #f0f2f5;
+  box-sizing: border-box;
 }
 
 .fb-action-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: none;
   border: none;
   color: #65676b;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  padding: 6px 12px;
+  padding: 4px 6px;
   border-radius: 6px;
   transition: background-color 0.15s ease;
 }
@@ -784,13 +789,37 @@ html, body.feed-body-root {
   background-color: #f0f2f5;
 }
 
+.fb-action-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #65676b;
+  stroke-width: 1.9;
+  fill: none;
+  display: block;
+}
+
+/* როცა დალაიქებულია: ლურჯდება */
 .fb-action-btn.liked {
   color: #1877f2;
 }
 
-.fb-action-btn.liked svg path {
+.fb-action-btn.liked svg {
+  stroke: #1877f2;
   fill: #1877f2;
 }
+
+/* ციფრები: თუ 0-ია საერთოდ არ ჩანს */
+.fb-action-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #65676b;
+  line-height: 1;
+}
+
+.fb-action-btn.liked .fb-action-count {
+  color: #1877f2;
+}
+
 
  
   /* ==========================================================================
