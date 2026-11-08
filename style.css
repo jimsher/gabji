@@ -789,38 +789,13 @@ html, body.feed-body-root {
   background-color: #f0f2f5;
 }
 
-.fb-action-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: #65676b;
-  stroke-width: 1.9;
-  fill: none;
-  display: block;
-}
-
-/* როცა დალაიქებულია: ლურჯდება */
 .fb-action-btn.liked {
   color: #1877f2;
 }
 
-.fb-action-btn.liked svg {
-  stroke: #1877f2;
+.fb-action-btn.liked svg path {
   fill: #1877f2;
 }
-
-/* ციფრები: თუ 0-ია საერთოდ არ ჩანს */
-.fb-action-count {
-  font-size: 13px;
-  font-weight: 600;
-  color: #65676b;
-  line-height: 1;
-}
-
-.fb-action-btn.liked .fb-action-count {
-  color: #1877f2;
-}
-
-
  
   /* ==========================================================================
    8. პროფილის გვერდი (TIKTOK სტილის პროფილი)
