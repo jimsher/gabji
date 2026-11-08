@@ -274,7 +274,7 @@ if (signupForm) {
    3. ფიდი (feed.html)
    ========================================================================== */
   /* ==========================================================================
-   3. ფიდი (feed.html - FACEBOOK STYLE FEED & CREATE POST)
+   3. ფიდი (feed.html - FACEBOOK STYLE FEED: USERS & PHOTOS)
    ========================================================================== */
 const feedContainer = document.getElementById("feedPostsContainer");
 
@@ -286,7 +286,6 @@ if (feedContainer) {
   const feedPostFileInput = document.getElementById("feedPostFileInput");
   const btnHeaderCreate = document.getElementById("btnHeaderCreate");
 
-  // მხოლოდ ფოტოების მიღება ატვირთვისას
   if (feedPostFileInput) {
     feedPostFileInput.accept = "image/jpeg,image/png,image/webp,image/jpg";
   }
@@ -294,13 +293,21 @@ if (feedContainer) {
   let currentLoggedInUser = null;
   let currentLoggedInUserData = null;
 
-  // რეალური დროის ფორმატირების ფუნქცია (Firestore timestamp-იდან)
+  // რეალური დროის გამოთვლა
   const formatTimeAgo = (timestamp) => {
     if (!timestamp) return "ახლახან";
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp.seconds ? timestamp.seconds * 1000 : timestamp);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now - date) / 1000);
+    let date;
+    if (timestamp.toDate) {
+      date = timestamp.toDate();
+    } else if (timestamp.seconds) {
+      date = new Date(timestamp.seconds * 1000);
+    } else {
+      date = new Date(timestamp);
+    }
 
+    if (isNaN(date.getTime())) return "ახლახან";
+
+    const diffInSeconds = Math.floor((Date.now() - date.getTime()) / 1000);
     if (diffInSeconds < 60) return "ახლახან";
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     if (diffInMinutes < 60) return `${diffInMinutes} წთ`;
@@ -313,16 +320,21 @@ if (feedContainer) {
     return `${Math.floor(diffInMonths / 12)} წელი`;
   };
 
+  // 1. ფოტოს ატვირთვა პირდაპირ users/{uid}/photos ქვეკოლექციაში
   if (btnPickGalleryPhoto && feedPostFileInput) {
     btnPickGalleryPhoto.onclick = (e) => {
       e.stopPropagation();
+      if (!currentLoggedInUser) {
+        alert("ფოტოს დასადებად გაიარეთ ავტორიზაცია");
+        return;
+      }
       feedPostFileInput.click();
     };
   }
 
   const triggerPostCreation = () => {
     if (!currentLoggedInUser) {
-      alert("პოსტის დასადებად გაიარეთ ავტორიზაცია");
+      alert("გაიარეთ ავტორიზაცია");
       return;
     }
     if (feedPostFileInput) feedPostFileInput.click();
@@ -336,15 +348,11 @@ if (feedContainer) {
       const file = e.target.files[0];
       if (!file) return;
 
-      const postCaption = prompt("დაწერეთ პოსტის აღწერა:", "");
-      if (postCaption === null) {
-        feedPostFileInput.value = "";
-        return;
-      }
+      const postCaption = prompt("დაწერეთ აღწერა (სურვილისამებრ):", "") || "";
 
       const placeholderText = document.querySelector(".fb-create-placeholder");
       const originalPlaceholder = placeholderText ? placeholderText.textContent : "";
-      if (placeholderText) placeholderText.textContent = "პოსტი იტვირთება...";
+      if (placeholderText) placeholderText.textContent = "ფოტო იტვირთება...";
 
       uploadPhotoToR2(
         file,
@@ -354,30 +362,19 @@ if (feedContainer) {
         async (uploadedUrl) => {
           if (uploadedUrl) {
             try {
-              const authorName = currentLoggedInUserData ? 
-                `${currentLoggedInUserData.firstName || ''} ${currentLoggedInUserData.lastName || ''}`.trim() || 'მომხმარებელი' : 
-                'მომხმარებელი';
-              const authorPhoto = currentLoggedInUserData?.photoUrl || 'icons/user-circle-linear.svg';
-
-              const postData = {
-                authorUid: currentLoggedInUser.uid,
-                userId: currentLoggedInUser.uid,
-                authorName: authorName,
-                authorPhoto: authorPhoto,
-                caption: postCaption.trim(),
+              // ზუსტად შენს ბაზაში არსებულ users/{uid}/photos-ში ჩაწერა
+              await setDoc(doc(collection(db, "users", currentLoggedInUser.uid, "photos")), {
                 photoUrl: uploadedUrl,
+                caption: postCaption.trim(),
                 likesCount: 0,
-                commentsCount: 0,
-                sharesCount: 0,
                 createdAt: serverTimestamp()
-              };
+              });
 
-              await setDoc(doc(collection(db, "posts")), postData);
               feedPostFileInput.value = "";
               loadFeedPosts(currentLoggedInUser.uid);
             } catch (postErr) {
-              console.error("პოსტის შექმნის შეცდომა:", postErr);
-              alert("პოსტის დადება ვერ მოხერხდა");
+              console.error("ფოტოს შენახვის შეცდომა:", postErr);
+              alert("ფოტოს დადება ვერ მოხერხდა");
             }
           }
           if (placeholderText) placeholderText.textContent = originalPlaceholder;
@@ -386,6 +383,7 @@ if (feedContainer) {
     };
   }
 
+  // 2. ფოტოების წამოღება users/{uid}/photos ქვეკოლექციებიდან და მომხმარებლების პროფილებიდან
   const loadFeedPosts = async (currentUid) => {
     try {
       const followedSet = new Set();
@@ -398,79 +396,87 @@ if (feedContainer) {
         } catch (_) {}
       }
 
-      // ვიღებთ მხოლოდ "posts" კოლექციას (reels საერთოდ აღარ იტვირთება აქ)
-      let postsSnap = await getDocs(collection(db, "posts"));
-      let allPosts = [];
+      let allCards = [];
 
-      postsSnap.forEach((d) => {
-        const data = d.data();
-        // ვიდეოები იფილტრება, რჩება მხოლოდ ფოტოიანი პოსტები ან ტექსტური პოსტები
-        if (!data.videoUrl) {
-          allPosts.push({ id: d.id, ...data });
+      const usersSnap = await getDocs(collection(db, "users"));
+
+      for (const uDoc of usersSnap.docs) {
+        const uData = uDoc.data();
+        const uId = uDoc.id;
+        const authorName = `${uData.firstName || ''} ${uData.lastName || ''}`.trim() || 'მომხმარებელი';
+        const authorAvatar = uData.photoUrl || 'icons/user-circle-linear.svg';
+
+        // 1. ვკითხულობთ თითოეული მომხმარებლის photos ქვეკოლექციას
+        try {
+          const photosSnap = await getDocs(collection(db, "users", uId, "photos"));
+          photosSnap.forEach((pDoc) => {
+            const pData = pDoc.data();
+            if (pData.photoUrl) {
+              allCards.push({
+                id: pDoc.id,
+                authorUid: uId,
+                authorName: authorName,
+                authorPhoto: authorAvatar,
+                photoUrl: pData.photoUrl,
+                caption: pData.caption || '',
+                likesCount: pData.likesCount || 0,
+                createdAt: pData.createdAt || null,
+                isSubcollection: true
+              });
+            }
+          });
+
+          // 2. თუ photos ქვეკოლექცია ჯერ ცარიელია, მაგრამ პროფილზე ფოტო უდევს
+          if (photosSnap.empty && uData.photoUrl) {
+            allCards.push({
+              id: `profile_${uId}`,
+              authorUid: uId,
+              authorName: authorName,
+              authorPhoto: authorAvatar,
+              photoUrl: uData.photoUrl,
+              caption: uData.city ? `📍 ${uData.city}` : '',
+              likesCount: uData.likesCount || 0,
+              createdAt: uData.createdAt || null,
+              isSubcollection: false
+            });
+          }
+        } catch (err) {
+          console.error(`შეცდომა ${uId}-ს ფოტოებზე:`, err);
         }
-      });
+      }
 
-      // უახლესის მიხედვით დალაგება
-      allPosts.sort((a, b) => {
-        const tA = a.createdAt?.seconds || 0;
-        const tB = b.createdAt?.seconds || 0;
+      // დალაგება უახლესის მიხედვით
+      allCards.sort((a, b) => {
+        const tA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime() / 1000 : 0);
+        const tB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime() / 1000 : 0);
         return tB - tA;
       });
 
-      if (allPosts.length === 0) {
-        if (loadingIndicator) loadingIndicator.textContent = "პოსტები არ არის";
+      if (allCards.length === 0) {
+        if (loadingIndicator) loadingIndicator.textContent = "ფოტოები არ არის";
         return;
       }
 
       if (loadingIndicator) loadingIndicator.remove();
       feedContainer.innerHTML = "";
 
-      for (const post of allPosts) {
-        const postId = post.id;
-        const authorUid = post.authorUid || post.userId;
+      for (const item of allCards) {
+        const isMe = currentUid && (currentUid === item.authorUid);
+        const isFollowed = followedSet.has(item.authorUid);
 
-        let authorName = post.authorName || "მომხმარებელი";
-        let authorPhoto = post.authorPhoto || "icons/user-circle-linear.svg";
-
-        if (authorUid) {
-          try {
-            const userSnap = await getDoc(doc(db, "users", authorUid));
-            if (userSnap.exists()) {
-              const u = userSnap.data();
-              authorName = `${u.firstName || ''} ${u.lastName || ''}`.trim() || authorName;
-              if (u.photoUrl) authorPhoto = u.photoUrl;
-            }
-          } catch (_) {}
-        }
-
-        const isMe = currentUid && (currentUid === authorUid);
-        const isFollowed = followedSet.has(authorUid);
-
-        const followHtml = (!isMe && !isFollowed && authorUid) ? `
+        const followHtml = (!isMe && !isFollowed && item.authorUid) ? `
           <span class="fb-bullet">·</span>
-          <button type="button" class="fb-follow-link" data-uid="${authorUid}">გამოწერა</button>
+          <button type="button" class="fb-follow-link" data-uid="${item.authorUid}">გამოწერა</button>
         ` : '';
 
-        // რეალური დრო
-        const realTimeAgo = formatTimeAgo(post.createdAt);
+        const realTimeAgo = formatTimeAgo(item.createdAt);
 
-        // მხოლოდ ფოტოს კონტეინერი (ვიდეო ამოღებულია)
-        let mediaBoxHtml = "";
-        if (post.photoUrl) {
-          mediaBoxHtml = `
-            <div class="fb-media-box">
-              <img src="${post.photoUrl}" class="fb-media-item" alt="Photo" loading="lazy">
-            </div>
-          `;
-        }
-
-        // ტექსტის ბლოკი
         let captionHtml = "";
-        if (post.caption && post.caption.trim()) {
-          const isLong = post.caption.length > 90;
+        if (item.caption && item.caption.trim()) {
+          const isLong = item.caption.length > 90;
           captionHtml = `
             <div class="fb-caption">
-              <span class="fb-caption-text">${post.caption}</span>
+              <span class="fb-caption-text">${item.caption}</span>
               ${isLong ? '<span class="fb-see-more-link">სხვა</span>' : ''}
             </div>
           `;
@@ -478,15 +484,15 @@ if (feedContainer) {
 
         const card = document.createElement("article");
         card.className = "fb-card";
-        card.id = `fb_post_${postId}`;
+        card.id = `fb_card_${item.id}`;
 
         card.innerHTML = `
           <div class="fb-header">
             <div class="fb-header-left">
-              <img src="${authorPhoto}" class="fb-avatar" alt="${authorName}" onclick="window.location.href='profile.html?uid=${authorUid}'">
+              <img src="${item.authorPhoto}" class="fb-avatar" alt="${item.authorName}" onclick="window.location.href='profile.html?uid=${item.authorUid}'">
               <div class="fb-user-details">
                 <div class="fb-name-row">
-                  <span class="fb-user-name" onclick="window.location.href='profile.html?uid=${authorUid}'">${authorName}</span>
+                  <span class="fb-user-name" onclick="window.location.href='profile.html?uid=${item.authorUid}'">${item.authorName}</span>
                   ${followHtml}
                 </div>
                 <div class="fb-meta-sub">
@@ -509,30 +515,29 @@ if (feedContainer) {
 
           ${captionHtml}
 
-          ${mediaBoxHtml}
+          <div class="fb-media-box">
+            <img src="${item.photoUrl}" class="fb-media-item" alt="Photo" loading="lazy">
+          </div>
 
           <div class="fb-footer-bar">
-            <!-- ლაიქი შენი აიკონით -->
-            <button type="button" class="fb-action-btn btn-fb-like" data-id="${postId}">
+            <button type="button" class="fb-action-btn btn-fb-like" data-id="${item.id}" data-author="${item.authorUid}" data-sub="${item.isSubcollection}">
               <img src="icons/like-linear.svg" class="fb-action-icon" alt="Like" onerror="this.src='icons/heart.svg'">
-              <span class="fb-like-count">${post.likesCount || post.likes || 0}</span>
+              <span class="fb-like-count">${item.likesCount || 0}</span>
             </button>
 
-            <!-- კომენტარი შენი აიკონით -->
-            <button type="button" class="fb-action-btn btn-fb-comment" data-id="${postId}">
+            <button type="button" class="fb-action-btn btn-fb-comment" onclick="window.location.href='photo-viewer.html?uid=${item.authorUid}&photoId=${item.id}'">
               <img src="icons/chat-round-dots-bold.svg" class="fb-action-icon" alt="Comment">
-              <span>${post.commentsCount || 0}</span>
+              <span>0</span>
             </button>
 
-            <!-- გაზიარება შენი აიკონით -->
             <button type="button" class="fb-action-btn btn-fb-share">
               <img src="icons/forward-right-bold.svg" class="fb-action-icon" alt="Share">
-              <span>${post.sharesCount || 0}</span>
+              <span>0</span>
             </button>
           </div>
         `;
 
-        // პოსტის დამალვა
+        // დამალვა
         const btnRemove = card.querySelector(".btn-post-remove");
         btnRemove.onclick = () => card.remove();
 
@@ -546,8 +551,8 @@ if (feedContainer) {
             }
             btnFollow.disabled = true;
             try {
-              await setDoc(doc(db, "users", currentUid, "following", authorUid), {
-                followedUid: authorUid,
+              await setDoc(doc(db, "users", currentUid, "following", item.authorUid), {
+                followedUid: item.authorUid,
                 active: true,
                 createdAt: serverTimestamp()
               });
@@ -561,7 +566,7 @@ if (feedContainer) {
           };
         }
 
-        // ლაიქი
+        // ლაიქი (წერს შესაბამის ობიექტში)
         const btnLike = card.querySelector(".btn-fb-like");
         const countSpan = card.querySelector(".fb-like-count");
         btnLike.onclick = async () => {
@@ -575,11 +580,19 @@ if (feedContainer) {
           if (!isLiked) {
             btnLike.classList.add("liked");
             countSpan.textContent = currentLikes + 1;
-            await updateDoc(doc(db, "posts", postId), { likesCount: increment(1) }).catch(() => {});
+            if (item.isSubcollection) {
+              await updateDoc(doc(db, "users", item.authorUid, "photos", item.id), { likesCount: increment(1) }).catch(() => {});
+            } else {
+              await updateDoc(doc(db, "users", item.authorUid), { likesCount: increment(1) }).catch(() => {});
+            }
           } else {
             btnLike.classList.remove("liked");
             countSpan.textContent = Math.max(0, currentLikes - 1);
-            await updateDoc(doc(db, "posts", postId), { likesCount: increment(-1) }).catch(() => {});
+            if (item.isSubcollection) {
+              await updateDoc(doc(db, "users", item.authorUid, "photos", item.id), { likesCount: increment(-1) }).catch(() => {});
+            } else {
+              await updateDoc(doc(db, "users", item.authorUid), { likesCount: increment(-1) }).catch(() => {});
+            }
           }
         };
 
@@ -610,7 +623,7 @@ if (feedContainer) {
     }
   });
 }
-     
+       
 /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
    ========================================================================== */
