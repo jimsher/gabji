@@ -424,387 +424,258 @@ body {
 
 
 
-
 /* ==========================================================================
-   7. ფიდის გვერდი (FEED / CARDS)
+   7. ფიდის გვერდი (FACEBOOK POSTS FEED)
    ========================================================================== */
-/* ==========================================================================
-   7. ფიდის გვერდი (FEED / CARDS)
-   ========================================================================== */
-.feed-screen {
-  padding: 12px 18px 8px;
+.feed-body {
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.feed-layout {
-  justify-content: space-between;
+.feed-screen-fb {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 75px;
 }
 
-/* ზედა საძიებო ზოლი */
-.feed-top-bar {
+.feed-posts-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.feed-loading-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: #65676b;
+  font-size: 14px;
+}
+
+/* პოსტის ბარათი */
+.fb-card {
+  background: #ffffff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* ზედა ზოლი */
+.fb-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-top: 4px;
-  margin-bottom: 8px;
+  padding: 12px 14px 8px;
 }
 
-.search-input-wrap {
-  position: relative;
+.fb-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
   flex: 1;
 }
 
-.search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  pointer-events: none;
-  object-fit: contain;
+.fb-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e4e6eb;
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
-.feed-search-input {
-  width: 100%;
-  padding: 10px 14px 10px 38px;
-  background: #ffffff;
-  border: 1px solid #ced0d4;
-  border-radius: 20px;
+.fb-user-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fb-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fb-user-name {
+  font-size: 15px;
+  font-weight: 700;
   color: #050505;
-  font-size: 14px;
-  outline: none;
-  box-sizing: border-box;
+  cursor: pointer;
 }
 
-.filter-toggle-wrap {
+.fb-bullet {
+  color: #65676b;
+  font-size: 13px;
+}
+
+.fb-follow-link {
+  background: none;
+  border: none;
+  color: #1877f2;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.fb-meta-sub {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #65676b;
+  margin-top: 1px;
+}
+
+.fb-globe-icon {
+  width: 12px;
+  height: 12px;
+  fill: #65676b;
+}
+
+.fb-header-right {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
-  white-space: nowrap;
 }
 
-.filter-label {
-  font-size: 13px;
-  color: #65676b;
-}
-
-/* გადამრთველი ღილაკი (Toggle Switch) */
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 44px;
-  height: 24px;
-}
-
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ced0d4;
-  border-radius: 24px;
-  transition: 0.3s;
-}
-
-.toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  transition: 0.3s;
-}
-
-input:checked + .toggle-slider {
-  background: #1877f2;
-}
-
-input:checked + .toggle-slider:before {
-  transform: translateX(20px);
-}
-
-/* ბარათების დიზაინი და წყობა */
-.cards-deck-container {
-  position: relative;
-  width: 100%;
-  height: 520px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 4px;
-  margin-bottom: 0;
-}
-
-/* უკანა ბარათის ფენა */
-.deck-card-shadow {
-  position: absolute;
-  width: 92%;
-  height: 98%;
-  background: #e4e6eb;
-  border-radius: 36px;
-  transform: rotate(-5deg) translate(-10px, -4px);
-  z-index: 1;
-  border: 1px solid #ced0d4;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-/* მთავარი ბარათი */
-.main-profile-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #ffffff;
-  border-radius: 36px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  border: 1px solid #ced0d4;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-}
-
-/* ფოტოს ადგილი */
-.card-image-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e4e6eb;
-  z-index: 1;
-}
-
-.card-image-placeholder img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ზედა თეთრი ოვალური ბეიჯი */
-.card-top-badge {
-  position: absolute;
-  top: 16px;
-  right: 18px;
-  background: rgba(255, 255, 255, 0.95);
-  width: 32px;
-  height: 18px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 3;
-}
-
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  background: #1877f2;
-  border-radius: 50%;
-}
-
-/* ბარათის ქვედა შუშისებრი ბლოკი */
-.card-info-glass {
-  position: relative;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  padding: 16px 18px 40px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  border-bottom-left-radius: 36px;
-  border-bottom-right-radius: 36px;
-}
-
-.card-name-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.card-user-title {
-  font-size: 21px;
-  font-weight: 700;
-  color: #050505;
-  letter-spacing: -0.2px;
-}
-
-/* გულის და ციფრის ვერტიკალური სვეტი (ციფრი მკაცრად გულის ქვეშ) */
-.mini-fav-box {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 2px !important;
-  min-width: 24px;
-  flex-shrink: 0;
-}
-
-.mini-fav-btn {
+.fb-icon-action {
   background: none;
   border: none;
   cursor: pointer;
+  padding: 6px;
+  color: #65676b;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  padding: 0;
 }
 
-.mini-fav-btn .fav-icon,
-.mini-fav-btn img {
-  width: 22px;
-  height: 22px;
-  display: block;
-  object-fit: contain;
-}
-
-/* ციფრი გულის ქვემოთ */
-.mini-fav-count {
-  font-size: 11px;
-  font-weight: 600;
-  color: #65676b;
+.fb-dots-text {
+  font-size: 20px;
   line-height: 1;
-  text-align: center;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-/* ლოკაციის ხაზი და აიქონი */
-.card-location-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 2px;
+.fb-close-x {
+  font-size: 19px;
+  line-height: 1;
 }
 
-.card-location-row .loc-icon {
-  width: 15px;
-  height: 15px;
-  flex-shrink: 0;
-  display: block;
-  object-fit: contain;
+/* პოსტის ტექსტი */
+.fb-caption {
+  padding: 2px 14px 10px;
+  font-size: 15px;
+  color: #050505;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
-.card-distance-text {
-  font-size: 13px;
+.fb-see-more-link {
   color: #65676b;
-  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 4px;
 }
 
-.card-bio-text {
-  font-size: 12px;
-  color: #050505;
-  line-height: 1.35;
-  margin: 2px 0 5px;
-}
-
-.card-interest-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 2px;
-}
-
-.card-pill {
-  background: #f0f2f5;
-  border: 1px solid #ced0d4;
-  color: #050505;
-  padding: 5px 12px;
-  border-radius: 14px;
-  font-size: 11px;
-}
-
-/* Like და Pass ღილაკები */
-.card-action-buttons {
+/* მედია კონტეინერი (ვიდეო/ფოტო) */
+.fb-media-box {
   position: relative;
-  z-index: 10;
+  width: 100%;
+  background: #000000;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 24px;
-  margin-top: -34px;
-  margin-bottom: 4px;
+  justify-content: center;
+  min-height: 350px;
+  max-height: 600px;
+  overflow: hidden;
 }
 
-.action-circle-btn {
-  width: 68px;
-  height: 68px;
+.fb-media-item {
+  width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ხმის ღილაკი ვიდეოს ქვედა კუთხეში */
+.fb-mute-btn {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
   border: none;
+  color: #ffffff;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-  transition: transform 0.15s ease;
-  backdrop-filter: blur(8px);
+  z-index: 5;
 }
 
-.action-circle-btn svg {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
+.fb-mute-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: #ffffff;
 }
 
-.action-circle-btn:active {
-  transform: scale(0.92);
-}
-
-.btn-like {
-  background: #ffffff;
-  border: 1.5px solid #ff7597;
-}
-
-.btn-pass {
-  background: #ffffff;
-  border: 1.5px solid #ced0d4;
-}
-
-.btn-caption {
-  font-size: 10px;
-  color: #65676b;
-  margin-top: 2px;
-  font-weight: 500;
-}
-
-.bottom-nav-bar {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 412px;
-  height: 60px;
+/* ქვედა მოქმედებების ზოლი */
+.fb-footer-bar {
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  background: #ffffff;
-  border-top: 1px solid #e4e6eb;
-  z-index: 9999;
-  margin: 0;
-  padding: 0;
+  justify-content: space-around;
+  padding: 8px 10px;
+  border-top: 1px solid #ced0d4;
 }
+
+.fb-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #65676b;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.fb-action-btn:active {
+  background-color: #f0f2f5;
+}
+
+.fb-action-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  object-fit: contain;
+}
+
+.fb-action-btn.liked {
+  color: #1877f2;
+}
+
+.fb-action-btn.liked svg path {
+  fill: #1877f2;
+}
+
 
 
   /* ==========================================================================
