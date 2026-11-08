@@ -273,257 +273,236 @@ if (signupForm) {
 /* ==========================================================================
    3. ფიდი (feed.html)
    ========================================================================== */
-const cardTitle = document.querySelector(".card-user-title");
+/* ==========================================================================
+   3. ფიდი (feed.html - FACEBOOK STYLE FEED)
+   ========================================================================== */
+const feedContainer = document.getElementById("feedPostsContainer");
 
-if (cardTitle) {
-  let allRawProfiles = [];
-  let feedProfiles = [];
-  let currentCardIndex = 0;
-  let alreadyLikedUids = new Set();
+if (feedContainer) {
+  const loadingIndicator = document.getElementById("feedLoadingText");
 
-  const calculateAge = (dateStr) => {
-    if (!dateStr) return "";
-    const birth = new Date(dateStr);
-    const diff = Date.now() - birth.getTime();
-    return Math.abs(new Date(diff).getUTCFullYear() - 1970);
-  };
-
-  const displayProfile = (index) => {
-    const nameEl = document.querySelector(".card-user-title");
-    const locEl = document.querySelector(".card-distance-text");
-    const bioEl = document.querySelector(".card-bio-text");
-    const pillsWrap = document.querySelector(".card-interest-pills");
-    const photoBox = document.querySelector(".card-image-placeholder");
-    const favCountEl = document.getElementById("miniFavCount");
-
-    if (!feedProfiles.length || index >= feedProfiles.length) {
-      if (nameEl) nameEl.textContent = "მომხმარებლები არ არის";
-      if (locEl) locEl.textContent = "";
-      if (bioEl) bioEl.textContent = "";
-      if (pillsWrap) pillsWrap.innerHTML = "";
-      if (favCountEl) favCountEl.textContent = "0";
-
-      if (photoBox) {
-        const oldImg = photoBox.querySelector(".profile-pic");
-        if (oldImg) oldImg.remove();
-        const placeholderSvg = photoBox.querySelector("svg");
-        if (placeholderSvg) placeholderSvg.style.display = "block";
-      }
-      return;
-    }
-
-    const item = feedProfiles[index];
-    const age = calculateAge(item.birthDate);
-
-    if (nameEl) {
-      nameEl.textContent = `${item.firstName || ""} ${item.lastName || ""}${age ? ", " + age : ""}`.trim();
-    }
-
-    if (locEl) {
-      const fullLoc = [item.city, item.country].filter(Boolean).join(", ");
-      locEl.textContent = fullLoc ? fullLoc : "";
-    }
-
-    if (favCountEl) {
-      favCountEl.textContent = item.likesCount || item.likes || 0;
-    }
-
-    if (bioEl) {
-      bioEl.textContent = item.email || "";
-    }
-
-    if (pillsWrap) {
-      pillsWrap.innerHTML = "";
-      if (Array.isArray(item.interests)) {
-        item.interests.forEach((intr) => {
-          const span = document.createElement("span");
-          span.className = "card-pill";
-          span.textContent = intr;
-          pillsWrap.appendChild(span);
-        });
-      }
-    }
-
-    if (photoBox) {
-      const oldImg = photoBox.querySelector(".profile-pic");
-      if (oldImg) oldImg.remove();
-
-      const placeholderSvg = photoBox.querySelector("svg");
-
-      if (item.photoUrl) {
-        if (placeholderSvg) placeholderSvg.style.display = "none";
-        const img = document.createElement("img");
-        img.className = "profile-pic";
-        img.src = item.photoUrl;
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.objectFit = "cover";
-        photoBox.appendChild(img);
-      } else {
-        if (placeholderSvg) placeholderSvg.style.display = "block";
-      }
-    }
-  };
-
-  const applyLocalFilters = () => {
-    const filterToggle = document.getElementById("filterToggle");
-    const searchInput = document.querySelector(".feed-search-input");
-
-    const onlyWithPhotos = filterToggle ? filterToggle.checked : false;
-    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
-    feedProfiles = allRawProfiles.filter((item) => {
-      if (onlyWithPhotos && !item.photoUrl) {
-        return false;
-      }
-
-      if (searchTerm) {
-        const fullName = `${item.firstName || ""} ${item.lastName || ""}`.toLowerCase();
-        const city = (item.city || "").toLowerCase();
-        if (!fullName.includes(searchTerm) && !city.includes(searchTerm)) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-
-    currentCardIndex = 0;
-    displayProfile(currentCardIndex);
-  };
-
-  const getProfilesFromDb = async (currentUserUid) => {
+  const loadFeedPosts = async (currentUid) => {
     try {
-      alreadyLikedUids.clear();
-
-      // 1. ვკითხულობთ ვინ გვყავს უკვე მოწონებული
-      if (currentUserUid) {
-        const likedSnap = await getDocs(collection(db, "users", currentUserUid, "likedUsers"));
-        likedSnap.forEach((docItem) => {
-          alreadyLikedUids.add(docItem.id);
+      // 1. გამოწერილი მომხმარებლების სია
+      const followedSet = new Set();
+      if (currentUid) {
+        const followSnap = await getDocs(collection(db, "users", currentUid, "following"));
+        followSnap.forEach((fDoc) => {
+          if (fDoc.data().active !== false) {
+            followedSet.add(fDoc.id);
+          }
         });
       }
 
-      // 2. წამოვიღოთ მომხმარებლები
-      const snapshot = await getDocs(collection(db, "users"));
-      allRawProfiles = [];
-      snapshot.forEach((docSnap) => {
-        const targetId = docSnap.id;
-        const uData = docSnap.data();
+      // 2. პოსტების წამოღება (ჯერ "posts" კოლექცია, თუ ცარიელია - "reels")
+      let postsSnap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")));
+      if (postsSnap.empty) {
+        postsSnap = await getDocs(query(collection(db, "reels"), orderBy("createdAt", "desc")));
+      }
 
-        // საკუთარი პროფილი და უკვე დალაიქებული მომხმარებლები არ ემატება სიას
-        const isMe = currentUserUid && (targetId === currentUserUid || uData.uid === currentUserUid);
-        const isAlreadyLiked = alreadyLikedUids.has(targetId);
-
-        if (!isMe && !isAlreadyLiked) {
-          allRawProfiles.push({ id: targetId, ...uData });
-        }
-      });
-
-      applyLocalFilters();
-    } catch (e) {
-      console.error("ბაზის შეცდომა:", e);
-      if (cardTitle) cardTitle.textContent = "ვერ ჩაიტვირთა";
-    }
-  };
-
-  const filterToggle = document.getElementById("filterToggle");
-  if (filterToggle) {
-    filterToggle.onchange = () => {
-      applyLocalFilters();
-    };
-  }
-
-  const searchInput = document.querySelector(".feed-search-input");
-  if (searchInput) {
-    searchInput.oninput = () => {
-      applyLocalFilters();
-    };
-  }
-
-  const likeBtn = document.getElementById("likeBtn");
-  const passBtn = document.getElementById("passBtn");
-
-  if (likeBtn) {
-    likeBtn.onclick = async () => {
-      if (!feedProfiles.length || currentCardIndex >= feedProfiles.length) return;
-
-      likeBtn.disabled = true;
-      const currentProfile = feedProfiles[currentCardIndex];
-      const targetDocId = currentProfile.id || currentProfile.uid;
-      const currentUser = auth.currentUser;
-      const favCountEl = document.getElementById("miniFavCount");
-
-      // შემოწმება: უკვე მოწონებული თუა მეხსიერებაში
-      if (alreadyLikedUids.has(targetDocId)) {
-        currentCardIndex++;
-        displayProfile(currentCardIndex);
-        likeBtn.disabled = false;
+      if (postsSnap.empty) {
+        if (loadingIndicator) loadingIndicator.textContent = "პოსტები არ არის";
         return;
       }
 
-      if (currentUser && targetDocId) {
-        try {
-          // ბაზაში რეალური შემოწმება - ხომ არ აქვს უკვე დალაიქებული
-          const likedDocRef = doc(db, "users", currentUser.uid, "likedUsers", targetDocId);
-          const likedDocSnap = await getDoc(likedDocRef);
+      if (loadingIndicator) loadingIndicator.remove();
+      feedContainer.innerHTML = "";
 
-          if (likedDocSnap.exists()) {
-            alreadyLikedUids.add(targetDocId);
-            currentCardIndex++;
-            displayProfile(currentCardIndex);
-            likeBtn.disabled = false;
+      for (const pDoc of postsSnap.docs) {
+        const post = pDoc.data();
+        const postId = pDoc.id;
+        const authorUid = post.authorUid || post.userId;
+
+        let authorName = post.authorName || "მომხმარებელი";
+        let authorPhoto = post.authorPhoto || "icons/user-circle-linear.svg";
+
+        if (authorUid) {
+          const userSnap = await getDoc(doc(db, "users", authorUid));
+          if (userSnap.exists()) {
+            const u = userSnap.data();
+            authorName = `${u.firstName || ''} ${u.lastName || ''}`.trim() || authorName;
+            if (u.photoUrl) authorPhoto = u.photoUrl;
+          }
+        }
+
+        const isMe = currentUid && (currentUid === authorUid);
+        const isFollowed = followedSet.has(authorUid);
+
+        // გამოწერის ღილაკი მხოლოდ მაშინ, როცა ავტორი სხვისია და ჯერ არაა გამოწერილი
+        const followHtml = (!isMe && !isFollowed && authorUid) ? `
+          <span class="fb-bullet">·</span>
+          <button type="button" class="fb-follow-link" data-uid="${authorUid}" data-i18n="btn_follow">გამოწერა</button>
+        ` : '';
+
+        // მედია (ვიდეო ან სურათი)
+        let mediaBoxHtml = "";
+        if (post.videoUrl) {
+          mediaBoxHtml = `
+            <div class="fb-media-box">
+              <video src="${post.videoUrl}" class="fb-media-item" loop muted playsinline autoplay></video>
+              <button type="button" class="fb-mute-btn" aria-label="Audio">
+                <svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+              </button>
+            </div>
+          `;
+        } else if (post.photoUrl) {
+          mediaBoxHtml = `
+            <div class="fb-media-box">
+              <img src="${post.photoUrl}" class="fb-media-item" alt="Photo" loading="lazy">
+            </div>
+          `;
+        }
+
+        const card = document.createElement("article");
+        card.className = "fb-card";
+        card.id = `fb_post_${postId}`;
+
+        card.innerHTML = `
+          <!-- ზედა ინფორმაცია -->
+          <div class="fb-header">
+            <div class="fb-header-left">
+              <img src="${authorPhoto}" class="fb-avatar" alt="${authorName}" onclick="window.location.href='profile.html?uid=${authorUid}'">
+              <div class="fb-user-details">
+                <div class="fb-name-row">
+                  <span class="fb-user-name" onclick="window.location.href='profile.html?uid=${authorUid}'">${authorName}</span>
+                  ${followHtml}
+                </div>
+                <div class="fb-meta-sub">
+                  <span>1 დღე</span>
+                  <span>·</span>
+                  <svg class="fb-globe-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="fb-header-right">
+              <button type="button" class="fb-icon-action btn-post-more" aria-label="More">
+                <span class="fb-dots-text">•••</span>
+              </button>
+              <button type="button" class="fb-icon-action btn-post-remove" aria-label="Close">
+                <span class="fb-close-x">✕</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ტექსტური ნაწილი -->
+          <div class="fb-caption">
+            <span>${post.caption || post.text || 'კვ.მ 380 დოლარიდან, აარჩიეთ სასურველი მოდელი...'}</span>
+            <span class="fb-see-more-link">სხვა</span>
+          </div>
+
+          <!-- მედია კონტეინერი -->
+          ${mediaBoxHtml}
+
+          <!-- ქვედა მოქმედებები: ლაიქი, კომენტარი, გაზიარება -->
+          <div class="fb-footer-bar">
+            <!-- ლაიქი (Facebook Thumb) -->
+            <button type="button" class="fb-action-btn btn-fb-like" data-id="${postId}">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" fill="#65676b"/>
+              </svg>
+              <span class="fb-like-count">${post.likesCount || post.likes || 0}</span>
+            </button>
+
+            <!-- კომენტარი -->
+            <button type="button" class="fb-action-btn btn-fb-comment" data-id="${postId}">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" fill="#65676b"/>
+              </svg>
+              <span>${post.commentsCount || 0}</span>
+            </button>
+
+            <!-- გაზიარება -->
+            <button type="button" class="fb-action-btn btn-fb-share">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z" fill="#65676b"/>
+              </svg>
+              <span>${post.sharesCount || 0}</span>
+            </button>
+          </div>
+        `;
+
+        // 1. X ღილაკი: პოსტის დამალვა
+        const btnRemove = card.querySelector(".btn-post-remove");
+        btnRemove.onclick = () => card.remove();
+
+        // 2. გამოწერა
+        const btnFollow = card.querySelector(".fb-follow-link");
+        if (btnFollow) {
+          btnFollow.onclick = async () => {
+            if (!currentUid) {
+              alert("გაიარეთ ავტორიზაცია");
+              return;
+            }
+            btnFollow.disabled = true;
+            try {
+              await setDoc(doc(db, "users", currentUid, "following", authorUid), {
+                followedUid: authorUid,
+                active: true,
+                createdAt: serverTimestamp()
+              });
+              btnFollow.remove();
+              const b = card.querySelector(".fb-bullet");
+              if (b) b.remove();
+            } catch (err) {
+              console.error("გამოწერის შეცდომა:", err);
+              btnFollow.disabled = false;
+            }
+          };
+        }
+
+        // 3. ლაიქი (Thumb)
+        const btnLike = card.querySelector(".btn-fb-like");
+        const countSpan = card.querySelector(".fb-like-count");
+        btnLike.onclick = async () => {
+          if (!currentUid) {
+            alert("გაიარეთ ავტორიზაცია");
             return;
           }
+          const isLiked = btnLike.classList.contains("liked");
+          let currentLikes = parseInt(countSpan.textContent) || 0;
 
-          // 1. ბაზაში ინიშნება რომ მოიწონა (აღარასდროს მოემატება მეორედ)
-          await setDoc(likedDocRef, {
-            likedAt: serverTimestamp()
-          });
-          alreadyLikedUids.add(targetDocId);
+          if (!isLiked) {
+            btnLike.classList.add("liked");
+            countSpan.textContent = currentLikes + 1;
+            await updateDoc(doc(db, "posts", postId), { likesCount: increment(1) }).catch(async () => {
+              await updateDoc(doc(db, "reels", postId), { likesCount: increment(1) }).catch(() => {});
+            });
+          } else {
+            btnLike.classList.remove("liked");
+            countSpan.textContent = Math.max(0, currentLikes - 1);
+            await updateDoc(doc(db, "posts", postId), { likesCount: increment(-1) }).catch(async () => {
+              await updateDoc(doc(db, "reels", postId), { likesCount: increment(-1) }).catch(() => {});
+            });
+          }
+        };
 
-          // 2. ციფრის გაზრდა
-          let currentLikes = Number(currentProfile.likesCount || currentProfile.likes || (favCountEl ? favCountEl.textContent : 0)) || 0;
-          currentLikes += 1;
-
-          if (favCountEl) favCountEl.textContent = currentLikes;
-          currentProfile.likesCount = currentLikes;
-
-          // 3. იმ მომხმარებლის ბაზაში likesCount-ის გაზრდა
-          const targetUserRef = doc(db, "users", targetDocId);
-          await setDoc(targetUserRef, { likesCount: currentLikes }, { merge: true });
-
-          allRawProfiles = allRawProfiles.filter(p => (p.id || p.uid) !== targetDocId);
-        } catch (err) {
-          console.error("ლაიქის შენახვის შეცდომა:", err);
+        // 4. ხმის ჩართვა/გამორთვა
+        const muteBtn = card.querySelector(".fb-mute-btn");
+        const vid = card.querySelector("video");
+        if (muteBtn && vid) {
+          muteBtn.onclick = () => {
+            vid.muted = !vid.muted;
+            muteBtn.innerHTML = vid.muted
+              ? `<svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>`
+              : `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+          };
         }
+
+        feedContainer.appendChild(card);
       }
 
-      // 4. გადასვლა შემდეგ პროფილზე
-      setTimeout(() => {
-        likeBtn.disabled = false;
-        currentCardIndex++;
-        displayProfile(currentCardIndex);
-      }, 200);
-    };
-  }
-
-  if (passBtn) {
-    passBtn.onclick = () => {
-      currentCardIndex++;
-      displayProfile(currentCardIndex);
-    };
-  }
-
-  // ველოდებით ავტორიზაციას, რომ currentUser.uid ზუსტად წამოვიდეს
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      getProfilesFromDb(user.uid);
-    } else {
-      getProfilesFromDb(null);
+    } catch (e) {
+      console.error("ფიდის ჩატვირთვის შეცდომა:", e);
+      if (loadingIndicator) loadingIndicator.textContent = "ჩატვირთვის შეცდომა";
     }
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    loadFeedPosts(user ? user.uid : null);
   });
 }
+
 
 /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
