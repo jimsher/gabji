@@ -427,21 +427,152 @@ body {
 /* ==========================================================================
    7. ფიდის გვერდი (FACEBOOK POSTS FEED)
    ========================================================================== */
-.feed-body {
-  background-color: #f0f2f5;
-  margin: 0;
-  padding: 0;
+   /* ==========================================================================
+   7. ფიდის გვერდი (FACEBOOK POSTS FEED & CREATE POST BAR)
+   ========================================================================== */
+body.feed-body-root {
+  background-color: #f0f2f5 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
 }
 
-.feed-screen-fb {
+/* 1. ზედა ფიქსირებული ჰედერი (მხოლოდ ლოგო და 3 ღილაკი) */
+.fb-top-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 540px;
-  margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 75px;
+  height: 56px;
+  background: #ffffff;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid #e4e6eb;
+  box-sizing: border-box;
 }
 
+.fb-brand-logo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #1877f2;
+  text-decoration: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.fb-top-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fb-round-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #e4e6eb;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.fb-round-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #050505;
+}
+
+.fb-round-btn:active {
+  background: #d8dadf;
+}
+
+/* 2. შიდა მთავარი კონტეინერი */
+.fb-feed-content-area {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding-top: 66px; /* 56px ჰედერი + 10px დაშორება */
+  padding-bottom: 75px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+/* 3. ჰედერისგან გამოყოფილი პოსტის დასადები თეთრი ბარათი */
+.fb-post-create-box {
+  background: #ffffff;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.fb-create-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e4e6eb;
+  flex-shrink: 0;
+}
+
+.fb-create-input-pill {
+  flex: 1;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #ced0d4;
+  border-radius: 24px;
+  padding: 8px 12px 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.fb-create-placeholder {
+  font-size: 14px;
+  color: #65676b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.fb-gallery-upload-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+.fb-gallery-svg {
+  width: 22px;
+  height: 22px;
+  stroke: #45bd62;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* 4. პოსტების ნაკადი */
 .feed-posts-stream {
   display: flex;
   flex-direction: column;
@@ -451,7 +582,7 @@ body {
 
 .feed-loading-state {
   text-align: center;
-  padding: 50px 20px;
+  padding: 40px 20px;
   color: #65676b;
   font-size: 14px;
 }
@@ -463,9 +594,10 @@ body {
   display: flex;
   flex-direction: column;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
-/* ზედა ზოლი */
+/* პოსტის ზედა ზოლი */
 .fb-header {
   display: flex;
   align-items: center;
@@ -482,8 +614,8 @@ body {
 }
 
 .fb-avatar {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   background: #e4e6eb;
@@ -575,7 +707,7 @@ body {
 
 /* პოსტის ტექსტი */
 .fb-caption {
-  padding: 2px 14px 10px;
+  padding: 4px 14px 10px;
   font-size: 15px;
   color: #050505;
   line-height: 1.4;
@@ -589,7 +721,7 @@ body {
   margin-left: 4px;
 }
 
-/* მედია კონტეინერი (ვიდეო/ფოტო) */
+/* მედია კონტეინერი */
 .fb-media-box {
   position: relative;
   width: 100%;
@@ -597,19 +729,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 350px;
-  max-height: 600px;
+  min-height: 320px;
+  max-height: 560px;
   overflow: hidden;
 }
 
 .fb-media-item {
   width: 100%;
-  max-height: 600px;
+  max-height: 560px;
   object-fit: contain;
   display: block;
 }
 
-/* ხმის ღილაკი ვიდეოს ქვედა კუთხეში */
 .fb-mute-btn {
   position: absolute;
   right: 14px;
@@ -633,12 +764,12 @@ body {
   fill: #ffffff;
 }
 
-/* ქვედა მოქმედებების ზოლი */
+/* პოსტის ქვედა მოქმედებები */
 .fb-footer-bar {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 8px 10px;
+  padding: 6px 10px;
   border-top: 1px solid #ced0d4;
 }
 
@@ -661,13 +792,6 @@ body {
   background-color: #f0f2f5;
 }
 
-.fb-action-icon {
-  width: 20px;
-  height: 20px;
-  display: block;
-  object-fit: contain;
-}
-
 .fb-action-btn.liked {
   color: #1877f2;
 }
@@ -675,165 +799,7 @@ body {
 .fb-action-btn.liked svg path {
   fill: #1877f2;
 }
-
-
-
-/* ==========================================================================
-   FACEBOOK STYLE FEED & SEPARATED POST BAR
-   ========================================================================== */
-body.feed-body-root {
-  background-color: #f0f2f5 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  overflow-x: hidden;
-}
-
-/* 1. ზედა ფიქსირებული ჰედერი */
-.fb-top-navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 56px;
-  background: #ffffff;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  border-bottom: 1px solid #e4e6eb;
-  max-width: 580px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.fb-brand-logo {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.6px;
-  color: #1877f2;
-  text-decoration: none;
-}
-
-.fb-top-nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.fb-round-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #e4e6eb;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.fb-round-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: #050505;
-}
-
-/* 2. შიდა მთავარი კონტეინერი (ჰედერის სიმაღლის კომპენსაციით) */
-.fb-feed-content-area {
-  max-width: 580px;
-  margin: 0 auto;
-  padding-top: 66px; /* ზუსტად 56px ჰედერი + 10px დაშორება */
-  padding-bottom: 75px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-sizing: border-box;
-}
-
-/* 3. ჰედერისგან ცალკე გამოყოფილი თეთრი ბარათი */
-.fb-post-create-box {
-  background: #ffffff;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.fb-create-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #e4e6eb;
-  flex-shrink: 0;
-}
-
-.fb-create-input-pill {
-  flex: 1;
-  min-width: 0;
-  background: #ffffff;
-  border: 1px solid #ced0d4;
-  border-radius: 24px;
-  padding: 8px 14px 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-.fb-create-placeholder {
-  font-size: 14px;
-  color: #65676b;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
-  min-width: 0;
-}
-
-.fb-gallery-upload-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  flex-shrink: 0;
-}
-
-.fb-gallery-svg {
-  width: 22px;
-  height: 22px;
-  stroke: #45bd62; /* Facebook-ის მწვანე ფოტოს აიკონი */
-  stroke-width: 2;
-  fill: none;
-}
-
-/* 4. პოსტების ნაკადი */
-.feed-posts-stream {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.feed-loading-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: #65676b;
-  font-size: 14px;
-}
-  
-
-
+   
 
   /* ==========================================================================
    8. პროფილის გვერდი (TIKTOK სტილის პროფილი)
