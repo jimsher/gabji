@@ -428,18 +428,17 @@ body {
    7. ფიდის გვერდი (FACEBOOK POSTS FEED)
    ========================================================================== */
    /* ==========================================================================
-   7. ფიდის გვერდი (FACEBOOK POSTS FEED & CREATE POST BAR)
+   7. ფიდის გვერდი (FACEBOOK POSTS FEED)
    ========================================================================== */
 body.feed-body-root {
   background-color: #f0f2f5 !important;
   margin: 0 !important;
   padding: 0 !important;
-  width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
 }
 
-/* 1. ზედა ფიქსირებული ჰედერი (მხოლოდ ლოგო და 3 ღილაკი) */
+/* 1. ზედა ფიქსირებული ჰედერი */
 .fb-top-navbar {
   position: fixed;
   top: 0;
@@ -507,14 +506,14 @@ body.feed-body-root {
   box-sizing: border-box;
 }
 
-/* 3. ჰედერისგან გამოყოფილი პოსტის დასადები თეთრი ბარათი */
-.fb-post-create-box {
+/* 3. პოსტის დასადები ზოლი (გარე თეთრი ჩარჩოს გარეშე, აიკონი ჩარჩოს გარეთ) */
+.fb-post-create-bar {
   background: #ffffff;
   padding: 10px 14px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  gap: 12px;
+  border-bottom: 1px solid #e4e6eb;
   box-sizing: border-box;
   width: 100%;
 }
@@ -528,19 +527,18 @@ body.feed-body-root {
   flex-shrink: 0;
 }
 
+/* ოვალური ჩარჩო მხოლოდ ტექსტისთვის */
 .fb-create-input-pill {
   flex: 1;
   min-width: 0;
   background: #ffffff;
   border: 1px solid #ced0d4;
   border-radius: 24px;
-  padding: 8px 12px 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  padding: 9px 16px;
   cursor: pointer;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .fb-create-placeholder {
@@ -549,25 +547,25 @@ body.feed-body-root {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
 }
 
-.fb-gallery-upload-btn {
+/* გალერეის ღილაკი ჩარჩოს გარეთ მარჯვნივ */
+.fb-gallery-btn-outside {
   background: none;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2px;
+  padding: 4px;
   flex-shrink: 0;
 }
 
 .fb-gallery-svg {
-  width: 22px;
-  height: 22px;
-  stroke: #45bd62;
+  width: 24px;
+  height: 24px;
+  stroke: #45bd62; /* Facebook-ის მწვანე ფოტოს აიკონი */
   stroke-width: 2;
   fill: none;
 }
@@ -799,8 +797,7 @@ body.feed-body-root {
 .fb-action-btn.liked svg path {
   fill: #1877f2;
 }
-   
-
+ 
   /* ==========================================================================
    8. პროფილის გვერდი (TIKTOK სტილის პროფილი)
    ========================================================================== */
