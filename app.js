@@ -274,13 +274,106 @@ if (signupForm) {
    3. ფიდი (feed.html)
    ========================================================================== */
 /* ==========================================================================
-   3. ფიდი (feed.html - FACEBOOK STYLE FEED)
+   3. ფიდი (feed.html - FACEBOOK STYLE FEED & CREATE POST)
    ========================================================================== */
 const feedContainer = document.getElementById("feedPostsContainer");
 
 if (feedContainer) {
   const loadingIndicator = document.getElementById("feedLoadingText");
+  const feedCurrentUserAvatar = document.getElementById("feedCurrentUserAvatar");
+  const openPostCreatorBtn = document.getElementById("openPostCreatorBtn");
+  const btnPickGalleryPhoto = document.getElementById("btnPickGalleryPhoto");
+  const feedPostFileInput = document.getElementById("feedPostFileInput");
+  const btnHeaderCreate = document.getElementById("btnHeaderCreate");
 
+  // მიმდინარე მომხმარებლის პროფილის მონაცემები
+  let currentLoggedInUser = null;
+  let currentLoggedInUserData = null;
+
+  // 1. ფოტოს/ვიდეოს არჩევის ღილაკების მიბმა
+  if (btnPickGalleryPhoto && feedPostFileInput) {
+    btnPickGalleryPhoto.onclick = (e) => {
+      e.stopPropagation();
+      feedPostFileInput.click();
+    };
+  }
+
+  const triggerPostCreation = () => {
+    if (!currentLoggedInUser) {
+      alert("პოსტის დასადებად გაიარეთ ავტორიზაცია");
+      return;
+    }
+    if (feedPostFileInput) feedPostFileInput.click();
+  };
+
+  if (openPostCreatorBtn) openPostCreatorBtn.onclick = triggerPostCreation;
+  if (btnHeaderCreate) btnHeaderCreate.onclick = triggerPostCreation;
+
+  // 2. ფაილის არჩევა, ტექსტის შეყვანა და R2 + Firestore-ში ატვირთვა
+  if (feedPostFileInput) {
+    feedPostFileInput.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const postCaption = prompt("დაწერეთ პოსტის აღწერა:", "");
+      if (postCaption === null) {
+        feedPostFileInput.value = "";
+        return;
+      }
+
+      const placeholderText = document.querySelector(".fb-create-placeholder");
+      const originalPlaceholder = placeholderText ? placeholderText.textContent : "";
+      if (placeholderText) placeholderText.textContent = "პოსტი იტვირთება...";
+
+      uploadPhotoToR2(
+        file,
+        (percent) => {
+          if (placeholderText) placeholderText.textContent = `იტვირთება... ${percent}%`;
+        },
+        async (uploadedUrl) => {
+          if (uploadedUrl) {
+            try {
+              const authorName = currentLoggedInUserData ? 
+                `${currentLoggedInUserData.firstName || ''} ${currentLoggedInUserData.lastName || ''}`.trim() || 'მომხმარებელი' : 
+                'მომხმარებელი';
+              const authorPhoto = currentLoggedInUserData?.photoUrl || 'icons/user-circle-linear.svg';
+
+              const isVideo = file.type.startsWith("video/");
+
+              const postData = {
+                authorUid: currentLoggedInUser.uid,
+                userId: currentLoggedInUser.uid,
+                authorName: authorName,
+                authorPhoto: authorPhoto,
+                caption: postCaption.trim(),
+                likesCount: 0,
+                commentsCount: 0,
+                sharesCount: 0,
+                createdAt: serverTimestamp()
+              };
+
+              if (isVideo) {
+                postData.videoUrl = uploadedUrl;
+              } else {
+                postData.photoUrl = uploadedUrl;
+              }
+
+              await setDoc(doc(collection(db, "posts")), postData);
+              feedPostFileInput.value = "";
+              loadFeedPosts(currentLoggedInUser.uid);
+            } catch (postErr) {
+              console.error("პოსტის შექმნის შეცდომა:", postErr);
+              alert("პოსტის დადება ვერ მოხერხდა");
+            }
+          }
+
+          if (placeholderText) placeholderText.textContent = originalPlaceholder;
+        }
+      );
+    };
+  }
+
+  // 3. პოსტების ჩატვირთვის ძირითადი ფუნქცია
   const loadFeedPosts = async (currentUid) => {
     try {
       // 1. გამოწერილი მომხმარებლების სია
@@ -387,7 +480,7 @@ if (feedContainer) {
 
           <!-- ტექსტური ნაწილი -->
           <div class="fb-caption">
-            <span>${post.caption || post.text || 'კვ.მ 380 დოლარიდან, აარჩიეთ სასურველი მოდელი...'}</span>
+            <span>${post.caption || post.text || ''}</span>
             <span class="fb-see-more-link">სხვა</span>
           </div>
 
@@ -498,8 +591,25 @@ if (feedContainer) {
     }
   };
 
-  onAuthStateChanged(auth, (user) => {
-    loadFeedPosts(user ? user.uid : null);
+  // 4. ავტორიზაციის შემოწმება და ავატარის ჩასმა
+  onAuthStateChanged(auth, async (user) => {
+    currentLoggedInUser = user;
+    if (user) {
+      try {
+        const uSnap = await getDoc(doc(db, "users", user.uid));
+        if (uSnap.exists()) {
+          currentLoggedInUserData = uSnap.data();
+          if (feedCurrentUserAvatar && currentLoggedInUserData.photoUrl) {
+            feedCurrentUserAvatar.src = currentLoggedInUserData.photoUrl;
+          }
+        }
+      } catch (err) {
+        console.error("პროფილის ავატარის წამოღების შეცდომა:", err);
+      }
+      loadFeedPosts(user.uid);
+    } else {
+      loadFeedPosts(null);
+    }
   });
 }
 
