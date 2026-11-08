@@ -273,7 +273,7 @@ if (signupForm) {
 /* ==========================================================================
    3. ფიდი (feed.html)
    ========================================================================== */
-  /* ==========================================================================
+ /* ==========================================================================
    3. ფიდი (feed.html - FACEBOOK STYLE FEED & CREATE POST)
    ========================================================================== */
 const feedContainer = document.getElementById("feedPostsContainer");
@@ -288,6 +288,25 @@ if (feedContainer) {
 
   let currentLoggedInUser = null;
   let currentLoggedInUserData = null;
+
+  // რეალური დროის ფორმატირების ფუნქცია (Firestore timestamp-იდან)
+  const formatTimeAgo = (timestamp) => {
+    if (!timestamp) return "ახლახან";
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp.seconds ? timestamp.seconds * 1000 : timestamp);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return "ახლახან";
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} წთ`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} სთ`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) return `${diffInDays} დღე`;
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) return `${diffInMonths} თვე`;
+    return `${Math.floor(diffInMonths / 12)} წელი`;
+  };
 
   if (btnPickGalleryPhoto && feedPostFileInput) {
     btnPickGalleryPhoto.onclick = (e) => {
@@ -380,7 +399,6 @@ if (feedContainer) {
         } catch (_) {}
       }
 
-      // შეცდომის თავიდან ასაცილებლად: ვიღებთ პოსტებს და კოდში ვალაგებთ დროით
       let postsSnap = await getDocs(collection(db, "posts"));
       let allPosts = [];
 
@@ -391,7 +409,6 @@ if (feedContainer) {
         reelsSnap.forEach((d) => allPosts.push({ id: d.id, ...d.data() }));
       }
 
-      // დალაგება უახლესის მიხედვით
       allPosts.sort((a, b) => {
         const tA = a.createdAt?.seconds || 0;
         const tB = b.createdAt?.seconds || 0;
@@ -432,6 +449,9 @@ if (feedContainer) {
           <button type="button" class="fb-follow-link" data-uid="${authorUid}">გამოწერა</button>
         ` : '';
 
+        // რეალური დრო
+        const realTimeAgo = formatTimeAgo(post.createdAt);
+
         let mediaBoxHtml = "";
         if (post.videoUrl) {
           mediaBoxHtml = `
@@ -450,6 +470,18 @@ if (feedContainer) {
           `;
         }
 
+        // ტექსტის ჩვენება (თუ ტექსტი არ არის, ცარიელი "სხვა" აღარ ჩნდება)
+        let captionHtml = "";
+        if (post.caption && post.caption.trim()) {
+          const isLong = post.caption.length > 90;
+          captionHtml = `
+            <div class="fb-caption">
+              <span class="fb-caption-text">${post.caption}</span>
+              ${isLong ? '<span class="fb-see-more-link">სხვა</span>' : ''}
+            </div>
+          `;
+        }
+
         const card = document.createElement("article");
         card.className = "fb-card";
         card.id = `fb_post_${postId}`;
@@ -464,7 +496,7 @@ if (feedContainer) {
                   ${followHtml}
                 </div>
                 <div class="fb-meta-sub">
-                  <span>1 დღე</span>
+                  <span>${realTimeAgo}</span>
                   <span>·</span>
                   <svg class="fb-globe-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                 </div>
@@ -481,10 +513,7 @@ if (feedContainer) {
             </div>
           </div>
 
-          <div class="fb-caption">
-            <span>${post.caption || post.text || ''}</span>
-            <span class="fb-see-more-link">სხვა</span>
-          </div>
+          ${captionHtml}
 
           ${mediaBoxHtml}
 
@@ -602,7 +631,7 @@ if (feedContainer) {
     }
   });
 }
-          
+
 
 /* ==========================================================================
    4. პროფილის მონაცემების წამოღება (PROFILE.HTML & FIRESTORE)
